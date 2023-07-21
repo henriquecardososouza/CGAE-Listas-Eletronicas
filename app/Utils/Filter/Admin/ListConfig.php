@@ -38,6 +38,18 @@ class ListConfig
             "name" => "data",
             "name_oficial" => "Data"
         ],
+        
+        "hour_initial" => [
+            "value" => "null",
+            "name" => "hour",
+            "name_oficial" => "Hora"
+        ],
+        
+        "hour_final" => [
+            "value" => "null",
+            "name" => "hour",
+            "name_oficial" => "Hora"
+        ],
 
         "estado" => [
             "value" => "null",

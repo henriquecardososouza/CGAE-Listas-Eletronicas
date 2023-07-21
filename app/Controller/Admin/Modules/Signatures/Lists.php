@@ -166,7 +166,7 @@ class Lists extends Page
                 }
             }
 
-            else if ($filters[$i] != "data_initial" && $filters[$i] != "data_final")
+            else if ($filters[$i] != "data_initial" && $filters[$i] != "data_final" && $filters[$i] != "hour_initial" && $filters[$i] != "hour_final")
             {
                 $checked[] = "checked";
             }
@@ -193,21 +193,50 @@ class Lists extends Page
         {
             $dateValues['date_final'] = $postVars['data_final'];
         }
+        
+        $hourValues = [];
+
+        if ($postVars['hour_initial'] == "null")
+        {
+            $hourValues['hour_initial'] = "";
+        }
+
+        else 
+        {
+            $hourValues['hour_initial'] = $postVars['hour_initial'];
+        }
+
+        if ($postVars['hour_final'] == "null")
+        {
+            $hourValues['hour_final'] = "";
+        }
+
+        else 
+        {
+            $hourValues['hour_final'] = $postVars['hour_final'];
+        }
 
         $itens = "";
         $filterActives = 0;
         $dataAlreadyIn = false;
+        $hourAlreadyIn = false;
 
         for ($i = 0; $i < count($filters); $i++)
         {
             if ($postVars[$filters[$i]] == "on" 
                 || ($postVars[$filters[$i]] != "null" && $values[$i]['name'] == "estado") 
                 || ($postVars[$filters[$i]] != "null" && $values[$i]['name'] == "sexo")
-                || ($postVars[$filters[$i]] != "null" && $values[$i]['name'] == "data" && !$dataAlreadyIn))
+                || ($postVars[$filters[$i]] != "null" && $values[$i]['name'] == "data" && !$dataAlreadyIn)
+                || ($postVars[$filters[$i]] != "null" && $values[$i]['name'] == "hour" && !$hourAlreadyIn))
             {
                 if ($values[$i]['name'] == "data")
                 {
                     $dataAlreadyIn = true;
+                }
+
+                else if ($values[$i]['name'] == "hour")
+                {
+                    $hourAlreadyIn = true;
                 }
 
                 $itens .= View::render("admin/modules/lists/filters/filter/active_card", [
@@ -238,6 +267,11 @@ class Lists extends Page
         foreach ($dateValues as $date => $value)
         {
             $params[$date] = $value;
+        }
+        
+        foreach ($hourValues as $hour => $value)
+        {
+            $params[$hour] = $value;
         }
 
         return View::render("admin/modules/lists/filters/filter/index", $params);
@@ -408,6 +442,25 @@ class Lists extends Page
                 $data = $item instanceof Listas\VaiVolta ? $item->data : $item->dataSaida;
                 
                 if ($data >= $dataMin && $data <= $dataMax)
+                {
+                    $aux[] = $item;
+                }
+            }
+
+            $ob = $aux;
+        }
+        
+        if ($postVars['hour_initial'] != "null")
+        {
+            $aux = [];
+            $hourMin = $postVars['hour_initial'];
+            $hourMax = $postVars['hour_final'];
+
+            foreach ($ob as $item)
+            {
+                $hour = $item->horaSaida;
+                
+                if ($hour >= $hourMin && $hour <= $hourMax)
                 {
                     $aux[] = $item;
                 }

@@ -182,7 +182,7 @@ class Solicitation
 
         if (empty($results))
         {
-            return null;
+            return [];
         }
 
         $itens = [];
