@@ -160,7 +160,7 @@ class Signature extends Page
                         $success = true;
                         $obList = Listas\VaiVolta::getListById($id);
 
-                        $obList->atualizar("id = ".$id, [
+                        $obList->atualizar([
                             "destino" => $destino,
                             "data" => $data,
                             "hora_saida" => $horaSaida,
@@ -210,7 +210,7 @@ class Signature extends Page
                         $success = true;
                         $obList = Listas\Pernoite::getListById($id);
 
-                        $obList->atualizar("id = ".$id, [
+                        $obList->atualizar([
                             "nome_responsavel" => $nomeResponsavel,
                             "endereco" => $endereco,
                             "telefone" => $telefone,
@@ -261,7 +261,7 @@ class Signature extends Page
                         $success = true;
                         $obList = Listas\Saida::getListById($id);
 
-                        $obList->atualizar("id = ".$id, [
+                        $obList->atualizar([
                             "destino" => $destino,
                             "data_saida" => $dataSaida,
                             "data_chegada" => $dataChegada,
@@ -290,6 +290,7 @@ class Signature extends Page
                 $ob = Listas\VaiVolta::getListById($id);
 
                 $content = View::render("admin/modules/lists/signature/edit/vai_volta", [
+                    "id" => $ob->id,
                     "destino" => $ob->destino,
                     "data" => $ob->data,
                     "hora-saida" => $ob->horaSaida,
@@ -302,6 +303,7 @@ class Signature extends Page
                 $ob = Listas\Pernoite::getListById($id);
 
                 $content = View::render("admin/modules/lists/signature/edit/pernoite", [
+                    "id" => $ob->id,
                     "endereco" => $ob->endereco,
                     "nome" => $ob->nomeResponsavel,
                     "telefone" => $ob->telefone,
@@ -315,6 +317,7 @@ class Signature extends Page
                 $ob = Listas\Saida::getListById($id);
 
                 $content = View::render("admin/modules/lists/signature/edit/saida", [
+                    "id" => $ob->id,
                     "destino" => $ob->destino,
                     "data_saida" => $ob->dataSaida,
                     "data_chegada" => $ob->dataChegada,

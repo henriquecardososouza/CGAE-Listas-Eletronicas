@@ -91,6 +91,28 @@ $router->post("/admin/student/update/{id}", [
     }
 ]);
 
+$router->get("/admin/student/delete/{id}", [
+    "middlewares" => [
+        "recover-cookies",
+        "require-admin-login"
+    ],
+
+    function ($id) {
+        return new Response(200, Students\Delete::getDelete($id));
+    }
+]);
+
+$router->post("/admin/student/delete/{id}", [
+    "middlewares" => [
+        "recover-cookies",
+        "require-admin-login"
+    ],
+
+    function ($request, $id) {
+        return new Response(200, Students\Delete::setDelete($request, $id));
+    }
+]);
+
 $router->get("/admin/student/{id}", [
     "middlewares" => [
         "recover-cookies",
