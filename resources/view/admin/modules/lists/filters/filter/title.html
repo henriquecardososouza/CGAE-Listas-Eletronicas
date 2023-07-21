@@ -1,0 +1,35 @@
+<h5>Filtros Ativos</h5>
+<br>
+
+{{itens}}
+
+<script>
+    function disableFilter(name)
+    {
+        if (name == "data")
+        {
+            document.getElementById("data_initial").value = "";
+            document.getElementById("data_final").value = "";
+        }
+
+        else if (name == "estado")
+        {
+            document.getElementById("estado-ativo").value = "";
+            document.getElementById("estado-finalizado").value = "";
+        }
+
+        else if (name == "sexo")
+        {
+            document.getElementById("sexo-masculino").value = "";
+            document.getElementById("sexo-feminino").value = "";
+        }
+
+        else 
+        {
+            document.getElementById(name).checked = false;
+        }        
+
+        document.getElementById("form-filters").action = "?page=1";
+        document.getElementById("form-filters").submit();
+    }
+</script>

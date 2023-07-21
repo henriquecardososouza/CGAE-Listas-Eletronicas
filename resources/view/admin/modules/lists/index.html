@@ -1,0 +1,31 @@
+<section>
+    <hr>
+    <div id="ativas">
+        <h4 class="display-4">Assinaturas Cadastradas</h4>
+
+        <hr>
+        
+        {{filters}}
+
+        <hr>
+
+        {{table}}
+
+        {{pagination}}
+    </div>
+
+    <a href="{{URL}}/admin/signatures/new" class="btn btn-outline-success">Cadastrar Assinatura</a>
+</section>
+
+<style>
+    td:hover {
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    function tableClick(id, name)
+    {
+        location.href = "{{URL}}/admin/signatures/" + name + "/" + id;
+    }
+</script>

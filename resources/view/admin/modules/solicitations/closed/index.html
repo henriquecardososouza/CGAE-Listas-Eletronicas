@@ -1,0 +1,29 @@
+<section>
+    <hr>
+    <div id="ativas">
+        <h4 class="display-4">Solicitações Finalizadas</h4>
+
+        <hr>
+        
+        {{filters}}
+
+        <hr>
+
+        {{table}}
+
+        {{pagination}}
+    </div>
+</section>
+
+<style>
+    td:hover {
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    function tableClick(id)
+    {
+        location.href = "{{URL}}/admin/solicitations/" + id;
+    }
+</script>

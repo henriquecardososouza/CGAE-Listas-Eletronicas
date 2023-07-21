@@ -1,0 +1,69 @@
+<section id="assinatura">
+    <h4 class="display-4">Minha Assinatura</h4>
+
+    <br>
+
+    {{status}}
+
+    <h4>Lista: {{lista}}</h4>
+    
+    <hr>
+
+    {{content}}
+
+    {{actions}}
+    
+    <div class="modal fade" id="excluir" tabindex="-1" role="dialog" aria-labelledby="excluir" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title text-light" id="excluirLabel">Excluir Assinatura</h5>
+                    <button type="button" class="btn btn-close bg-light" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="motivo-delete" action="" method="post">
+                        <label for="txt-motivo-delete">Explique o motivo da exclusão</label>
+                        <textarea id="txt-motivo-delete" name="motivo" class="bg-dark text-light form-control" style="width: 466px; height: 145px;" required></textarea>
+                        <input type="hidden" name="acao" value="excluir">
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="submitDeleteForm()">Enviar Solicatação</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{edit}}
+</section>
+
+<script>
+    function submitEditForm()
+    {
+        var txt = document.getElementById('txt-motivo-edit');
+
+        if (txt.value.trim().length == 0)
+        {
+            alert("ERROR\nPreencha o campo de motivo!");
+            return;
+        }
+
+        document.getElementById('motivo-edit').submit();
+    }
+
+    function submitDeleteForm()
+    {
+        var txt = document.getElementById('txt-motivo-delete');
+
+        if (txt.value.trim().length == 0)
+        {
+            alert("ERROR\nPreencha o campo de motivo!");
+            return;
+        }
+
+        document.getElementById('motivo-delete').submit();
+    }
+</script>

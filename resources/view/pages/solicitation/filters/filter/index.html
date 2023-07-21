@@ -1,0 +1,115 @@
+<div>
+    <div class="modal fade" id="modal-filter" tabindex="-1" role="dialog" aria-labelledby="modal-filter-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title text-light">Filtrar Busca</h5>
+                    <button type="button" class="btn btn-close bg-white" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <h5>Por Lista</h5>
+
+                    <ul>
+                        <input type="checkbox" name="vai_volta" class="form-check-input bg-dark" id="vai_volta" {{checked-0}}>
+                        <label class="form-check-label" for="vai_volta">Vai e Volta</label> 
+                    
+                        <br>
+
+                        <input type="checkbox" name="pernoite" class="form-check-input bg-dark" id="pernoite" {{checked-1}}>
+                        <label class="form-check-label" for="pernoite">Pernoite</label>  
+                    
+                        <br>
+
+                        <input type="checkbox" name="saida" class="form-check-input bg-dark" id="saida" {{checked-2}}>
+                        <label class="form-check-label" for="saida">Saída</label>
+                    </ul>
+
+                    <hr>
+
+                    <h5>Por Ação</h5>
+
+                    <ul>
+                        <input type="checkbox" name="editar" class="form-check-input bg-dark" id="editar" {{checked-3}}>
+                        <label class="form-check-label" for="editar">Editar</label>
+                    
+                        <br>
+
+                        <input type="checkbox" name="excluir" class="form-check-input bg-dark" id="excluir" {{checked-4}}>
+                        <label class="form-check-label" for="excluir">Excluir</label>
+                    </ul>
+
+                    <hr>
+
+                    <h5>Por Data</h5>
+
+                    <ul>
+                        <label class="form-label" for="data_initial">De:</label> 
+                        <input type="date" name="data_initial" class="form-control bg-dark text-light" id="data_initial" value="{{date_initial}}">
+                    
+                        <br>
+
+                        <label class="form-label" for="data_final">Até:</label>
+                        <input type="date" name="data_final" class="form-control bg-dark text-light" id="data_final" value="{{date_final}}">
+                    </ul>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-outline-success" onclick="clearFilterForm();">
+                        Limpar Filtros
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" onclick="submitFilterForm()">Filtrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        {{actives}}
+    </div>
+</div>
+
+<script>
+    function clearFilterForm()
+    {
+        document.getElementById("vai_volta").checked = false;
+        document.getElementById("pernoite").checked = false;
+        document.getElementById("saida").checked = false;
+        document.getElementById("editar").checked = false;
+        document.getElementById("excluir").checked = false;
+        document.getElementById("data_initial").value = "";
+        document.getElementById("data_final").value = "";
+
+        document.getElementById("form-filters").submit();
+    }
+
+    function submitFilterForm()
+    {
+        let data1 = document.getElementById("data_initial");
+        let data2 = document.getElementById("data_final");
+
+        if (data1.value.length > 0)
+        {
+            if (!data2.value.length > 0)
+            {
+                alert("ERROR\nPreencha os dois campos de data!");
+                return;
+            }
+        }
+
+        else if (data2.value.length > 0)
+        {
+            alert("ERROR\nPreencha os dois campos de data!");
+            return;
+        }
+
+        if (data1.value > data2.value)
+        {
+            alert("ERROR\nA data mínima deve ser anterior ou igual a data máxima!");
+            return;
+        }
+
+        document.getElementById("form-filters").submit();
+    }
+</script>
