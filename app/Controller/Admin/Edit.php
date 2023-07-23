@@ -13,6 +13,7 @@ class Edit extends Page
      */
     public static function getEdit($request, $message = null, $success = false)
     {
+        parent::configNavbar("profile");
         $content = View::render("admin/edit_profile", self::getAttributes($request, $message, $success));
         return parent::getPage("Editar", $content);
     }

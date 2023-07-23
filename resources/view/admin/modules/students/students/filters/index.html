@@ -6,14 +6,14 @@
                     Filtrar
                 </button>
                 
-                <button type="button" class="btn btn-outline-warning mx-3" data-toggle="modal" data-target="#modal-order-by">
+                <button type="button" class="btn btn-outline-warning" id="order-button" data-toggle="modal" data-target="#modal-order-by">
                     Ordenar
                 </button>
             </div>
 
-            <div class="col">
-                <input type="text" class="d-inline form-control bg-dark text-light" style="max-width: 250px;" name="busca" value="{{search}}">
-                <button class="btn btn-outline-success" type="button" onclick="sendSearchForm()">Buscar</button>
+            <div class="col" id="search-box">
+                <input type="text" class="d-inline form-control bg-dark text-light" style="max-width: 250px;" name="busca" value="{{search}}" placeholder="Buscar">
+                <button class="btn btn-outline-success" type="button" id="search-button" onclick="sendSearchForm()"><span>Buscar</span></button>
             </div>
         </div>
 
@@ -30,3 +30,33 @@
         document.getElementById("form-filters").submit();
     }
 </script>
+
+<style>
+    #order-button
+    {
+        margin-left: 1rem;
+    }
+
+    @media (max-width: 768px)
+    {
+        #order-button
+        {
+            margin-left: 0;
+        }
+
+        #search-box
+        {
+            display: flex;
+        }
+
+        #search-button:after
+        {
+            content: "\00bb";
+        }
+
+        #search-button span
+        {
+            display: none;
+        }
+    }
+</style>

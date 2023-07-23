@@ -9,7 +9,9 @@
 
         <hr>
 
-        {{table}}
+        <div id="table">
+            {{table}}
+        </div>
 
         {{pagination}}
     </div>
@@ -20,6 +22,19 @@
 <style>
     td:hover {
         cursor: pointer;
+    }
+
+    #table
+    {
+        overflow-x: none;
+    }
+
+    @media (max-width: 480px)
+    {
+        #table
+        {
+            overflow-x: scroll;
+        }
     }
 </style>
 

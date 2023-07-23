@@ -21,8 +21,8 @@
     </div>
 
     <div class="btn-group dropright">
-        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Minhas Assinaturas
+        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Minhas assinaturas 
         </button>
         <div class="dropdown-menu">
             <a class="dropdown-item" href="{{URL}}/mylists/active">Ativas</a>
@@ -32,7 +32,7 @@
     
     <div class="btn-group dropright">
         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Minhas Solicitações
+          Minhas solicitações
         </button>
         <div class="dropdown-menu">
             <a class="dropdown-item" href="{{URL}}/solicitations/open">Abertas</a>
@@ -42,6 +42,15 @@
 
     <br>
     
-    <a href="{{URL}}/logout" class="btn btn-danger mt-3">SAIR</a>
-
+    <a href="{{URL}}/logout" class="btn btn-danger mt-3">Sair</a>
 </section>
+
+<style>
+    @media (max-width: 768px)
+    {
+        .btn-group
+        {
+            margin-top: 1rem;
+        }
+    }
+</style>

@@ -288,6 +288,9 @@ class Lists extends Page
         $order = $postVars['order'] ?? null;
         $way = $postVars['way'] ?? null;
 
+        $order = is_null($way) ? null : $order;
+        $way = is_null($order) ? null : $way;
+
         $active = "";
         $idOrder = -1;
         $idWay = -1;
@@ -384,7 +387,7 @@ class Lists extends Page
             $values[] = $data['value'];
         }
 
-        if (isset($postVars['order']))
+        if (isset($postVars['order']) && isset($postVars['way']))
         {
             $order = [
                 $postVars['order'] => $postVars['way']
@@ -424,9 +427,9 @@ class Lists extends Page
         }
         
         $listas = [
-            $renderLists['vai_volta'] ? Listas\VaiVolta::processData(Listas\VaiVolta::getLists()) : [],
-            $renderLists['saida'] ? Listas\Saida::processData(Listas\Saida::getLists()) : [],
-            $renderLists['pernoite'] ? Listas\Pernoite::processData(Listas\Pernoite::getLists()) : []
+            $renderLists['vai_volta'] ? Listas\VaiVolta::processData(Listas\VaiVolta::getLists(null, "id DESC")) : [],
+            $renderLists['saida'] ? Listas\Saida::processData(Listas\Saida::getLists(null, "id DESC")) : [],
+            $renderLists['pernoite'] ? Listas\Pernoite::processData(Listas\Pernoite::getLists(null, "id DESC")) : []
         ];
 
         $ob = array_merge($listas[0], $listas[1], $listas[2]);

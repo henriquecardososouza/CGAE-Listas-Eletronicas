@@ -12,6 +12,8 @@ class Profile extends Page
      */
     public static function getProfile()
     {
+        parent::configNavbar("profile");
+        
         \App\Session\Login::init();
 
         $content = View::render("admin/profile", [

@@ -273,7 +273,6 @@ class Signature extends Page
 
                     break;
             }
-
         }
 
         else
@@ -283,7 +282,7 @@ class Signature extends Page
         }
 
         $content = null;
-
+        
         switch ($list)
         {
             case "vai_volta":
@@ -313,6 +312,8 @@ class Signature extends Page
                     "hora-chegada" => $ob->horaChegada
                 ]);
 
+                break;
+
             case "saida":
                 $ob = Listas\Saida::getListById($id);
 
@@ -324,6 +325,8 @@ class Signature extends Page
                     "hora_saida" => $ob->horaSaida,
                     "hora_chegada" => $ob->horaChegada,
                 ]);
+
+                break;
         }
 
         return $content;

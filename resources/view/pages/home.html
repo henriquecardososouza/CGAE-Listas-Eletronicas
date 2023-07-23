@@ -44,8 +44,8 @@
     {
         border: 1px solid white;
         border-radius: 15px;
-        width: 200px;
-        height: 200px;
+        min-width: 200px;
+        max-width: 200px;
         padding: 20px;
         margin: 20px;
         text-align: center;
@@ -71,5 +71,14 @@
     {
         display: flex;
         justify-content: center;
+        overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+        #links
+        {
+            overflow-x: scroll;
+            justify-content: inherit;
+        }
     }
 </style>

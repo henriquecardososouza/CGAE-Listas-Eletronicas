@@ -51,6 +51,9 @@ class NewSignature extends Page
 
         else
         {
+            $hourFinal = "23:00:00";
+            $hourInitial = "07:00:00";
+
             switch ($postVars['type'])
             {
                 case "vai_volta":
@@ -83,12 +86,22 @@ class NewSignature extends Page
                         break;
                     }
 
-                    if ($horaSaida >= $horaChegada)
+                    if (!($hourInitial < $horaSaida && $horaSaida < $hourFinal))
+                    {
+                        $message = "O horário de saída não é válido";
+                    }
+
+                    else if (!($hourInitial < $horaChegada && $horaChegada < $hourFinal))
+                    {
+                        $message = "O horário de chegada não é válido";
+                    }
+
+                    else if ($horaSaida >= $horaChegada)
                     {
                         $message = "O horário de chegada não é válido!";
                     }
 
-                    if ($dataAtual > $data)
+                    else if ($dataAtual > $data)
                     {
                         $message = "A data informada não é válida!";
                     }
@@ -100,7 +113,7 @@ class NewSignature extends Page
 
                     else
                     {
-                        $message = "Cadastrado com Sucesso!";
+                        $message = "Cadastrado com sucesso!";
                         $success = true;
                         $obList = new Listas\VaiVolta(0, $obAluno->id, true, $destino, $data, $horaSaida, $horaChegada);
                         $obList->cadastrar();
@@ -139,7 +152,17 @@ class NewSignature extends Page
                         break;
                     }
 
-                    if ($dataSaida > $dataChegada)
+                    if (!($hourInitial < $horaSaida && $horaSaida < $hourFinal))
+                    {
+                        $message = "O horário de saída não é válido";
+                    }
+
+                    else if (!($hourInitial < $horaChegada && $horaChegada < $hourFinal))
+                    {
+                        $message = "O horário de chegada não é válido";
+                    }
+
+                    else if ($dataSaida > $dataChegada)
                     {
                         $message = "A Data de Chegada não é Válida!";
                     }
@@ -161,7 +184,7 @@ class NewSignature extends Page
 
                     else
                     {
-                        $message = "Atualizado com Sucesso!";
+                        $message = "Cadastrado com sucesso!";
                         $success = true;
                         $obList = new Listas\Saida(0, $obAluno->id, true, $destino, $dataSaida, $dataChegada, $horaSaida, $horaChegada);
 
@@ -203,29 +226,39 @@ class NewSignature extends Page
                         break;
                     }
 
-                    if ($dataSaida > $dataChegada)
+                    if (!($hourInitial < $horaSaida && $horaSaida < $hourFinal))
                     {
-                        $message = "A Data de Chegada não é Válida!";
+                        $message = "O horário de saída não é válido";
                     }
-            
-                    else if ($horaSaida >= $horaChegada && $dataSaida == $dataChegada)
+
+                    else if (!($hourInitial < $horaChegada && $horaChegada < $hourFinal))
                     {
-                        $message = "O Horário de Chegada não é Válido!";
+                        $message = "O horário de chegada não é válido";
+                    }
+
+                    else if ($dataSaida > $dataChegada)
+                    {
+                        $message = "A data de chegada não é válida!";
                     }
             
                     else if ($dataAtual > $dataSaida)
                     {
-                        $message = "A Data de Saída Informada não é Válida!";
+                        $message = "A data de saída informada não é válida!";
+                    }
+            
+                    else if ($horaSaida >= $horaChegada && $dataSaida == $dataChegada)
+                    {
+                        $message = "O horário de chegada não é válido!";
                     }
             
                     else if ($dataAtual == $dataSaida && $horaAtual > $horaSaida)
                     {
-                        $message = "O Horário de Saída não é Válido!";
+                        $message = "O horário de saída não é válido!";
                     }
 
                     else
                     {
-                        $message = "Atualizado com Sucesso!";
+                        $message = "Cadastrado com sucesso!";
                         $success = true;
                         $obList = new Listas\Pernoite(0, $obAluno->id, true, $endereco, $nomeResponsavel, $telefone, $dataSaida, $dataChegada, $horaSaida, $horaChegada);
 

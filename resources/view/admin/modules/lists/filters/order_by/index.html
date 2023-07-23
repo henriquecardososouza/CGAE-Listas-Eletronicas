@@ -11,29 +11,29 @@
                     <ul>
                         <h5>Ordenar Por:</h5>
 
-                        <p>
+                        <ul>
                             <input type="radio" id="order-date" name="order" value="data" {{checked-0}}>
-                            Data
-                        </p>
+                            <label class="form-check-label" for="order-date">Data</label> 
 
-                        <p>
-                            <input type="radio" name="order" value="nome" {{checked-1}}>
-                            Nome
-                        </p>
+                            <br>
+
+                            <input type="radio" name="order" id="order-name" value="nome" {{checked-1}}>
+                            <label class="form-check-label" for="order-name">Nome</label> 
+                        </ul>
                         
                         <hr>
 
                         <h5>Modo:</h5>
 
-                        <p>
+                        <ul>
                             <input type="radio" name="way" id="way-cres" value="crescente" {{checked-00}}>
-                            Crescente
-                        </p>
+                            <label class="form-check-label" for="way-cres">Crescente</label> 
 
-                        <p>
-                            <input type="radio" name="way" value="decrescente" {{checked-01}}>
-                            Decrescente
-                        </p>
+                            <br>
+
+                            <input type="radio" name="way" id="way-desc" value="decrescente" {{checked-01}}>
+                            <label class="form-check-label" for="way-desc">Decrescente</label> 
+                        </ul>
                     </ul>
                 </div>
 

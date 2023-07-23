@@ -15,6 +15,7 @@ class Page
         "signatures" => false,
         "solicitations" => false,
         "students" => false,
+        "profile" => false
     ];
 
     /**
