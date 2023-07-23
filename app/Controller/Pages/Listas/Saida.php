@@ -12,6 +12,7 @@ class Saida extends Page
     /**
      * Retorna a view da lista de saída
      * @param string $message
+     * @param bool $success
      * @return string
      */
     public static function getSaida($message = null, $success = false)
@@ -41,27 +42,45 @@ class Saida extends Page
         $dataAtual = date("Y-m-d", time());
         $horaAtual = date("H:i:s", time() + 60);
 
-        if ($dataSaida > $dataChegada)
+        $hourInitial = getenv("HOUR_INITIAL");
+        $hourFinal = getenv("HOUR_FINAL");
+
+        if (!($hourInitial < $horaAtual && $horaAtual < $hourFinal))
         {
-            return self::getSaida("A Data de Chegada não é Válida!");
+            return self::getSaida("O horário para cadastro de assinaturas já se encerrou!<br>Contate um assistente para realizar sua assinatura");
+        }
+
+        if (!("07:00:00" < $horaSaida && $horaSaida < "23:00:00"))
+        {
+            return self::getSaida("O horário de saída informado não é válido!");
+        }
+
+        if ($dataAtual == $dataSaida)
+        {
+            if ($horaAtual > $horaSaida)
+            {
+                return self::getSaida("O horário de saída informado não é válido!");
+            }
+        }
+
+        if (!("07:00:00" < $horaChegada && $horaChegada < "23:00:00"))
+        {
+            return self::getSaida("O horário de chegada informado não é válido!");
         }
 
         if ($horaSaida >= $horaChegada && $dataSaida == $dataChegada)
         {
-            return self::getSaida("O Horário de Chegada não é Válido!");
+            return self::getSaida("O horário de chegada informado não é válido!");
         }
 
         if ($dataAtual > $dataSaida)
         {
-            return self::getSaida("A Data de Saída Informada não é Válida!");
+            return self::getSaida("A data de saída informada não é válida!");
         }
 
-        else if ($dataAtual == $dataSaida)
+        if ($dataSaida > $dataChegada)
         {
-            if ($horaAtual > $horaSaida)
-            {
-                return self::getSaida("O Horário de Saída não é Válido!");
-            }
+            return self::getSaida("A data de chegada informada não é válida!");
         }
 
         \App\Session\Login::init();
@@ -74,7 +93,7 @@ class Saida extends Page
             {
                 if ($item->ativa)
                 {
-                    return self::getSaida("O Aluno já possui uma Assinatura Ativa nessa Lista!");
+                    return self::getSaida("O aluno já possui uma assinatura ativa nesta lista!");
                 }
             }
         }
@@ -83,7 +102,7 @@ class Saida extends Page
 
         $obList->cadastrar();
 
-        return self::getSaida("Assinatura Registrada!", true);
+        return self::getSaida("Assinatura registrada!", true);
     }
 }
 

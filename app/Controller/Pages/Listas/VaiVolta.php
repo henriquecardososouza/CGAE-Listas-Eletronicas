@@ -12,6 +12,7 @@ class VaiVolta extends Page
     /**
      * Retorna a view da lista vai e volta
      * @param string $message
+     * @param bool $success
      * @return string
      */
     public static function getVaiVolta($message = null, $success = false)
@@ -39,23 +40,41 @@ class VaiVolta extends Page
         date_default_timezone_set("America/Sao_Paulo");
         $dataAtual = date("Y-m-d", time());
         $horaAtual = date("H:i:s", time() + 60);
+        
+        $hourInitial = getenv("HOUR_INITIAL");
+        $hourFinal = getenv("HOUR_FINAL");
+
+        if (!($hourInitial < $horaAtual && $horaAtual < $hourFinal))
+        {
+            return self::getVaiVolta("O horário para cadastro de assinaturas já se encerrou!<br>Contate um assistente para realizar sua assinatura");
+        }
+
+        if (!("07:00:00" < $horaSaida && $horaSaida < "23:00:00"))
+        {
+            return self::getVaiVolta("O horário de saída informado não é válido!");
+        }
+
+        if ($dataAtual == $data)
+        {
+            if ($horaAtual > $horaSaida)
+            {
+                return self::getVaiVolta("O horário de saída informado não é válido!");
+            }
+        }
+
+        if (!("07:00:00" < $horaChegada && $horaChegada < "23:00:00"))
+        {
+            return self::getVaiVolta("O horário de chegada informado não é válido!");
+        }
 
         if ($horaSaida >= $horaChegada)
         {
-            return self::getVaiVolta("O horário de chegada não é válido!");
+            return self::getVaiVolta("O horário de chegada informado não é válido!");
         }
 
         if ($dataAtual > $data)
         {
             return self::getVaiVolta("A data informada não é válida!");
-        }
-
-        else if ($dataAtual == $data)
-        {
-            if ($horaAtual > $horaSaida)
-            {
-                return self::getVaiVolta("O horário de saída não é válido!");
-            }
         }
 
         \App\Session\Login::init();
@@ -68,7 +87,7 @@ class VaiVolta extends Page
             {
                 if ($item->ativa)
                 {
-                    return self::getVaiVolta("O aluno já possui uma assinatura cadastrada!");
+                    return self::getVaiVolta("O aluno já possui uma assinatura cadastrada nesta lista!");
                 }
             }
         }
@@ -77,7 +96,7 @@ class VaiVolta extends Page
 
         $obList->cadastrar();
 
-        return self::getVaiVolta("Assinatura Registrada!", true);
+        return self::getVaiVolta("Assinatura registrada!", true);
     }
 }
 

@@ -12,6 +12,7 @@ class Pernoite extends Page
     /**
      * Retorna a view da lista de pernoite
      * @param string $message
+     * @param bool $success
      * @return string
      */
     public static function getPernoite($message = null, $success = false)
@@ -35,7 +36,7 @@ class Pernoite extends Page
 
         if (!$ob->pernoite)
         {
-            return self::getPernoite("O Aluno não Possui Permissão para Assinar a Lista de Pernoite!");
+            return self::getPernoite("O Aluno não possui permissão para assinar a lista de pernoite!");
         }
 
         $postVars = $request->getPostVars();
@@ -52,27 +53,45 @@ class Pernoite extends Page
         $dataAtual = date("Y-m-d", time());
         $horaAtual = date("H:i:s", time() + 60);
 
-        if ($dataSaida > $dataChegada)
+        $hourInitial = getenv("HOUR_INITIAL");
+        $hourFinal = getenv("HOUR_FINAL");
+
+        if (!($hourInitial < $horaAtual && $horaAtual < $hourFinal))
         {
-            return self::getPernoite("A Data de Chegada não é Válida!");
+            return self::getPernoite("O horário para cadastro de assinaturas já se encerrou!<br>Contate um assistente para realizar sua assinatura");
+        }
+
+        if (!("07:00:00" < $horaSaida && $horaSaida < "23:00:00"))
+        {
+            return self::getPernoite("O horário de saída informado não é válido!");
+        }
+
+        if ($dataAtual == $dataSaida)
+        {
+            if ($horaAtual > $horaSaida)
+            {
+                return self::getPernoite("O horário de saída informado não é válido!");
+            }
+        }
+
+        if (!("07:00:00" < $horaChegada && $horaChegada < "23:00:00"))
+        {
+            return self::getPernoite("O horário de chegada informado não é válido!");
         }
 
         if ($horaSaida >= $horaChegada && $dataSaida == $dataChegada)
         {
-            return self::getPernoite("O Horário de Chegada não é Válido!");
+            return self::getPernoite("O horário de chegada informado não é válido!");
         }
 
         if ($dataAtual > $dataSaida)
         {
-            return self::getPernoite("A Data de Saída Informada não é Válida!");
+            return self::getPernoite("A data de saída informada não é válida!");
         }
 
-        else if ($dataAtual == $dataSaida)
+        if ($dataSaida > $dataChegada)
         {
-            if ($horaAtual > $horaSaida)
-            {
-                return self::getPernoite("O Horário de Saída não é Válido!");
-            }
+            return self::getPernoite("A data de chegada informada não é válida!");
         }
 
         $ob = EntityPernoite::getListByStudent($_SESSION['user']['usuario']['id']);
@@ -83,7 +102,7 @@ class Pernoite extends Page
             {
                 if ($item->ativa)
                 {
-                    return self::getPernoite("O Aluno já possui uma Assinatura Ativa nessa Lista!");
+                    return self::getPernoite("O aluno já possui uma assinatura ativa nesta lista!");
                 }
             }
         }
@@ -92,7 +111,7 @@ class Pernoite extends Page
 
         $obList->cadastrar();
 
-        return self::getPernoite("Assinatura Registrada!", true);
+        return self::getPernoite("Assinatura registrada!", true);
     }
 }
 
