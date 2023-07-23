@@ -39,6 +39,7 @@ class Finished extends Page
 
     /**
      * Retorna os cards das solicitações
+     * @param Request $request
      * @return string
      */
     private static function getItens($request)
@@ -50,6 +51,10 @@ class Finished extends Page
         $values = [];
         $order = $request->getPostVars()['order'] ?? null;
         $way = $request->getPostVars()['way'] ?? null;
+        
+        $order = is_null($way) ? null : $order;
+        $way = is_null($order) ? null : $way;
+
         $solicitations = [];
 
         if ($request->getHttpMethod() == "POST")
@@ -67,7 +72,7 @@ class Finished extends Page
                 $values[] = $data['value'];
             }
 
-            $solicitations = Solicitation::processData(Solicitation::getSolicitation("ativa = false AND aluno = ".$_SESSION['user']['usuario']['id']));
+            $solicitations = Solicitation::processData(Solicitation::getSolicitation("ativa = false AND aluno = ".$_SESSION['user']['usuario']['id'], "id DESC"));
         
             $aux = $solicitations;
             $solicitations = [];
@@ -451,6 +456,9 @@ class Finished extends Page
         $postVars = $request->getPostVars();
         $order = $postVars['order'] ?? null;
         $way = $postVars['way'] ?? null;
+        
+        $order = is_null($way) ? null : $order;
+        $way = is_null($order) ? null : $way;
 
         $active = "";
         $idOrder = -1;

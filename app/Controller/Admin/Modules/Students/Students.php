@@ -221,7 +221,7 @@ class Students extends Page
         {
             $postVars = $request->getPostVars();
 
-            if (isset($postVars['order']))
+            if (isset($postVars['order']) && isset($postVars['way']))
             {
                 $itens['active'] = View::render("admin/modules/students/students/filters/order_by/title", [
                     "item" => View::render("admin/modules/students/students/filters/order_by/active_card", [
@@ -313,11 +313,14 @@ class Students extends Page
 
                 if ($key == "order")
                 {
-                    $order = $value;
-
-                    if ($postVars['way'] == "decrescente")
+                    if (isset($postVars['way']))
                     {
-                        $order .= " DESC";
+                        $order = $value;
+
+                        if ($postVars['way'] == "decrescente")
+                        {
+                            $order .= " DESC";
+                        }
                     }
                 }
 

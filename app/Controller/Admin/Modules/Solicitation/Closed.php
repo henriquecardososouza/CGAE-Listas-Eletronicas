@@ -268,6 +268,9 @@ class Closed extends Page
         $postVars = $request->getPostVars();
         $order = $postVars['order'] ?? null;
         $way = $postVars['way'] ?? null;
+        
+        $order = is_null($way) ? null : $order;
+        $way = is_null($order) ? null : $way;
 
         $active = "";
         $idOrder = -1;
@@ -380,14 +383,14 @@ class Closed extends Page
             $values[] = $data['value'];
         }
 
-        if (isset($postVars['order']))
+        if (isset($postVars['order']) && isset($postVars['way']))
         {
             $order = [
                 $postVars['order'] => $postVars['way']
             ];
         }
         
-        $solicitations = EntitySolicitation::processData(EntitySolicitation::getSolicitation("ativa = false"));
+        $solicitations = EntitySolicitation::processData(EntitySolicitation::getSolicitation("ativa = false", "id DESC"));
 
         if ($postVars['data_initial'] != "null")
         {

@@ -24,7 +24,7 @@ class Encerred extends Page
     }
 
     /**
-     * Obtém as listas segundo os filtros selecionados
+     * Obtêm as listas segundo os filtros selecionados
      * @return string
      */
     public static function setEncerred($request)
@@ -50,6 +50,10 @@ class Encerred extends Page
         $values = [];
         $order = $request->getPostVars()['order'] ?? null;
         $way = $request->getPostVars()['way'] ?? null;
+        
+        $order = is_null($way) ? null : $order;
+        $way = is_null($order) ? null : $way;
+
         $lists = [];
 
         if ($request->getHttpMethod() == "POST")
@@ -69,24 +73,24 @@ class Encerred extends Page
 
             if ($postVars['vai_volta'] == "on")
             {
-                $lists['vai_volta'] = Listas\VaiVolta::processData(Listas\VaiVolta::getLists("ativa = false AND aluno = ".$_SESSION['user']['usuario']['id']));
+                $lists['vai_volta'] = Listas\VaiVolta::processData(Listas\VaiVolta::getLists("ativa = false AND aluno = ".$_SESSION['user']['usuario']['id'], "id DESC"));
             }
 
             if ($postVars['saida'] == "on")
             {
-                $lists['saida'] = Listas\Saida::processData(Listas\Saida::getLists("ativa = false AND aluno = ".$_SESSION['user']['usuario']['id']));
+                $lists['saida'] = Listas\Saida::processData(Listas\Saida::getLists("ativa = false AND aluno = ".$_SESSION['user']['usuario']['id'], "id DESC"));
             }
 
             if ($postVars['pernoite'] == "on")
             {
-                $lists['pernoite'] = Listas\Pernoite::processData(Listas\Pernoite::getLists("ativa = false AND aluno = ".$_SESSION['user']['usuario']['id']));
+                $lists['pernoite'] = Listas\Pernoite::processData(Listas\Pernoite::getLists("ativa = false AND aluno = ".$_SESSION['user']['usuario']['id'], "id DESC"));
             }
 
-            if ($postVars['vai_volta'] == "off" && $postVars['saida'] == "off" && $postVars['pernoite'])
+            if ($postVars['vai_volta'] == "off" && $postVars['saida'] == "off" && $postVars['pernoite'] == "off")
             {
-                $lists['vai_volta'] = Listas\VaiVolta::processData(Listas\VaiVolta::getLists("ativa = false AND aluno = ".$_SESSION['user']['usuario']['id']));
-                $lists['saida'] = Listas\Saida::processData(Listas\Saida::getLists("ativa = false AND aluno = ".$_SESSION['user']['usuario']['id']));
-                $lists['pernoite'] = Listas\Pernoite::processData(Listas\Pernoite::getLists("ativa = false AND aluno = ".$_SESSION['user']['usuario']['id']));    
+                $lists['vai_volta'] = Listas\VaiVolta::processData(Listas\VaiVolta::getLists("ativa = false AND aluno = ".$_SESSION['user']['usuario']['id'], "id DESC"));
+                $lists['saida'] = Listas\Saida::processData(Listas\Saida::getLists("ativa = false AND aluno = ".$_SESSION['user']['usuario']['id'], "id DESC"));
+                $lists['pernoite'] = Listas\Pernoite::processData(Listas\Pernoite::getLists("ativa = false AND aluno = ".$_SESSION['user']['usuario']['id'], "id DESC"));    
             }
 
             else 
@@ -474,6 +478,9 @@ class Encerred extends Page
         $postVars = $request->getPostVars();
         $order = $postVars['order'] ?? null;
         $way = $postVars['way'] ?? null;
+        
+        $order = is_null($way) ? null : $order;
+        $way = is_null($order) ? null : $way;
 
         $active = "";
         $idOrder = -1;

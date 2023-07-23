@@ -268,6 +268,9 @@ class Open extends Page
         $postVars = $request->getPostVars();
         $order = $postVars['order'] ?? null;
         $way = $postVars['way'] ?? null;
+        
+        $order = is_null($way) ? null : $order;
+        $way = is_null($order) ? null : $way;
 
         $active = "";
         $idOrder = -1;
@@ -380,7 +383,7 @@ class Open extends Page
             $values[] = $data['value'];
         }
 
-        if (isset($postVars['order']))
+        if (isset($postVars['order']) && isset($postVars['way']))
         {
             $order = [
                 $postVars['order'] => $postVars['way']

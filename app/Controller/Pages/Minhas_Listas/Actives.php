@@ -39,6 +39,7 @@ class Actives extends Page
 
     /**
      * Retorna os cards das listas ativas
+     * @param Request $request
      * @return string
      */
     private static function getItens($request)
@@ -48,8 +49,13 @@ class Actives extends Page
         $postVars = [];
         $filters = [];
         $values = [];
+
         $order = $request->getPostVars()['order'] ?? null;
         $way = $request->getPostVars()['way'] ?? null;
+        
+        $order = is_null($way) ? null : $order;
+        $way = is_null($order) ? null : $way;
+
         $lists = [];
 
         if ($request->getHttpMethod() == "POST")
@@ -151,9 +157,9 @@ class Actives extends Page
 
         else
         {
-            $lists['vai_volta'] = Listas\VaiVolta::processData(Listas\VaiVolta::getLists("ativa = true AND aluno = ".$_SESSION['user']['usuario']['id']));
-            $lists['saida'] = Listas\Saida::processData(Listas\Saida::getLists("ativa = true AND aluno = ".$_SESSION['user']['usuario']['id']));
-            $lists['pernoite'] = Listas\Pernoite::processData(Listas\Pernoite::getLists("ativa = true AND aluno = ".$_SESSION['user']['usuario']['id']));
+            $lists['vai_volta'] = Listas\VaiVolta::processData(Listas\VaiVolta::getLists("ativa = true AND aluno = ".$_SESSION['user']['usuario']['id'], "id DESC"));
+            $lists['saida'] = Listas\Saida::processData(Listas\Saida::getLists("ativa = true AND aluno = ".$_SESSION['user']['usuario']['id'], "id DESC"));
+            $lists['pernoite'] = Listas\Pernoite::processData(Listas\Pernoite::getLists("ativa = true AND aluno = ".$_SESSION['user']['usuario']['id'], "id DESC"));
         }
 
         if (empty($lists['vai_volta']) && empty($lists['pernoite']) && empty($lists['saida']))
@@ -474,6 +480,9 @@ class Actives extends Page
         $postVars = $request->getPostVars();
         $order = $postVars['order'] ?? null;
         $way = $postVars['way'] ?? null;
+        
+        $order = is_null($way) ? null : $order;
+        $way = is_null($order) ? null : $way;
 
         $active = "";
         $idOrder = -1;
