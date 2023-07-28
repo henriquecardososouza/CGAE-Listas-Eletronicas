@@ -1,8 +1,0 @@
-{
-    "name": "cgae/listas",
-    "autoload": {
-        "psr-4": {
-            "App\\": "app/"
-        }
-    }
-}
