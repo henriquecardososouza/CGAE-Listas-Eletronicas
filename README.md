@@ -10,4 +10,4 @@
 
 **Usuário padrão:**
 - Email: "teste@teste"
-- Senha: "teste"
+- Senha: "teste123"
