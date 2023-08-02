@@ -14,6 +14,25 @@
 
     <br>
     
-    <a href="{{URL}}/admin/edit" class="btn btn-primary mt-3">Alterar dados</a>
-    <a href="{{URL}}/logout" class="btn btn-danger mt-3">Sair</a>
+    <a href="{{URL}}/admin/edit" class="btn btn-outline-primary mt-3">Alterar dados</a>
+
+    <div id="control">
+        <a href="{{URL}}/logout" class="btn btn-outline-danger mt-3">Sair</a>
+    </div>
 </section>
+
+<style>
+    #control
+    {
+        display: flex;
+        justify-content: right;
+    }
+
+    @media (max-width: 768px)
+    {
+        #control
+        {
+            justify-content: left;
+        }
+    }
+</style>

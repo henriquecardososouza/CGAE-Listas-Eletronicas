@@ -1,7 +1,7 @@
 <hr>
 
 <section>
-    <h1 class="display-4">Meu Perfil</h1>
+    <h5 class="display-5">Meu perfil</h5>
 
     <div id="dados" class="mt-5">
         <dl class="row">
@@ -21,7 +21,7 @@
     </div>
 
     <div class="btn-group dropright">
-        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Minhas assinaturas 
         </button>
         <div class="dropdown-menu">
@@ -31,7 +31,7 @@
     </div>
     
     <div class="btn-group dropright">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Minhas solicitações
         </button>
         <div class="dropdown-menu">
@@ -40,17 +40,28 @@
         </div>
     </div>
 
-    <br>
-    
-    <a href="{{URL}}/logout" class="btn btn-danger mt-3">Sair</a>
+    <div id="controls">
+        <a href="{{URL}}/logout" class="btn btn-outline-danger mt-3">Sair</a>
+    </div>
 </section>
 
 <style>
+    #controls
+    {
+        display: flex;
+        justify-content: right;
+    }
+
     @media (max-width: 768px)
     {
         .btn-group
         {
             margin-top: 1rem;
+        }
+
+        #controls
+        {
+            justify-content: left;
         }
     }
 </style>

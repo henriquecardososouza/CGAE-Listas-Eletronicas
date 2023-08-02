@@ -32,31 +32,22 @@
 </script>
 
 <style>
-    #order-button
+    #search-box
     {
-        margin-left: 1rem;
+        justify-content: right;
+        display: flex;
     }
-
+    
     @media (max-width: 768px)
     {
-        #order-button
-        {
-            margin-left: 0;
-        }
-
-        #search-box
-        {
-            display: flex;
-        }
-
-        #search-button:after
-        {
-            content: "\00bb";
-        }
-
         #search-button span
         {
             display: none;
+        }
+
+        #search-button::after
+        {
+            content: "\00bb";
         }
     }
 </style>
