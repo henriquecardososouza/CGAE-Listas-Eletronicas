@@ -1,0 +1,14 @@
+<form id="action-form" action="" method="post">
+    <button type="button" class="btn btn-outline-success" onclick="submitActionForm('aceitar')">Aceitar</button>
+    <button type="button" class="btn btn-outline-danger" onclick="submitActionForm('rejeitar')">Rejeitar</button>
+    <input type="hidden" id="action-input" name="acao" value="">
+    {{compare_data}}
+</form>
+
+<script>
+    function submitActionForm(acao)
+    {
+        document.getElementById("action-input").value = acao;
+        document.getElementById("action-form").submit();
+    }
+</script>

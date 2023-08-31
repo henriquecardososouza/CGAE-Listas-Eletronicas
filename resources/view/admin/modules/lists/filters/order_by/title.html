@@ -1,0 +1,23 @@
+<h5>Ordem Ativa</h5>
+<br>
+
+{{item}}
+
+<script>
+    function disableOrder()
+    {
+        var order = document.getElementsByName("order");
+        var way = document.getElementsByName("way");
+        
+        order.forEach(item => {
+            item.checked = false;
+        });
+        
+        way.forEach(item => {
+            item.checked = false;
+        });
+
+        document.getElementById("form-filters").action = "?page=1";
+        document.getElementById("form-filters").submit();
+    }
+</script>

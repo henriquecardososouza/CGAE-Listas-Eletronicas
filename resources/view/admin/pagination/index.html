@@ -1,0 +1,26 @@
+<div>
+    <nav>
+        <ul class="pagination justify-content-center">
+            {{links}}
+        </ul>
+    </nav>
+</div>
+
+<script>
+    function sendPaginationData(link)
+    {
+        let form = document.getElementById("form-filters");
+        form.action = link;
+        form.submit();
+    }
+</script>
+
+<style>
+    #link-pagination {
+        cursor: pointer;
+    }
+
+    #link-pagination:hover {
+        background-color: rgb(58, 57, 57) !important;
+    }
+</style>

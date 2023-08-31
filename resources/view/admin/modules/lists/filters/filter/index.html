@@ -1,0 +1,175 @@
+<div>
+    <div class="modal fade" id="modal-filter" tabindex="-1" role="dialog" aria-labelledby="modal-filter-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title text-light">Filtrar Busca</h5>
+                    <button type="button" class="btn btn-close bg-white" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <ul>
+                        <h5>Por Lista</h5>
+
+                        <ul>
+                            <input type="checkbox" name="vai_volta" class="form-check-input bg-dark" id="vai_volta" {{checked-0}}>
+                            <label class="form-check-label" for="vai_volta">Vai e Volta</label> 
+                        
+                            <br>
+
+                            <input type="checkbox" name="pernoite" class="form-check-input bg-dark" id="pernoite" {{checked-1}}>
+                            <label class="form-check-label" for="pernoite">Pernoite</label>  
+                        
+                            <br>
+
+                            <input type="checkbox" name="saida" class="form-check-input bg-dark" id="saida" {{checked-2}}>
+                            <label class="form-check-label" for="saida">Saída</label>
+                        </ul>
+
+                        <hr>
+
+                        <h5>Por Data</h5>
+
+                        <ul>
+                            <label class="form-label" for="data_initial">De:</label> 
+                            <input type="date" name="data_initial" class="form-control bg-dark text-light" id="data_initial" value="{{date_initial}}" style="max-width: 200px;">
+                        
+                            <br>
+
+                            <label class="form-label" for="data_final">Até:</label>
+                            <input type="date" name="data_final" class="form-control bg-dark text-light" id="data_final" value="{{date_final}}" style="max-width: 200px;">
+                        </ul>
+
+                        <hr>
+
+                        <h5>Por Hora</h5>
+
+                        <ul>
+                            <label class="form-label" for="hour_initial">De:</label> 
+                            <input type="time" name="hour_initial" class="form-control bg-dark text-light" id="hour_initial" value="{{hour_initial}}" style="max-width: 200px;">
+                        
+                            <br>
+
+                            <label class="form-label" for="hour_final">Até:</label>
+                            <input type="time" name="hour_final" class="form-control bg-dark text-light" id="hour_final" value="{{hour_final}}" style="max-width: 200px;">
+                        </ul>
+
+                        <hr>
+
+                        <h5>Por Estado</h5>
+
+                        <ul>
+                            <input type="radio" name="estado" class="form-input-radio bg-dark text-light" id="estado-ativo" value="ativo" {{checked-3}}>
+                            <label class="form-label" for="estado-ativo">Ativa</label>
+
+                            <br>
+
+                            <input type="radio" name="estado" class="form-input-radio bg-dark text-light" id="estado-finalizado" value="finalizado" {{checked-4}}>
+                            <label class="form-label" for="estado-finalizado">Finalizada</label>
+                        </ul>
+
+                        <hr>
+
+                        <h5>Por Sexo</h5>
+
+                        <ul>
+                            <input type="radio" name="sexo" class="bg-dark text-light" id="sexo-masculino" value="masculino" {{checked-5}}>
+                            <label class="form-label" for="sexo-masculino">Masculino</label>
+
+                            <br>
+
+                            <input type="radio" name="sexo" class="bg-dark text-light" id="sexo-feminino" value="feminino" {{checked-6}}>
+                            <label class="form-label" for="sexo-feminino">Feminino</label>
+                        </ul>
+                    </ul>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-outline-success" onclick="clearFilterForm();">
+                        Limpar Filtros
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" onclick="submitFilterForm()">Filtrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        {{actives}}
+    </div>
+</div>
+
+<script>
+    function clearFilterForm()
+    {
+        document.getElementById("vai_volta").checked = false;
+        document.getElementById("pernoite").checked = false;
+        document.getElementById("saida").checked = false;
+        document.getElementById("data_initial").value = "";
+        document.getElementById("data_final").value = "";
+        document.getElementById("hour_initial").value = "";
+        document.getElementById("hour_final").value = "";
+        document.getElementById("estado-ativo").value = "";
+        document.getElementById("estado-finalizado").value = "";
+        document.getElementById("sexo-masculino").value = "";
+        document.getElementById("sexo-feminino").value = "";
+
+        document.getElementById("form-filters").action = "?page=1";
+        document.getElementById("form-filters").submit();
+    }
+
+    function submitFilterForm()
+    {
+        let data1 = document.getElementById("data_initial");
+        let data2 = document.getElementById("data_final");
+
+        if (data1.value.length > 0)
+        {
+            if (!data2.value.length > 0)
+            {
+                alert("ERROR\nPreencha os dois campos de data!");
+                return;
+            }
+        }
+
+        else if (data2.value.length > 0)
+        {
+            alert("ERROR\nPreencha os dois campos de data!");
+            return;
+        }
+
+        if (data1.value > data2.value)
+        {
+            alert("ERROR\nA data mínima deve ser anterior ou igual a data máxima!");
+            return;
+        }
+
+        let hour1 = document.getElementById("hour_initial");
+        let hour2 = document.getElementById("hour_final");
+
+        if (hour1.value.length > 0)
+        {
+            if (!hour2.value.length > 0)
+            {
+                alert("ERROR\nPreencha os dois campos de hora!");
+                return;
+            }
+        }
+
+        else if (hour2.value.length > 0)
+        {
+            alert("ERROR\nPreencha os dois campos de hora!");
+            return;
+        }
+
+        if (hour1.value > hour2.value)
+        {
+            alert("ERROR\nA hora mínima deve ser anterior ou igual a hora máxima!");
+            return;
+        }
+
+        document.getElementById("form-filters").action = "?page=1";
+        document.getElementById("form-filters").submit();
+    }
+</script>

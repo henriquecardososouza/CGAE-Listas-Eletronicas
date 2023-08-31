@@ -1,0 +1,105 @@
+<section>
+    <hr>
+    <div id="ativas">
+        <h5 class="display-5">Assinaturas finalizadas</h5>
+
+        <hr>
+
+        <div class="list-group" id="res">
+            {{no_itens}}
+        </div>
+    </div>
+</section>
+
+<script>
+    const results = [{{itens}}];
+
+    window.addEventListener("DOMContentLoaded", (event) => {
+        let res = document.getElementById("res");
+
+        if (results.length == 0)
+        {
+            document.getElementById("no_itens").style.display = "block";  
+        }
+        
+        let table = document.createElement("table");
+        table.setAttribute("class", "table table-dark table-bordered table-hover");
+
+        let thead = document.createElement("thead");
+        let tr = document.createElement("tr");
+
+        let th = [
+            document.createElement("th"),
+            document.createElement("th"), 
+            document.createElement("th"),
+            document.createElement("th"),
+            document.createElement("th"),
+        ];
+
+        th[0].textContent = "Lista";
+        th[1].textContent = "Data de saída";
+        th[2].textContent = "Data de chegada";
+        th[3].textContent = "Horário de saída";
+        th[4].textContent = "Horário de chegada";
+
+        th.forEach(item => {
+            tr.appendChild(item)
+        });
+
+        thead.appendChild(tr);
+        table.appendChild(thead);
+
+        let tbody = document.createElement("tbody");
+
+        for (let i = 0; i < results.length; i++)
+        {
+            let tr = document.createElement("tr");
+            tr.setAttribute("onclick", "tableClick(" + results[i].id + ", '" + results[i].type + "')");
+            tr.style.cursor = "pointer";
+
+            let td = [
+                document.createElement("td"),
+                document.createElement("td"),
+                document.createElement("td"),
+                document.createElement("td"),
+                document.createElement("td")
+            ];
+
+            switch (results[i].type)
+            {
+                case "vai_volta":
+                    td[0].textContent = "Vai e Volta",
+                    td[1].textContent = results[i].data,
+                    td[2].textContent = results[i].data,
+                    td[3].textContent = results[i].horaSaida,
+                    td[4].textContent = results[i].horaChegada
+                    
+
+                    break;
+
+                default:
+                    td[0].textContent = results[i].type == "saida" ? "Saída" : "Pernoite",
+                    td[1].textContent = results[i].dataSaida,
+                    td[2].textContent = results[i].dataChegada,
+                    td[3].textContent = results[i].horaSaida,
+                    td[4].textContent = results[i].horaChegada
+
+                    break;
+            }
+
+            td.forEach(item => {
+                tr.appendChild(item);
+            })
+            
+            tbody.appendChild(tr);
+        }
+
+        table.appendChild(tbody);
+        res.appendChild(table);
+    });
+
+    function tableClick(id, name)
+    {
+        location.href = "{{URL}}/assinaturas/" + name + "/" + id;
+    }
+</script>

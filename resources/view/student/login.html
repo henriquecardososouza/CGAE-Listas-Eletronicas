@@ -1,0 +1,56 @@
+<header>
+    <div class="mt-2">
+        <h1 class="display-5">CGAE</h1>
+        <h1 class="h5">Listas Eletrônicas</h1>
+    </div>
+</header>
+
+<hr>
+
+<section class="my-5" style="display: flex; justify-content: center;">
+    <form style="width:500px" method="post" action="" class="border border-light p-5 rounded">
+        <div class="mb-5" style="text-align: center;">
+            <h1 class="display-5">ENTRAR</h1>
+        </div>
+
+        {{status}}
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" class="form-control bg-dark text-light mb-3" id="email" aria-describedby="emailHelp" placeholder="Email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" name="senha" class="form-control bg-dark text-light mb-3" id="senha" placeholder="Senha" required>
+        </div>
+
+        <div class="form-group">
+            <input type="checkbox" name="check" class="form-check-input bg-dark" id="conected">
+            <label class="form-check-label" for="conected">Permanecer Conectado</label>
+        </div>
+
+        <div id="controls" style="justify-content: right; display: flex;">
+            <button type="submit" class="btn btn-outline-success mt-3">Entrar</button>
+        </div>
+    </form>
+</section>
+
+<style>
+    header
+    {
+        display: flex;
+        user-select: none;
+    }
+
+    header a
+    {
+        text-decoration: none;
+        color: white;
+    }
+
+    footer
+    {
+        user-select: none;
+    }
+</style>

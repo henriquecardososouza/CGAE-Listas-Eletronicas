@@ -1,0 +1,50 @@
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title text-light" id="editLabel">Editar Assinatura</h5>
+                <button type="button" class="btn btn-close bg-light" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="motivo-edit" action="" method="post">
+                    <label for="txt-motivo-edit">Explique o motivo da edição</label>
+                    <textarea id="txt-motivo-edit" name="motivo" class="bg-dark text-light mb-3 form-control" style="width: 466px; height: 145px;" required></textarea>
+                    <br>
+
+                    <label for="endereco">Endereço</label>
+                    <input type="text" class="bg-dark text-light form-control mb-4" value="{{endereco}}" name="endereco" required>
+                    
+                    <label for="nome">Nome do Responsável</label>
+                    <input type="text" class="bg-dark text-light form-control mb-4" value="{{nome}}" name="nome" required>
+
+                    <label for="telefone">Telefone</label>
+                    <input type="tel" class="bg-dark text-light form-control" value="{{telefone}}" name="telefone" placeholder="(00) 99999999..."  pattern="\([0-9]{2}\) [0-9]{8,}" required>
+                    <small>Formato: (99) 00000000</small>
+
+                    <br>
+                    <br>
+
+                    <label for="data_saida">Data de Saída</label>
+                    <input type="date" class="bg-dark text-light form-control mb-4" value="{{data_saida}}" name="data_saida" required>
+
+                    <label for="data_chegada">Data de Chegada</label>
+                    <input type="date" class="bg-dark text-light form-control mb-4" value="{{data_chegada}}" name="data_chegada" required>
+
+                    <label for="hora_saida">Horário de Saída</label>
+                    <input type="time" class="bg-dark text-light form-control mb-4" value="{{hora_saida}}" name="hora_saida" required>
+
+                    <label for="hora_chegada">Horário de Chegada</label>
+                    <input type="time" class="bg-dark text-light form-control mb-4" value="{{hora_chegada}}" name="hora_chegada" required>
+
+                    <input type="hidden" name="acao" value="editar">
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-outline-primary" onclick="submitEditForm()">Enviar Solicatação</button>
+            </div>
+        </div>
+    </div>
+</div>

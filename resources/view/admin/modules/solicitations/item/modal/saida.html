@@ -1,0 +1,66 @@
+<div class="modal fade" id="saida" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="display: grid; justify-content: center;">
+        <div class="modal-content bg-dark" style="width:900px">
+            <div class="modal-header">
+                <h5 class="modal-title text-light">Comparar Dados</h5>
+                <button type="button" class="btn btn-close bg-light" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <br>
+                
+                <dl class="row">
+                    <dt class="col-sm-6">
+                        <label for="destino">Destino - Original</label>
+                        <input type="text" class="bg-dark text-light form-control mb-4" value="{{destino}}" name="destino" readonly>
+                    </dt>
+                
+                    <dt class="col-sm-6">
+                        <label for="destino-new">Destino - Novo</label>
+                        <input type="text" class="bg-dark text-light form-control mb-4" value="{{destino_new}}" name="destino-new" readonly>
+                    </dt>
+                
+                    <dt class="col-sm-6">
+                        <label for="data_saida">Data de Saída - Original</label>
+                        <input type="date" class="bg-dark text-light form-control mb-4" value="{{data_saida}}" name="data_saida" readonly>
+                    </dt>
+                
+                    <dt class="col-sm-6">
+                        <label for="data_saida-new">Data de Saída - Novo</label>
+                        <input type="date" class="bg-dark text-light form-control mb-4" value="{{data_saida_new}}" name="data_saida-new" readonly>
+                    </dt>
+                
+                    <dt class="col-sm-6">
+                        <label for="data_chegada">Data de Chegada - Original</label>
+                        <input type="date" class="bg-dark text-light form-control mb-4" value="{{data_chegada}}" name="data_chegada" readonly>
+                    </dt>
+                
+                    <dt class="col-sm-6">
+                        <label for="data_chegada-new">Data de Chegada - Novo</label>
+                        <input type="date" class="bg-dark text-light form-control mb-4" value="{{data_chegada_new}}" name="data_chegada-new" readonly>
+                    </dt>
+                
+                    <dt class="col-sm-6">
+                        <label for="hora_saida">Horário de Saída - Original</label>
+                        <input type="time" class="bg-dark text-light form-control mb-4" value="{{hora_saida}}" name="hora_saida" readonly>
+                    </dt>
+                
+                    <dt class="col-sm-6">
+                        <label for="hora_saida-new">Horário de Saída - Novo</label>
+                        <input type="time" class="bg-dark text-light form-control mb-4" value="{{hora_saida_new}}" name="hora_saida-new" readonly>
+                    </dt>
+                
+                    <dt class="col-sm-6">
+                        <label for="hora_chegada">Horário de Chegada - Original</label>
+                        <input type="time" class="bg-dark text-light form-control mb-4" value="{{hora_chegada}}" name="hora_chegada" readonly>
+                    </dt>
+                
+                    <dt class="col-sm-6">
+                        <label for="hora_chegada-new">Horário de Chegada - Novo</label>
+                        <input type="time" class="bg-dark text-light form-control mb-4" value="{{hora_chegada_new}}" name="hora_chegada-new" readonly>
+                    </dt>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
