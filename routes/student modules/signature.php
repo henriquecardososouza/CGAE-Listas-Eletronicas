@@ -11,8 +11,8 @@ $router->get("/assinaturas/finalizadas", [
         "update-signatures"
     ],
 
-    function ($request) {
-        return new Response(200, Student\Signatures\Finished::getFinished($request));
+    function () {
+        return new Response(200, Student\Signatures\Signatures::getContent("finalizadas"));
     }
 ]);
 
@@ -24,8 +24,8 @@ $router->get("/assinaturas/ativas", [
         "update-signatures"
     ],
 
-    function ($request) {
-        return new Response(200, Student\Signatures\Actives::getActives($request));
+    function () {
+        return new Response(200, Student\Signatures\Signatures::getContent("ativas"));
     }
 ]);
 

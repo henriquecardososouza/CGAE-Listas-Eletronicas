@@ -29,7 +29,7 @@ class Page
      */
     public static function getPage($title, $content, $renderNavbar = true)
     {
-        return View::render("student/base/page", [
+        return self::render("base/page", [
             "title"   => $title,
             "header"  => $renderNavbar ? self::getHeader() : "",
             "content" => $content,
@@ -52,7 +52,7 @@ class Page
             $variables["active-".$module] = $value ? "active" : "";
         }
         
-        return View::render("student/base/header", $variables);;
+        return self::render("base/header", $variables);;
     }
 
     /**
@@ -61,7 +61,18 @@ class Page
      */
     private static function getFooter()
     {
-        return View::render("student/base/footer");
+        return self::render("base/footer");
+    }
+
+    /**
+     * Renderiza views de aluno
+     * @param string $view A view a ser renderizada
+     * @param array $params Parâmetros de renderização da view
+     * @return string View renderizada
+     */
+    protected static function render($view, $params = [], $isModule = true)
+    {
+        return View::render(($isModule ? "student/" : "").$view, $params);
     }
 
     /**

@@ -6,7 +6,6 @@ use \App\Http\Response;
 // INCLUINDO AS ROTAS GERAIS DO SITE
 include __DIR__."/student.php";
 include __DIR__."/assistant.php";
-include __DIR__."/admin.php";
 
 // ADICIONANDO A ROTA DE LOGIN
 $router->get("/login", [
