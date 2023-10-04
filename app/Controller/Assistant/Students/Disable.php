@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Controller\Admin\Modules\Students;
+namespace App\Controller\Assistant\Students;
 
-use App\Controller\Admin\Alert;
-use App\Controller\Admin\Page;
-use App\Model\Entity\Student;
-use App\Utils\View;
+use App\Controller\Common\Alert;
+use App\Controller\Assistant\Page;
+use App\Model\Entity\Aluno;
 
-class DisableAll extends Page
+class Disable extends Page
 {
     /**
      * Retorna a view de desabilitar alunos
@@ -15,12 +14,12 @@ class DisableAll extends Page
      * @param bool $success
      * @return string
      */
-    public static function getDisable($message = null, $success = false)
+    public static function getView($message = null, $success = false)
     {
-        parent::configNavbar("students");
+        parent::setActiveModule("students");
 
-        $content = View::render("admin/modules/students/all/disable/index", [
-            "status" => is_null($message) ? null : ($success ? "<br>".Alert::getSuccess($message) : "<br>".Alert::getError($message))
+        $content = parent::render("students/disable/index", [
+            "status" => is_null($message) ? null : "<br>".($success ? Alert::getSuccess($message) : Alert::getError($message))
         ]);
 
         return parent::getPage("Alunos", $content);
@@ -31,7 +30,7 @@ class DisableAll extends Page
      * @param request $request
      * @return string
      */
-    public static function setDisable($request)
+    public static function setView($request)
     {
         $postVars = $request->getPostVars();
 
@@ -49,17 +48,17 @@ class DisableAll extends Page
         if (isset($postVars['confirm']))
         {
             self::disableStudents($where);
-            return self::getDisable("Alunos desativados com sucesso!", true);
+            return self::getView("Alunos desativados com sucesso!", true);
         }
 
-        $obStudents = Student::processData(Student::getStudents($where));
+        $obStudents = Aluno::processData(Aluno::getAlunos($where));
 
         if (!empty($obStudents))
         {
             return self::getConfirm($obStudents, $request);
         }
 
-        return self::getDisable("Nenhum aluno foi encontrado!");
+        return self::getView("Nenhum aluno foi encontrado!");
     }
 
     /**
@@ -70,9 +69,9 @@ class DisableAll extends Page
      */
     private static function getConfirm($obStudents, $request)
     {
-        parent::configNavbar("students");
+        parent::setActiveModule("students");
         
-        $content = View::render("admin/modules/students/all/disable/confirm", self::getContent($obStudents, $request));
+        $content = parent::render("students/disable/confirm", self::getContent($obStudents, $request));
 
         return parent::getPage("Alunos", $content);
     }
@@ -98,7 +97,7 @@ class DisableAll extends Page
 
         foreach ($obStudents as $item)
         {
-            $lines .= View::render("admin/modules/students/all/disable/item", [
+            $lines .= parent::render("students/disable/item", [
                 "id_refeitorio" => $item->idRefeitorio,
                 "nome" => $item->nome,
                 "sexo" => ucfirst($item->sexo),
@@ -118,7 +117,7 @@ class DisableAll extends Page
      */
     private static function disableStudents($where)
     {
-        $list = Student::processData(Student::getStudents($where));
+        $list = Aluno::processData(Aluno::getAlunos($where));
 
         foreach ($list as $item)
         {

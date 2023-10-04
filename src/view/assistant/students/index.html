@@ -93,15 +93,15 @@
         </div>
         
         <div id="actions">
-            <a href="{{URL}}/admin/students/new" type="button" class="btn btn-outline-success">Cadastrar aluno</a>
-            <a href="{{URL}}/admin/students/update/all" type="button" class="btn btn-outline-primary">Atualizar alunos</a>
-            <a href="{{URL}}/admin/students/disable/all" type="button" class="btn btn-outline-danger">Desativar alunos</a>
+            <a href="{{URL}}/ass/alunos/cadastrar" type="button" class="btn btn-outline-success">Cadastrar aluno</a>
+            <a href="{{URL}}/ass/alunos/atualizar" type="button" class="btn btn-outline-primary">Atualizar alunos</a>
+            <a href="{{URL}}/ass/alunos/desativar" type="button" class="btn btn-outline-danger">Desativar alunos</a>
         </div>
     </div>
 </section>
 
 <script>
-    const results = [{{itens}}];
+    const results = {{itens}};
 
     const pageLimit = {{page_limit}};
 
@@ -162,12 +162,14 @@
             document.createElement("th"), 
             document.createElement("th"),
             document.createElement("th"),
+            document.createElement("th")
         ];
 
-        th[0].textContent = "Lista";
-        th[1].textContent = "Aluno";
-        th[2].textContent = "Data de assinatura";
-        th[3].textContent = "Ativa";
+        th[0].textContent = "N° Refeitório";
+        th[1].textContent = "Nome";
+        th[2].textContent = "Série";
+        th[3].textContent = "Sexo";
+        th[4].textContent = "Quarto";
 
         let sortIcon = [];
         
@@ -197,34 +199,23 @@
         for (let i = 0; i < itens.length; i++)
         {
             let tr = document.createElement("tr");
-            tr.setAttribute("onclick", "tableClick(" + itens[i].id + ", '" + itens[i].type + "')");
+            tr.setAttribute("onclick", "tableClick(" + itens[i].id + ")");
             tr.style.cursor = "pointer";
 
             let td = [
                 document.createElement("td"),
                 document.createElement("td"),
                 document.createElement("td"),
+                document.createElement("td"),
                 document.createElement("td")
             ];
 
-            switch (itens[i].lista)
-            {
-                case "vai_volta":
-                    td[0].textContent = "Vai e Volta";
-                    break;
 
-                case "saida":
-                    td[0].textContent = "Saída";
-                    break;
-
-                default:
-                    td[0].textContent = "Pernoite";
-                    break;
-            }
-
-            td[1].textContent = itens[i].aluno;
-            td[2].textContent = itens[i].data;
-            td[3].textContent = itens[i].ativa ? "Sim" : "Não";
+            td[0].textContent = itens[i].id_refeitorio;
+            td[1].textContent = itens[i].nome;
+            td[2].textContent = itens[i].serie + "º";
+            td[3].textContent = itens[i].sexo.charAt(0).toUpperCase() + itens[i].sexo.slice(1);
+            td[4].textContent = itens[i].quarto;
 
             td.forEach(item => {
                 tr.appendChild(item);
@@ -247,9 +238,9 @@
         catch { return }
     }
 
-    function tableClick(id, name)
+    function tableClick(id)
     {
-        location.href = "{{URL}}/assinaturas/" + name + "/" + id;
+        location.href = "{{URL}}/ass/alunos/" + id;
     }
 
     function verifyFilters()
@@ -683,34 +674,37 @@
 
         document.getElementById("actual-link").innerHTML = actualPage + 1;
 
+        
         if (numberOfPages <= 1)
         {
             document.getElementById("pagination").style.display = "none";
-            return;
-        }
-
-        if (actualPage == 0)
-        {
-            previous.setAttribute("onclick", "");
-            previous.classList.add("disabled");
         }
 
         else
         {
-            previous.setAttribute("onclick", "configPagination(-1)");
-            previous.classList.remove("disabled");
-        }
+            if (actualPage == 0)
+            {
+                previous.setAttribute("onclick", "");
+                previous.classList.add("disabled");
+            }
 
-        if (actualPage >= numberOfPages - 1)
-        {
-            next.setAttribute("onclick", "");
-            next.classList.add("disabled");
-        }
+            else
+            {
+                previous.setAttribute("onclick", "configPagination(-1)");
+                previous.classList.remove("disabled");
+            }
 
-        else
-        {
-            next.setAttribute("onclick", "configPagination(1)");
-            next.classList.remove("disabled");
+            if (actualPage >= numberOfPages - 1)
+            {
+                next.setAttribute("onclick", "");
+                next.classList.add("disabled");
+            }
+
+            else
+            {
+                next.setAttribute("onclick", "configPagination(1)");
+                next.classList.remove("disabled");
+            }
         }
 
         applyEffects();

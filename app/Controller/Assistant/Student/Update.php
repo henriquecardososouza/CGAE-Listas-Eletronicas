@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Controller\Admin\Modules\Students;
+namespace App\Controller\Assistant\Student;
 
-use App\Controller\Admin\Alert;
-use App\Controller\Admin\Page;
-use App\Model\Entity\Student as EntityStudent;
-use App\Utils\View;
+use App\Controller\Common\Alert;
+use App\Controller\Assistant\Page;
+use App\Model\Entity\Aluno;
 
 class Update extends Page
 {
@@ -16,9 +15,9 @@ class Update extends Page
      */
     public static function getUpdate($id, $message = null, $success = false)
     {
-        parent::configNavbar("students");
+        parent::setActiveModule("students");
 
-        $content = View::render("admin/modules/students/update/index", self::getForm($id, $message, $success));
+        $content = parent::render("student/update/index", self::getForm($id, $message, $success));
 
         return parent::getPage("Alunos", $content);
     }
@@ -33,19 +32,19 @@ class Update extends Page
     {
         $postVars = $request->getPostVars();
 
-        $ob = EntityStudent::getStudentById($id);
+        $ob = Aluno::getAlunoById($id);
 
-        $ob1 = EntityStudent::processData(EntityStudent::getStudents("ativo = true AND id_refeitorio = ".$postVars['refeitorio']." AND id != ".$ob->id));
-        $ob2 = EntityStudent::processData(EntityStudent::getStudents("ativo = true AND email = '".$postVars['email']."' AND id != ".$ob->id));
+        $ob1 = Aluno::processData(Aluno::getAlunos("ativo = true AND id_refeitorio = ".$postVars['refeitorio']." AND id != ".$ob->id));
+        $ob2 = Aluno::processData(Aluno::getAlunos("ativo = true AND email = '".$postVars['email']."' AND id != ".$ob->id));
 
         if (!is_null($ob1))
         {
-            return self::getUpdate($id, "Número do Refeitório Informado já<br>está sendo utilizado por outro aluno!", false);
+            return self::getUpdate($id, "O número do Refeitório informado já<br>está sendo utilizado por outro aluno!", false);
         }
         
         if (!is_null($ob2))
         {
-            return self::getUpdate($id, "Email Informado já está<br>sendo utilizado por outro aluno!", false);
+            return self::getUpdate($id, "O email informado já está<br>sendo utilizado por outro aluno!", false);
         }
 
         $senha = empty($postVars['senha']) ? $ob->senha : password_hash($postVars['senha'], PASSWORD_DEFAULT);
@@ -64,7 +63,7 @@ class Update extends Page
 
         $ob->atualizar();
 
-        return self::getUpdate($id, "Atualizado com Sucesso!", true);
+        return self::getUpdate($id, "Atualizado com sucesso!", true);
     }
 
     /**
@@ -74,7 +73,7 @@ class Update extends Page
      */
     private static function getForm($id, $message, $success)
     {
-        $ob = EntityStudent::getStudentById($id);
+        $ob = Aluno::getAlunoById($id);
 
         $content = [
             "id" => $ob->id,

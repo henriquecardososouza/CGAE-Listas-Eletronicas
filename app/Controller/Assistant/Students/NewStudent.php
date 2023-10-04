@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Controller\Admin\Modules\Students;
+namespace App\Controller\Assistant\Students;
 
-use App\Controller\Admin\Alert;
-use App\Controller\Admin\Page;
-use App\Model\Entity\Student;
-use App\Utils\View;
+use App\Controller\Common\Alert;
+use App\Controller\Assistant\Page;
+use App\Model\Entity\Aluno;
 
 class NewStudent extends Page
 {
@@ -13,11 +12,11 @@ class NewStudent extends Page
      * 
      * @return string
      */
-    public static function getNew($message = null, $success = false)
+    public static function getView($message = null, $success = false)
     {
-        parent::configNavbar("students");
+        parent::setActiveModule("students");
 
-        $content = View::render("admin/modules/students/new/index", [
+        $content = parent::render("students/new/index", [
             "status" => self::getStatus($message, $success)
         ]);
 
@@ -29,14 +28,14 @@ class NewStudent extends Page
      * @param Request $request
      * @return string
      */
-    public static function setNew($request)
+    public static function setView($request)
     {
         $postVars = $request->getPostVars();
         
-        $ob = new Student(-1, $postVars['nome'], $postVars['sexo'], $postVars['email'], $postVars['quarto'], $postVars['serie'], $postVars["refeitorio"], null, (isset($postVars['pernoite']) ? true : false), $postVars['nome_responsavel'], $postVars['cidade'], $postVars['telefone']);
+        $ob = new Aluno(-1, $postVars['nome'], $postVars['sexo'], $postVars['email'], $postVars['quarto'], $postVars['serie'], $postVars["refeitorio"], null, (isset($postVars['pernoite']) ? true : false), $postVars['nome_responsavel'], $postVars['cidade'], $postVars['telefone']);
         $ob->cadastrar();
     
-        return self::getNew("Aluno Cadastrado com Sucesso!", true);
+        return self::getView("Aluno cadastrado com sucesso!", true);
     }
 
     /**

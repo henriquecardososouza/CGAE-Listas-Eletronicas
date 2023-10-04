@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Controller\Admin\Modules\Students;
+namespace App\Controller\Assistant\Student;
 
-use App\Controller\Admin\Page;
-use App\Model\Entity\Student as EntityStudent;
-use App\Utils\View;
+use App\Controller\Assistant\Page;
+use App\Model\Entity\Aluno;
 
 class Student extends Page
 {
@@ -15,7 +14,7 @@ class Student extends Page
      */
     public static function getStudent($id)
     {
-        parent::configNavbar("students");
+        parent::setActiveModule("students");
 
         $content = self::getContent($id);
 
@@ -30,9 +29,9 @@ class Student extends Page
     public static function setStudent($request, $id)
     {
         $postVars = $request->getPostVars();
-        $ob = EntityStudent::getStudentById($id);
+        $ob = Aluno::getAlunoById($id);
 
-        if (!$ob instanceof EntityStudent)
+        if (!$ob instanceof Aluno)
         {
             return self::getStudent($id);
         }
@@ -66,16 +65,16 @@ class Student extends Page
     private static function getContent($id)
     {
         $content = null;
-        $ob = EntityStudent::getStudentById($id);
+        $ob = Aluno::getAlunoById($id);
 
         if (is_null($ob))
         {
-            $content = View::render("admin/modules/students/student/not_found");
+            $content = parent::render("student/not_found");
         }
 
         else
         {
-            $content = View::render("admin/modules/students/student/index", [
+            $content = parent::render("student/index", [
                 "nome" => $ob->nome,
                 "email" => $ob->email,
                 "refeitorio" => $ob->idRefeitorio,
@@ -101,25 +100,25 @@ class Student extends Page
     private static function getActions($id)
     {
         $content = "";
-        $ob = EntityStudent::getStudentById($id);
+        $ob = Aluno::getAlunoById($id);
 
         if (!is_null($ob))
         {
             if ($ob->ativo)
             {
-                $content .= View::render("admin/modules/students/student/actions/desativar");
+                $content .= parent::render("student/actions/desativar");
             }
 
             else
             {
-                $content .= View::render("admin/modules/students/student/actions/ativar");
+                $content .= parent::render("student/actions/ativar");
             }
             
-            $content .= View::render("admin/modules/students/student/actions/excluir", [
+            $content .= parent::render("student/actions/excluir", [
                 "id" => $ob->id
             ]);
 
-            $content .= View::render("admin/modules/students/student/actions/atualizar", [
+            $content .= parent::render("student/actions/atualizar", [
                 "id" => $ob->id
             ]);
         }

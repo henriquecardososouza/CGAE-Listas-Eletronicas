@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Controller\Admin\Modules\Students;
+namespace App\Controller\Assistant\Student;
 
-use App\Controller\Admin\Page;
-use App\Model\Entity\Student as EntityStudent;
-use App\Utils\View;
+use App\Controller\Assistant\Page;
+use App\Model\Entity\Aluno;
 
 class Delete extends Page
 {
@@ -15,11 +14,11 @@ class Delete extends Page
      */
     public static function getDelete($id)
     {
-        parent::configNavbar("students");
+        parent::setActiveModule("students");
 
-        $ob = EntityStudent::getStudentById($id);
+        $ob = Aluno::getAlunoById($id);
 
-        $content = View::render("admin/modules/students/delete/index", [
+        $content = parent::render("student/delete/index", [
             "id" => $ob->id,
             "nome" => $ob->nome
         ]);
@@ -35,10 +34,10 @@ class Delete extends Page
      */
     public static function setDelete($request, $id)
     {
-        $ob = EntityStudent::getStudentById($id);
+        $ob = Aluno::getAlunoById($id);
         $ob->excluir();
 
-        $request->getRouter()->redirect("/admin/students");
+        $request->getRouter()->redirect("/ass/alunos");
     }
 }
 

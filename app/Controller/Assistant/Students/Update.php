@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Controller\Admin\Modules\Students;
+namespace App\Controller\Assistant\Students;
 
-use App\Controller\Admin\Page;
-use App\Model\Entity\Student;
-use App\Utils\View;
+use App\Controller\Assistant\Page;
+use App\Model\Entity\Aluno;
 
-class UpdateAll extends Page
+class Update extends Page
 {
     /**
      * Retorna a view da página de confirmação de atualização de todos os alunos
      * @return string
      */
-    public static function getUpdate()
+    public static function getView()
     {
-        parent::configNavbar("students");
+        parent::setActiveModule("students");
         
-        $content = View::render("admin/modules/students/all/update/index");
+        $content = parent::render("students/update/index");
 
         return parent::getPage("Alunos", $content);
     }
@@ -25,9 +24,9 @@ class UpdateAll extends Page
      * Atualiza os alunos e realiza o redirecionamento adequado
      * @param Request $request
      */
-    public static function setUpdate($request)
+    public static function setView($request)
     {
-        $ob = Student::processData(Student::getStudents("ativo = true"));
+        $ob = Aluno::processData(Aluno::getAlunos("ativo = true"));
 
         foreach ($ob as $item)
         {
@@ -45,6 +44,6 @@ class UpdateAll extends Page
             $item->atualizar();
         }
 
-        $request->getRouter()->redirect("/admin/students?status=success");
+        $request->getRouter()->redirect("/ass/alunos?status=success");
     }
 }

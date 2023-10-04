@@ -42,7 +42,8 @@ class WithoutLogin
             $request->getRouter()->redirect("/ass");
         }
 
-        throw new \Exception("user not indetified", 404);
+        \App\Session\Login::logout();
+        throw new \Exception("user not identified", 500);
     }
 }
 

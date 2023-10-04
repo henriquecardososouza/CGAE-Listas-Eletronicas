@@ -33,7 +33,7 @@ $router->post("/ass/alunos", [
 ]);
 
 // ADICIONANDO A ROTA DE CADASTRO DE ALUNOS
-$router->get("/ass/alunos/novo", [
+$router->get("/ass/alunos/cadastrar", [
     "middlewares" => [
         "recover-cookies",
         "require-assistant-login",
@@ -42,12 +42,12 @@ $router->get("/ass/alunos/novo", [
 
     function ()
     {
-        return new Response(200, Student\NewStudent::getNew());
+        return new Response(200, Students\NewStudent::getView());
     }
 ]);
 
 // ADICIONANDO A ROTA DE CADASTRO DE ALUNOS (POST)
-$router->post("/ass/alunos/novo", [
+$router->post("/ass/alunos/cadastrar", [
     "middlewares" => [
         "recover-cookies",
         "require-assistant-login",
@@ -56,12 +56,12 @@ $router->post("/ass/alunos/novo", [
 
     function ($request)
     {
-        return new Response(200, Student\NewStudent::setNew($request));
+        return new Response(200, Students\NewStudent::setView($request));
     }
 ]);
 
 // ADICIONANDO A ROTA DE ATUALIZAÇÃO GERAL DE ALUNOS
-$router->get("/ass/alunos/atualizar/todos", [
+$router->get("/ass/alunos/atualizar", [
     "middlewares" => [
         "recover-cookies",
         "require-assistant-login",
@@ -70,12 +70,12 @@ $router->get("/ass/alunos/atualizar/todos", [
 
     function ()
     {
-        return new Response(200, Students\UpdateAll::getUpdate());
+        return new Response(200, Students\Update::getView());
     }
 ]);
 
 // ADICIONANDO A ROTA DE ATUALIZAÇÃO GERAL DE ALUNOS (POST)
-$router->post("/ass/alunos/atualizar/todos", [
+$router->post("/ass/alunos/atualizar", [
     "middlewares" => [
         "recover-cookies",
         "require-assistant-login",
@@ -84,7 +84,35 @@ $router->post("/ass/alunos/atualizar/todos", [
 
     function ($request)
     {
-        return new Response(200, Students\UpdateAll::setUpdate($request));
+        return new Response(200, Students\Update::setView($request));
+    }
+]);
+
+// ADICIONANDO A ROTA DE DESABILITAÇÃO GERAL DE ALUNOS
+$router->get("/ass/alunos/desativar", [
+    "middlewares" => [
+        "recover-cookies",
+        "require-assistant-login",
+        "update-lists"
+    ],
+
+    function ()
+    {
+        return new Response(200, Students\Disable::getView());
+    }
+]);
+
+// ADICIONANDO A ROTA DE DESABILITAÇÃO GERAL DE ALUNOS (POST)
+$router->post("/ass/alunos/desativar", [
+    "middlewares" => [
+        "recover-cookies",
+        "require-assistant-login",
+        "update-lists"
+    ],
+
+    function ($request)
+    {
+        return new Response(200, Students\Disable::setView($request));
     }
 ]);
 
@@ -169,34 +197,6 @@ $router->post("/ass/alunos/{id}", [
     function ($request, $id)
     {
         return new Response(200, Student\Student::setStudent($request, $id));
-    }
-]);
-
-// ADICIONANDO A ROTA DE DESABILITAÇÃO GERAL DE ALUNOS
-$router->get("/ass/alunos/desativar/todos", [
-    "middlewares" => [
-        "recover-cookies",
-        "require-assistant-login",
-        "update-lists"
-    ],
-
-    function ()
-    {
-        return new Response(200, Students\DisableAll::getDisable());
-    }
-]);
-
-// ADICIONANDO A ROTA DE DESABILITAÇÃO GERAL DE ALUNOS (POST)
-$router->post("/ass/alunos/desativar/todos", [
-    "middlewares" => [
-        "recover-cookies",
-        "require-assistant-login",
-        "update-lists"
-    ],
-
-    function ($request)
-    {
-        return new Response(200, Students\DisableAll::setDisable($request));
     }
 ]);
 
