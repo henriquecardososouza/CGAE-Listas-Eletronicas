@@ -3,9 +3,8 @@
 namespace App\Controller\Student\Lists;
 
 use App\Controller\Student\Page;
-use App\Controller\Page\Alert;
-use App\Utils\View;
-use App\Model\Entity\Lists\VaiVolta as EntityVaiVolta;
+use App\Controller\Common\Alert;
+use App\Model\Entity\Listas\VaiVolta as EntityVaiVolta;
 
 /**
  * Controlador da página da lista de vai e volta (aluno)
@@ -23,7 +22,7 @@ class VaiVolta extends Page
         // CONFIGURA A NAVBAR
         parent::setActiveModule("listas");
 
-        $content = View::render("student/lists/vai_volta", [
+        $content = parent::render("lists/vai_volta", [
             "status" => !is_null($message) ? (!$success ? Alert::getError($message) : Alert::getSuccess($message)) : ""
         ]);
 
@@ -97,7 +96,7 @@ class VaiVolta extends Page
         }
 
         // CADASTRA A ASSINATURA
-        $obList = new EntityVaiVolta(0, $_SESSION['user']['usuario']['id'], true, $destino, $data, $horaSaida, $horaChegada);
+        $obList = new EntityVaiVolta(0, $_SESSION['user']['usuario']['id'], null, true, $destino, $data, $horaSaida, $horaChegada);
         $obList->cadastrar();
 
         // RETORNA A VIEW

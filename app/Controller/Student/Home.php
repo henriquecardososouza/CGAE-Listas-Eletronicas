@@ -19,7 +19,7 @@ class Home extends Page
         parent::setActiveModule("home");
 
         // RENDERIZA A VIEW DA PÁGINA
-        $content = View::render("student/home");
+        $content = parent::render("home/index");
         
         return parent::getPage("Home", $content);
     }

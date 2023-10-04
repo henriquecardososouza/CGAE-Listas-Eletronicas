@@ -3,9 +3,8 @@
 namespace App\Controller\Student\Lists;
 
 use App\Controller\Student\Page;
-use App\Controller\Page\Alert;
-use App\Utils\View;
-use App\Model\Entity\Lists\Saida as EntitySaida;
+use App\Controller\Common\Alert;
+use App\Model\Entity\Listas\Saida as EntitySaida;
 
 /**
  * Controlador da página da lista de saída (aluno)
@@ -24,7 +23,7 @@ class Saida extends Page
         parent::setActiveModule("listas");
 
         // RENDERIZA A VIEW
-        $content = View::render("student/lists/saida", [
+        $content = parent::render("lists/saida", [
             "status" => !is_null($message) ? (!$success ? Alert::getError($message) : Alert::getSuccess($message)) : ""
         ]);
         

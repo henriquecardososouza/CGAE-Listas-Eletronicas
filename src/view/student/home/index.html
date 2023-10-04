@@ -1,0 +1,79 @@
+<hr>
+
+<section id="content">
+    <div id="title">
+        <h5 class="display-5 mb-5">Bem vindo!</h5>
+    </div>
+    
+    <div id="links">
+        <a href="{{URL}}/assinaturas/ativas" id="card">
+            <img src="./src/img/home/signature.png" alt="icon">
+            <h6>Minhas assinaturas ativas</h6>
+        </a>
+        
+        <a href="{{URL}}/perfil" id="card">
+            <img src="./src/img/home/profile.png" alt="icon">
+            <h6><br>Meu perfil</h6>
+        </a>
+    </div>
+</section>
+
+<hr>
+
+<section id="about" class="my-5">
+    <div id="title" class="mb-5">
+        <h6 class="display-6">Sobre</h6>
+    </div>
+
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit numquam natus doloremque, cum eveniet nemo similique molestias dolor voluptate ullam sequi a voluptatem officiis quis amet consectetur? Explicabo, blanditiis quia!
+    </p>
+
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta nesciunt, sint laborum nemo officiis laudantium tenetur perspiciatis possimus autem dolorem neque iusto totam modi. Sunt tempora velit hic quae doloremque!
+    </p>
+</section>
+
+<style>
+    #card
+    {
+        border: 1px solid white;
+        border-radius: 15px;
+        min-width: 200px;
+        max-width: 200px;
+        padding: 20px;
+        margin: 20px;
+        text-align: center;
+        display: inline-block;
+        text-decoration: none;
+        color: white;
+        transition: 0.5s;
+    }
+
+    #card:hover
+    {
+        background-color: rgb(77, 77, 77);
+    }
+
+    #card img
+    {
+        width: 70%;
+        padding: 10px;
+        filter: invert();
+    }
+
+    #links
+    {
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+        #links
+        {
+            overflow-x: scroll;
+            justify-content: inherit;
+        }
+    }
+</style>

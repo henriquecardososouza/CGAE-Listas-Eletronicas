@@ -2,7 +2,7 @@
 
 namespace App\Http\Middlewares;
 
-use \App\Model\Entity\Lists;
+use \App\Model\Entity\Listas;
 use App\Session\Login;
 
 /**
@@ -38,9 +38,9 @@ class UpdateSignatures
         Login::init();
 
         // RECUPERA AS ASSINATURAS ATIVAS
-        $lists['vai_volta'] = Lists\VaiVolta::processData(Lists\VaiVolta::getSignatures("ativa = true AND aluno = ".$_SESSION['user']['usuario']['id']));
-        $lists['pernoite'] = Lists\Pernoite::processData(Lists\Pernoite::getSignatures("ativa = true AND aluno = ".$_SESSION['user']['usuario']['id']));
-        $lists['saida'] = Lists\Saida::processData(Lists\Saida::getSignatures("ativa = true AND aluno = ".$_SESSION['user']['usuario']['id']));
+        $lists['vai_volta'] = Listas\VaiVolta::processData(Listas\VaiVolta::getSignatures("ativa = true AND aluno = ".$_SESSION['user']['usuario']['id']));
+        $lists['pernoite'] = Listas\Pernoite::processData(Listas\Pernoite::getSignatures("ativa = true AND aluno = ".$_SESSION['user']['usuario']['id']));
+        $lists['saida'] = Listas\Saida::processData(Listas\Saida::getSignatures("ativa = true AND aluno = ".$_SESSION['user']['usuario']['id']));
 
         if (empty($lists['vai_volta']) && empty($lists['pernoite']) && empty($lists['saida']))
         {
@@ -90,7 +90,7 @@ class UpdateSignatures
                 case "vai_volta":
                     foreach ($ids as $id)
                     {
-                        Lists\VaiVolta::atualizarAssinaturas("id = ".$id, [
+                        Listas\VaiVolta::atualizarAssinaturas("id = ".$id, [
                             "ativa" => false
                         ]);
                     }
@@ -100,7 +100,7 @@ class UpdateSignatures
                 case "pernoite":
                     foreach ($ids as $id)
                     {
-                        Lists\Pernoite::atualizarAssinaturas("id = ".$id, [
+                        Listas\Pernoite::atualizarAssinaturas("id = ".$id, [
                             "ativa" => false
                         ]);
                     }
@@ -110,7 +110,7 @@ class UpdateSignatures
                 case "saida":
                     foreach ($ids as $id)
                     {
-                        Lists\Saida::atualizarAssinaturas("id = ".$id, [
+                        Listas\Saida::atualizarAssinaturas("id = ".$id, [
                             "ativa" => false
                         ]);
                     }

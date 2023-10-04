@@ -36,7 +36,7 @@ class RequireAssistantLogin
         }
 
         // REALIZA O REDIRECIONAMENTO
-        $request->getRouter()->redirect("/login");
+        $request->getRouter()->redirect("/entrar");
     }
 }
 

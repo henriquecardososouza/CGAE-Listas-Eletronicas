@@ -3,7 +3,7 @@
 namespace App\Controller\Student\Signatures;
 
 use App\Controller\Student\Page;
-use App\Model\Entity\Lists;
+use App\Model\Entity\Listas;
 
 class Signatures extends Page
 {
@@ -11,11 +11,12 @@ class Signatures extends Page
     {
         parent::setActiveModule("assinaturas");
 
-        $content = parent::render("modules/signatures/index", [
+        $content = parent::render("signatures/index", [
             "type" => $type,
             "no_itens" => self::getNoItens(),
             "not_found" => self::getNotFound(),
-            "itens" => self::getItens($type)
+            "itens" => self::getItens($type),
+            "page_limit" => getenv("PAGE_LIMIT")
         ]);
 
         return parent::getPage("Assinaturas", $content);
@@ -23,12 +24,12 @@ class Signatures extends Page
 
     private static function getNoItens()
     {
-        return parent::render("modules/signatures/no_itens");
+        return parent::render("signatures/no_itens");
     }
 
     private static function getNotFound()
     {
-        return parent::render("modules/signatures/not_found");
+        return parent::render("signatures/not_found");
     }
 
     private static function getItens($type)
@@ -40,9 +41,9 @@ class Signatures extends Page
         $ativa = $type == "ativas" ? "true" : "false";
 
         // RECUPERA OS DADOS DO BANCO
-        $lists['vai_volta'] = Lists\VaiVolta::processData(Lists\VaiVolta::getSignatures("ativa = ".$ativa." AND aluno = ".$_SESSION['user']['usuario']['id']), "id DESC");
-        $lists['saida'] = Lists\Saida::processData(Lists\Saida::getSignatures("ativa = ".$ativa." AND aluno = ".$_SESSION['user']['usuario']['id']), "id DESC");
-        $lists['pernoite'] = Lists\Pernoite::processData(Lists\Pernoite::getSignatures("ativa = ".$ativa." AND aluno = ".$_SESSION['user']['usuario']['id']), "id DESC");    
+        $lists['vai_volta'] = Listas\VaiVolta::processData(Listas\VaiVolta::getSignatures("ativa = ".$ativa." AND aluno = ".$_SESSION['user']['usuario']['id']." AND pai IS NULL", "id DESC"));
+        $lists['saida'] = Listas\Saida::processData(Listas\Saida::getSignatures("ativa = ".$ativa." AND aluno = ".$_SESSION['user']['usuario']['id']." AND pai IS NULL", "id DESC"));
+        $lists['pernoite'] = Listas\Pernoite::processData(Listas\Pernoite::getSignatures("ativa = ".$ativa." AND aluno = ".$_SESSION['user']['usuario']['id']." AND pai IS NULL", "id DESC"));    
         
         $result = "";
 

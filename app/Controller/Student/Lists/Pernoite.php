@@ -2,10 +2,9 @@
 
 namespace App\Controller\Student\Lists;
 
-use App\Controller\Page\Alert;
-use App\Utils\View;
+use App\Controller\Common\Alert;
 use App\Controller\Student\Page;
-use App\Model\Entity\Lists\Pernoite as EntityPernoite;
+use App\Model\Entity\Listas\Pernoite as EntityPernoite;
 
 /**
  * Controlador da página da lista de pernoite (aluno)
@@ -24,7 +23,7 @@ class Pernoite extends Page
         parent::setActiveModule("listas");
 
         // RENDERIZA A VIEW
-        $content = View::render("student/lists/pernoite", [
+        $content = parent::render("lists/pernoite", [
             "status" => !is_null($message) ? (!$success ? Alert::getError($message) : Alert::getSuccess($message)) : ""
         ]);
 
@@ -67,9 +66,9 @@ class Pernoite extends Page
         $horaAtual = date("H:i:s", time() + 60);
 
         // VERIFICA SE OS DADOS DA ASSINATURA SÃO VÁLIDOS
-        if (!("07:00:00" < $horaSaida && $horaSaida < "23:00:00"))
+        if (!("05:00:00" < $horaSaida && $horaSaida < "23:00:00"))
         {
-            return self::getPernoite("O horário de saída deve estar compreendido entre 07:00 e 23:00 horas!");
+            return self::getPernoite("O horário de saída deve estar compreendido entre 05:00 e 23:00 horas!");
         }
 
         if ($dataAtual == $dataSaida)
@@ -82,7 +81,7 @@ class Pernoite extends Page
 
         if (!("07:00:00" < $horaChegada && $horaChegada < "23:00:00"))
         {
-            return self::getPernoite("O horário de chegada deve estar compreendido entre 07:00 e 23:00 horas!");
+            return self::getPernoite("O horário de chegada deve estar compreendido entre 05:00 e 23:00 horas!");
         }
 
         if ($dataSaida >= $dataChegada)
@@ -115,7 +114,7 @@ class Pernoite extends Page
         }
 
         // CADASTRA A ASSINATURA
-        $obList = new EntityPernoite(0, $_SESSION['user']['usuario']['id'], true, $endereco, $nomeResponsavel, $telefone, $dataSaida, $dataChegada, $horaSaida, $horaChegada);
+        $obList = new EntityPernoite(0, $_SESSION['user']['usuario']['id'], null, true, $endereco, $nomeResponsavel, $telefone, $dataSaida, $dataChegada, $horaSaida, $horaChegada);
         $obList->cadastrar();
 
         // RETORNA A VIEW DA PÁGINA

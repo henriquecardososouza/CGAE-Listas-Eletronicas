@@ -26,7 +26,7 @@ class Profile extends Page
         parent::setActiveModule("perfil");
 
         // RENDERIZA A VIEW DA PÁGINA
-        $content = View::render("student/profile", [
+        $content = parent::render("profile/index", [
             "nome" => $ob->nome,
             "email" => $ob->email,
             "quarto" => $quarto,

@@ -39,13 +39,10 @@ class WithoutLogin
         
         else if ($_SESSION['user']['usuario']['type'] == "assistant")
         {
-            $request->getRouter()->redirect("/assistant");
+            $request->getRouter()->redirect("/ass");
         }
 
-        else
-        {
-            $request->getRouter()->redirect("/admin");
-        }
+        throw new \Exception("user not indetified", 404);
     }
 }
 

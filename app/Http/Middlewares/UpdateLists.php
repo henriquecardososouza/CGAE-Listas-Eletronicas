@@ -2,7 +2,7 @@
 
 namespace App\Http\Middlewares;
 
-use \App\Model\Entity\Lists;
+use \App\Model\Entity\Listas;
 
 /**
  * Middleware para a atualização automática de assinaturas
@@ -34,9 +34,9 @@ class UpdateLists
     public function getActiveLists()
     {
         // RECUPERA AS ASSINATURAS ATIVAS
-        $lists['vai_volta'] = Lists\VaiVolta::processData(Lists\VaiVolta::getSignatures("ativa = true"));
-        $lists['pernoite'] = Lists\Pernoite::processData(Lists\Pernoite::getSignatures("ativa = true"));
-        $lists['saida'] = Lists\Saida::processData(Lists\Saida::getSignatures("ativa = true"));
+        $lists['vai_volta'] = Listas\VaiVolta::processData(Listas\VaiVolta::getSignatures("ativa = true"));
+        $lists['pernoite'] = Listas\Pernoite::processData(Listas\Pernoite::getSignatures("ativa = true"));
+        $lists['saida'] = Listas\Saida::processData(Listas\Saida::getSignatures("ativa = true"));
         
         if (empty($lists['vai_volta']) && empty($lists['pernoite']) && empty($lists['saida']))
         {
@@ -86,7 +86,7 @@ class UpdateLists
                 case "vai_volta":
                     foreach ($ids as $id)
                     {
-                        Lists\VaiVolta::atualizarAssinaturas("id = ".$id, [
+                        Listas\VaiVolta::atualizarAssinaturas("id = ".$id, [
                             "ativa" => false
                         ]);
                     }
@@ -96,7 +96,7 @@ class UpdateLists
                 case "pernoite":
                     foreach ($ids as $id)
                     {
-                        Lists\Pernoite::atualizarAssinaturas("id = ".$id, [
+                        Listas\Pernoite::atualizarAssinaturas("id = ".$id, [
                             "ativa" => false
                         ]);
                     }
@@ -106,7 +106,7 @@ class UpdateLists
                 case "saida":
                     foreach ($ids as $id)
                     {
-                        Lists\Saida::atualizarAssinaturas("id = ".$id, [
+                        Listas\Saida::atualizarAssinaturas("id = ".$id, [
                             "ativa" => false
                         ]);
                     }

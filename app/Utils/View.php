@@ -27,8 +27,7 @@ class View
     private static function getContentView($view)
     {
         // DEFINE O CAMINHO RELATIVO DO ARQUIVO A SER RENDERIZADO
-        $file = __DIR__."/../../resources/view/"
-.$view.".html";
+        $file = __DIR__."/../../src/view/".$view.".html";
 
         // RENDERIZA O CONTEÚDO DO ARQUIVO
         return file_exists($file) ? file_get_contents($file) : "";

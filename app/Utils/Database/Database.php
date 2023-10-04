@@ -131,7 +131,7 @@ class Database
 
         //MONTA A QUERY
         $query = "SELECT ".$fields." FROM ".$this->table." ".$where." ".$order." ".$limit;
-
+        
         //EXECUTA A QUERY
         return $this->execute($query);
     }

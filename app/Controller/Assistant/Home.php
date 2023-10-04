@@ -2,8 +2,6 @@
 
 namespace App\Controller\Assistant;
 
-use \App\Utils\View;
-
 /**
  * Controlador da página principal (assistente)
  */
@@ -16,10 +14,10 @@ class Home extends Page
     public static function getHome()
     {
         // CONFIGURA A NAVBAR
-        parent::configNavbar("home");
+        parent::setActiveModule("home");
 
         // RENDERIZA A PÁGINA
-        $content = View::render("assistant/home");
+        $content = parent::render("home");
 
         return parent::getPage("Painel", $content, true);
     }
