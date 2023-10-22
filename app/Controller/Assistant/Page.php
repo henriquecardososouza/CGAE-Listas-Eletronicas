@@ -14,7 +14,7 @@ class Page
      * @var array
      */
     private static $modules = [
-        "home" => true,
+        "home" => false,
         "signatures" => false,
         "students" => false,
         "profile" => false

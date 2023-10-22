@@ -14,9 +14,9 @@
 
     <br>
     
-    <a href="{{URL}}/ass/perfil/editar" class="btn btn-outline-primary mt-3">Alterar dados</a>
 
     <div id="control">
+        <a href="{{URL}}/ass/perfil/editar" class="btn btn-outline-primary mt-3">Alterar dados</a>
         <a href="{{URL}}/sair" class="btn btn-outline-danger mt-3">Sair</a>
     </div>
 </section>
@@ -25,14 +25,6 @@
     #control
     {
         display: flex;
-        justify-content: right;
-    }
-
-    @media (max-width: 768px)
-    {
-        #control
-        {
-            justify-content: left;
-        }
+        justify-content: space-between;
     }
 </style>

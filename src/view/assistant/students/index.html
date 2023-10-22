@@ -18,37 +18,56 @@
         
                         <div class="modal-body">
                             <div class="container">
-                                <h5>Por lista</h5>
+                                <h5>Por série</h5>
 
                                 <ul>
-                                    <input type="checkbox" name="list" value="vai_volta" class="form-check-input bg-dark" id="vai_volta">
-                                    <label class="form-check-label" for="vai_volta">Vai e Volta</label> 
-                                
-                                    <br>
-        
-                                    <input type="checkbox" name="list" value="pernoite" class="form-check-input bg-dark" id="pernoite">
-                                    <label class="form-check-label" for="pernoite">Pernoite</label>  
-                                
-                                    <br>
-        
-                                    <input type="checkbox" name="list" value="saida" class="form-check-input bg-dark" id="saida">
-                                    <label class="form-check-label" for="saida">Saída</label>
+                                    <select class="form-select bg-dark text-light" name="serie" id="serie">
+                                        <option value="1" selected>1° série</option>
+                                        <option value="2">2° série</option>
+                                        <option value="3">3° série</option>
+                                    </select>
                                 </ul>
                             </div>
 
                             <hr>
     
                             <div class="container">
-                                <h5>Por data</h5>
+                                <h5>Por sexo</h5>
     
                                 <ul>
-                                    <label class="form-check-label" for="date_initial">De:</label> 
-                                    <input type="date" name="data_initial" class="form-control bg-dark text-light" id="date_initial" onchange="fillFinalHourInput()">
-                                
-                                    <br>
-        
-                                    <label class="form-check-label" for="date_final">Até:</label>
-                                    <input type="date" name="data_final" class="form-control bg-dark text-light" id="date_final">
+                                    <select class="form-select bg-dark text-light" name="sexo" id="sexo">
+                                        <option value="1" selected>Masculino</option>
+                                        <option value="2">Feminino</option>
+                                    </select>
+                                </ul>
+                            </div>
+
+                            <hr>
+                            
+                            <div class="container">
+                                <h5>Por quarto</h5>
+    
+                                <ul>
+                                    <select class="form-select bg-dark text-light" name="quarto" id="quarto">
+                                        <option value="1" selected>1.1</option>
+                                        <option value="2" selected>1.1</option>
+                                        <option value="3" selected>1.1</option>
+                                        <option value="1" selected>1.1</option>
+                                        <option value="1" selected>1.1</option>
+                                        <option value="1" selected>1.1</option>
+                                        <option value="1" selected>1.1</option>
+                                        <option value="1" selected>1.1</option>
+                                        <option value="1" selected>1.1</option>
+                                        <option value="1" selected>1.1</option>
+                                        <option value="1" selected>1.1</option>
+                                        <option value="1" selected>1.1</option>
+                                        <option value="1" selected>1.1</option>
+                                        <option value="1" selected>1.1</option>
+                                        <option value="1" selected>1.1</option>
+                                        <option value="1" selected>1.1</option>
+                                        <option value="1" selected>1.1</option>
+                                        <option value="1" selected>1.1</option>
+                                    </select>
                                 </ul>
                             </div>
                         </div>
@@ -73,12 +92,18 @@
             {{no_itens}}
             {{not_found}}
         </div>
+        
+        <div id="actions">
+            <a href="{{URL}}/ass/alunos/cadastrar" type="button" class="btn btn-outline-success">Cadastrar aluno</a>
+            <a href="{{URL}}/ass/alunos/atualizar" type="button" class="btn btn-outline-primary">Atualizar alunos</a>
+            <a href="{{URL}}/ass/alunos/desativar" type="button" class="btn btn-outline-danger">Desativar alunos</a>
+        </div>
 
         <div id="pagination">
             <nav>
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
-                        <a class="page-link bg-dark text-light" id="previous-link" onclick="configPagination(-1)">&laquo;</a>
+                        <a class="page-link bg-dark text-light" id="previous-link" onclick="applyEffects(false, null, -1)">&laquo;</a>
                     </li>
 
                     <li class="page-item active">
@@ -86,16 +111,10 @@
                     </li>
 
                     <li class="page-item">
-                        <a class="page-link bg-dark text-light" id="next-link" onclick="configPagination(1)">&raquo;</a>
+                        <a class="page-link bg-dark text-light" id="next-link" onclick="applyEffects(false, null, 1)">&raquo;</a>
                     </li>
                 </ul>
             </nav>
-        </div>
-        
-        <div id="actions">
-            <a href="{{URL}}/ass/alunos/cadastrar" type="button" class="btn btn-outline-success">Cadastrar aluno</a>
-            <a href="{{URL}}/ass/alunos/atualizar" type="button" class="btn btn-outline-primary">Atualizar alunos</a>
-            <a href="{{URL}}/ass/alunos/desativar" type="button" class="btn btn-outline-danger">Desativar alunos</a>
         </div>
     </div>
 </section>
@@ -106,7 +125,7 @@
     const pageLimit = {{page_limit}};
 
     const actualOrder = {
-        order: "Data de saída",
+        order: null,
         reverse: false
     };
 
@@ -120,7 +139,7 @@
     let numberOfPages = undefined;
 
     window.addEventListener("DOMContentLoaded", (event) => {
-        configPagination();
+        applyEffects();
     });
 
     function createTable(itens, allItens = true)
@@ -179,7 +198,7 @@
                 document.createElement("img")
             );
 
-            sortIcon[i].setAttribute("src", "../src/img/filter/sort-" + (th[i].textContent == specialSortIcon.order ? (specialSortIcon.rotate ? "up" : "down") : "down") + ".png");
+            sortIcon[i].setAttribute("src", "{{SERVER_URI}}/src/img/filter/sort-" + (th[i].textContent == specialSortIcon.order ? (specialSortIcon.rotate ? "up" : "down") : "down") + ".png");
         
             th[i].setAttribute("onclick", "applyEffects(false, '" + th[i].textContent + "')");
             th[i].setAttribute("class", "sort-header");
@@ -351,7 +370,7 @@
             specialSortIcon.rotate = !specialSortIcon.rotate;
         }
 
-        else
+        else if (actualOrder.order != order)
         {
             actualOrder.reverse = false;
             specialSortIcon.rotate = false;
@@ -361,7 +380,7 @@
 
         switch (order)
         {
-            case "Lista":
+            case "N° Refeitório":
                 for (let i = 0; i < itens.length; i++)
                 {
                     let index = 0;
@@ -369,21 +388,11 @@
 
                     for (let j = 0; j < aux.length; j++)
                     {
-                        if (menorItem.lista > aux[j].lista)
+                        if (menorItem.id_refeitorio > aux[j].id_refeitorio)
                         {
                             menorItem = aux[j];
                             index = j;
                             j = 0;
-                        }
-
-                        else if (menorItem.lista == aux[j].lista)
-                        {
-                            if (menorItem.data > aux[j].data)
-                            {
-                                menorItem = aux[j];
-                                index = j;
-                                j = 0;
-                            }
                         }
                     }
 
@@ -404,7 +413,7 @@
 
                 break;
 
-            case "Aluno":
+            case "Nome":
                 for (let i = 0; i < itens.length; i++)
                 {
                     let index = 0;
@@ -412,21 +421,11 @@
 
                     for (let j = 0; j < aux.length; j++)
                     {
-                        if (menorItem.aluno > aux[j].aluno)
+                        if (menorItem.nome > aux[j].nome)
                         {
                             menorItem = aux[j];
                             index = j;
                             j = 0;
-                        }
-
-                        else if (menorItem.aluno == aux[j].aluno)
-                        {
-                            if (menorItem.data > aux[j].data)
-                            {
-                                menorItem = aux[j];
-                                index = j;
-                                j = 0;
-                            }
                         }
                     }
 
@@ -455,7 +454,7 @@
 
                     for (let j = 0; j < aux.length; j++)
                     {
-                        if (menorItem.data > aux[j].data)
+                        if (Number(menorItem.serie) > Number(aux[j].serie))
                         {
                             menorItem = aux[j];
                             index = j;
@@ -489,7 +488,7 @@
         return res;
     }
 
-    function applyEffects(fromFilter = false, order = null)
+    function applyEffects(fromFilter = false, order = null, num = undefined)
     {
         if (fromFilter)
         {
@@ -497,10 +496,10 @@
         }
         
         let itens = filterItens();
-        
+
         if (order != null)
         {
-            itens = applyOrder(itens, order);
+            itens = applyOrder(itens, order, order == actualOrder.order);
         }
 
         else if (actualOrder.order != null)
@@ -508,7 +507,7 @@
             itens = applyOrder(itens, actualOrder.order, false);
         }
 
-        itens = applyPagination(itens);
+        itens = applyPagination(itens, num);
        
         clearTable();
         setFilters();
@@ -526,36 +525,6 @@
         }
 
         final.value = initial.value;
-    }
-
-    //  1 -> Se data1 > data2
-    //  0 -> Se data1 == data2
-    // -1 -> Se data1 < data2
-    function verifyDates(date1, date2)
-    {
-        let d1 = date1.split("/");
-        let d2 = date2.split("/");
-
-        for (let i = 0; i < 3; i++)
-        {
-            d1[i] = Number(d1[i]);
-            d2[i] = Number(d2[i]);
-        }
-
-        for (let i = 2; i >= 0; i--)
-        {
-            if (d1[i] > d2[i])
-            {
-                return 1;
-            }
-
-            if (d1[i] < d2[i])
-            {
-                return -1;
-            }
-        }
-
-        return 0;
     }
 
     function prepareDate(date)
@@ -643,8 +612,10 @@
         updateFilterElements();
     }
 
-    function applyPagination(itens)
+    function applyPagination(itens, num = undefined)
     {
+        configPagination(itens.length, num);
+
         let res = [];
 
         if (itens.length > pageLimit)
@@ -663,51 +634,49 @@
         return res;
     }
 
-    function configPagination(num = undefined)
+    function configPagination(length, num = undefined)
     {
         let previous = document.getElementById("previous-link");
         let actual = document.getElementById("actual-link");
         let next = document.getElementById("next-link");
 
-        actualPage = typeof num == "undefined" ? 0 : actualPage + num;
-        numberOfPages = calcTotalPages(results.length, pageLimit);
+        actualPage = typeof num == "undefined" ? actualPage : actualPage + num;
+        numberOfPages = calcTotalPages(length, pageLimit);
 
         document.getElementById("actual-link").innerHTML = actualPage + 1;
 
-        
         if (numberOfPages <= 1)
         {
             document.getElementById("pagination").style.display = "none";
+            actualPage = 0;
+            return;
+        }
+
+        document.getElementById("pagination").style.display = "block";
+
+        if (actualPage == 0)
+        {
+            previous.setAttribute("onclick", "");
+            previous.classList.add("disabled");
         }
 
         else
         {
-            if (actualPage == 0)
-            {
-                previous.setAttribute("onclick", "");
-                previous.classList.add("disabled");
-            }
-
-            else
-            {
-                previous.setAttribute("onclick", "configPagination(-1)");
-                previous.classList.remove("disabled");
-            }
-
-            if (actualPage >= numberOfPages - 1)
-            {
-                next.setAttribute("onclick", "");
-                next.classList.add("disabled");
-            }
-
-            else
-            {
-                next.setAttribute("onclick", "configPagination(1)");
-                next.classList.remove("disabled");
-            }
+            previous.setAttribute("onclick", "applyEffects(false, null, -1)");
+            previous.classList.remove("disabled");
         }
 
-        applyEffects();
+        if (actualPage >= numberOfPages - 1)
+        {
+            next.setAttribute("onclick", "");
+            next.classList.add("disabled");
+        }
+
+        else
+        {
+            next.setAttribute("onclick", "applyEffects(false, null, 1)");
+            next.classList.remove("disabled");
+        }
     }
 
     function calcTotalPages(itens, limit)

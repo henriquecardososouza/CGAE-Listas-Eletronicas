@@ -59,6 +59,34 @@ $router->post("/ass/listas/cadastrar", [
     }
 ]);
 
+// ADICIONANDO A ROTA DE EXPORTAÇÃO DE ASSINATURAS
+$router->get("/ass/listas/exportar", [
+    "middlewares" => [
+        "recover-cookies",
+        "require-assistant-login",
+        "update-lists"
+    ],
+
+    function ($request)
+    {
+        return new Response(200, Signatures\Export::getContent($request));
+    }
+]);
+
+// ADICIONANDO A ROTA DE EXPORTAÇÃO DE ASSINATURAS
+$router->post("/ass/listas/exportar", [
+    "middlewares" => [
+        "recover-cookies",
+        "require-assistant-login",
+        "update-lists"
+    ],
+
+    function ($request)
+    {
+        return new Response(200, Signatures\Export::setContent($request));
+    }
+]);
+
 // ADICIONANDO A ROTA DE EDIÇÃO DE ASSINATURA
 $router->get("/ass/listas/{list}/{id}/editar", [
     "middlewares" => [

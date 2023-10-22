@@ -66,6 +66,11 @@ class Signatures extends Page
                 // FORMATA A DATA PARA O PADRÃO dd/mm/yyyy E ADICIONA O ATRIBUTO AO OBJETO
                 if (str_contains($keys[$i], "data"))
                 {
+                    if (!isset($arr["data"]))
+                    {
+                        if ($keys[$i] == "dataChegada") continue;
+                    }
+
                     $valueData = explode("-", $valueData, 4);
                     $valueData = $valueData[2]."/".$valueData[1]."/".$valueData[0];
                     $aux .= "data: '".$valueData."', ";

@@ -277,17 +277,871 @@ function applyVerticalAlignment(node, rowIndex, align, rowSpanCell, manualHeight
     }
 }
 
+let dataLength;
+let data;
+
 function printVaiVoltaPDF()
 {
+    var docDefinition = {
+        pageSize: "A4",
+        pageMargins: [20, 30],
 
+        info: {
+            title: "Lista - Vai e Volta",
+            author: "IFNMG - Campus Salinas",
+            creator: "CGAE - Listas Eletrônicas",
+            producer: "Henrique Cardoso de Souza"
+        },
+
+        content: [
+            {
+                table: {
+                    widths: ["auto"],
+                    headerRows: 2,
+
+                    body: [
+                        [
+                            {
+                                image: "logo",
+                                width: 190,
+                                margin: [0, 0, 0, 11]
+                            }
+                        ],
+
+                        [
+                            {
+                                text: "CONTROLE DE SAÍDAS DE ALUNOS INTERNOS - VAI E VOLTA",
+                                style: "header",
+                                margin: [0, 0, 0, 6]
+                            }
+                        ],
+
+                        [
+                            {
+                                table: {
+                                    widths: [20, 194, 35, 55, 40, 60, 80],
+                                    headerRows: 2,
+                                    dontBreakRows: true,
+                                    keepWithHeaderRows: 1,
+
+                                    body: [
+                                        [
+                                            {
+                                                image: writeRotatedText("QUARTO", "black"),
+                                                rowSpan: 2,
+                                                fit: [7, 50]
+                                            },
+
+                                            {
+                                                text: "ASSINATURA DO ALUNO",
+                                                style: "tableHeader2",
+                                                rowSpan: 2,
+                                                margin: [0, 2, 0, 0]
+                                            },
+
+                                            {
+                                                text: "Nº\nCART.",
+                                                style: "tableHeader1",
+                                                rowSpan: 2,
+                                                margin: [0, 1, 0, 0]
+                                            },
+
+                                            {
+                                                text: 'SAÍDA',
+                                                style: 'tableHeader3',
+                                                colSpan: 2
+                                            },
+
+                                            {},
+
+                                            {
+                                                text: "CHEGADA",
+                                                style: "tableHeader3"
+                                            },
+
+                                            {
+                                                text: "DESTINO",
+                                                style: "tableHeader3",
+                                                rowSpan: 2,
+                                                margin: [0, 2, 0, 0]
+                                            },
+                                        ],
+
+                                        [
+                                            {},
+                                            {},
+                                            {},
+
+                                            {
+                                                text: 'DATA',
+                                                style: 'tableHeader1'
+                                            },
+                                            
+                                            {
+                                                text: 'HORA',
+                                                style: 'tableHeader1'
+                                            },
+
+                                            {
+                                                text: "HORA",
+                                                style: "tableHeader1"
+                                            },
+                                            
+                                            {},
+                                        ]
+                                    ],
+                                
+                                    style: "table"
+                                },
+                            
+                                layout: {
+                                    hLineWidth: function (i, node) {
+                                        return 1;
+                                    },
+                                    vLineWidth: function (i, node) {
+                                        return 1;
+                                    },
+                                    hLineColor: function (i, node) {
+                                        return "#444";
+                                    },
+                                    vLineColor: function (i, node) {
+                                        return "#444";
+                                    },
+                                    paddingTop: (index, node) => {
+                                        applyVerticalAlignment(node, index, 'center', []);
+                                        return 0;
+                                    },
+                                },
+                            
+                                style: "table"
+                            }
+                        ]
+                    ]
+                },
+
+                style: "table",
+
+                layout: {
+                    hLineWidth: function (i, node) {
+                        return 0;
+                    },
+                    vLineWidth: function (i, node) {
+                        return 0;
+                    },
+                }
+            }
+        ],
+
+        styles: {
+            header: {
+                fontSize: 14,
+                bold: true
+            },
+
+            simpleText: {
+                fontSize: 10,
+                bold: false
+            },
+
+            table: {
+                margin: 0
+            },
+
+            tableHeader1: {
+                fontSize: 10,
+                bold: true
+            },
+
+            tableHeader2: {
+                fontSize: 12,
+                bold: true
+            },
+
+            tableHeader3: {
+                fontSize: 11,
+                bold: true
+            }
+        },
+
+        images: {
+            logo: "IF Logo.png"
+        },
+
+        defaultStyle: {
+            font: "Arial",
+            fontSize: 12,
+            alignment: "center"
+        }
+    };
+
+    for (let i = 0; i < dataLength; i++)
+    {
+        docDefinition.content[0].table.body[2][0].table.body.push(
+            getVaiVoltaData(i)
+        );
+    }
+
+    pdfMake.fonts = {
+        Arial: {
+            normal: "arial regular.ttf",
+            bold: "arial bold.ttf",
+            light: "arial light.ttf",
+        },
+    };
+
+    pdfMake.createPdf(docDefinition).print();
+}
+
+function getVaiVoltaData(index)
+{
+    let res = [
+        {
+            text: data[index].quarto,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].nome,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].idRefeitorio,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].data,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].horaSaida,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].horaChegada,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].destino,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        }
+    ];
+
+    return res;
 }
 
 function printSaidaPDF()
 {
+    var docDefinition = {
+        pageSize: "A4",
+        pageMargins: [20, 30],
 
+        info: {
+            title: "Lista - Saída",
+            author: "IFNMG - Campus Salinas",
+            creator: "CGAE - Listas Eletrônicas",
+            producer: "Henrique Cardoso de Souza"
+        },
+
+        content: [
+            {
+                table: {
+                    widths: ["auto"],
+                    headerRows: 2,
+
+                    body: [
+                        [
+                            {
+                                image: "logo",
+                                width: 190,
+                                margin: [0, 0, 0, 11]
+                            }
+                        ],
+
+                        [
+                            {
+                                text: "CONTROLE DE SAÍDAS DE ALUNOS INTERNOS",
+                                style: "header",
+                                margin: [0, 0, 0, 6]
+                            }
+                        ],
+
+                        [
+                            {
+                                table: {
+                                    widths: [20, 159, 35, 55, 40, 55, 40, 71],
+                                    headerRows: 2,
+                                    dontBreakRows: true,
+                                    keepWithHeaderRows: 1,
+
+                                    body: [
+                                        [
+                                            {
+                                                image: writeRotatedText("QUARTO", "black"),
+                                                fit: [7, 50],
+                                                rowSpan: 2,
+                                            },
+
+                                            {
+                                                text: "ASSINATURA DO ALUNO",
+                                                style: "tableHeader2",
+                                                rowSpan: 2,
+                                                margin: [0, 2, 0, 0]
+                                            },
+
+                                            {
+                                                text: "Nº\nCART.",
+                                                style: "tableHeader1",
+                                                rowSpan: 2,
+                                                margin: [0, 1, 0, 0]
+                                            },
+
+                                            {
+                                                text: 'SAÍDA',
+                                                style: 'tableHeader3',
+                                                colSpan: 2,
+                                            },
+
+                                            {},
+
+                                            {
+                                                text: "CHEGADA",
+                                                style: "tableHeader3",
+                                                colSpan: 2,
+                                            },
+
+                                            {},
+
+                                            {
+                                                text: "DESTINO",
+                                                style: "tableHeader3",
+                                                rowSpan: 2,
+                                                margin: [0, 2, 0, 0]
+                                            },
+                                        ],
+
+                                        [
+                                            {},
+                                            {},
+                                            {},
+
+                                            {
+                                                text: 'DATA',
+                                                style: 'tableHeader1',
+                                                margin: [0, 4, 0, 0]
+                                            },
+                                            
+                                            {
+                                                text: 'HORA',
+                                                style: 'tableHeader1',
+                                                margin: [0, 4, 0, 0]
+                                            },
+
+                                            {
+                                                text: "DATA",
+                                                style: "tableHeader1",
+                                                margin: [0, 4, 0, 0]
+                                            },
+
+                                            {
+                                                text: "HORA",
+                                                style: "tableHeader1",
+                                                margin: [0, 4, 0, 0]
+                                            },
+                                            
+                                            {},
+                                        ]
+                                    ],
+                                
+                                    style: "table"
+                                },
+                            
+                                layout: {
+                                    hLineWidth: function (i, node) {
+                                        return 1;
+                                    },
+                                    vLineWidth: function (i, node) {
+                                        return 1;
+                                    },
+                                    hLineColor: function (i, node) {
+                                        return "#444";
+                                    },
+                                    vLineColor: function (i, node) {
+                                        return "#444";
+                                    },
+                                    paddingTop: (index, node) => {
+                                        applyVerticalAlignment(node, index, 'center', []);
+                                        return 0;
+                                    },
+                                },
+                            
+                                style: "table"
+                            }
+                        ]
+                    ]
+                },
+
+                style: "table",
+
+                layout: {
+                    hLineWidth: function (i, node) {
+                        return 0;
+                    },
+                    vLineWidth: function (i, node) {
+                        return 0;
+                    },
+                }
+            }
+        ],
+
+        styles: {
+            header: {
+                fontSize: 14,
+                bold: true
+            },
+
+            simpleText: {
+                fontSize: 10,
+                bold: false
+            },
+
+            table: {
+                margin: 0
+            },
+
+            tableHeader1: {
+                fontSize: 10,
+                bold: true
+            },
+
+            tableHeader2: {
+                fontSize: 12,
+                bold: true
+            },
+
+            tableHeader3: {
+                fontSize: 11,
+                bold: true
+            }
+        },
+
+        images: {
+            logo: "IF Logo.png"
+        },
+
+        defaultStyle: {
+            font: "Arial",
+            fontSize: 12,
+            alignment: "center"
+        }
+    };
+
+    for (let i = 0; i < dataLength; i++)
+    {
+        docDefinition.content[0].table.body[2][0].table.body.push(
+            getSaidaData(i)
+        );
+    }
+
+    pdfMake.fonts = {
+        Arial: {
+            normal: "arial regular.ttf",
+            bold: "arial bold.ttf",
+            light: "arial light.ttf",
+        },
+    };
+
+    pdfMake.createPdf(docDefinition).print();
+}
+
+function getSaidaData(index)
+{
+    let res = [
+        {
+            text: data[index].quarto,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].nome,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].idRefeitorio,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].dataSaida,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].horaSaida,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].dataChegada,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].horaChegada,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].destino,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        }
+    ];
+
+    return res;
 }
 
 function printPernoitePDF()
 {
+    var docDefinition = {
+        pageSize: "A4",
+        pageMargins: [20, 30],
+        pageOrientation: "landscape",
 
+        info: {
+            title: "Lista - Pernoite",
+            author: "IFNMG - Campus Salinas",
+            creator: "CGAE - Listas Eletrônicas",
+            producer: "Henrique Cardoso de Souza"
+        },
+
+        content: [
+            {
+                table: {
+                    widths: [220, "*"],
+                    headerRows: 1,
+
+                    body: [
+                        [
+                            {
+                                image: "logo",
+                                width: 190,
+                                margin: [7, 0, 0, 12],
+                                alignment: "left"
+                            },
+
+                            {
+                                text: "CONTROLE DE PERNOITE",
+                                style: "header",
+                                margin: [85, 57, 0, 0],
+                                alignment: "left"
+                            }
+                        ],
+
+                        [
+                            {
+                                table: {
+                                    widths: [20, 150, 160, 112, 80, 55, 40, 55, 40],
+                                    headerRows: 2,
+                                    dontBreakRows: true,
+                                    keepWithHeaderRows: 1,
+
+                                    body: [
+                                        [
+                                            {
+                                                image: writeRotatedText("QUARTO", "black"),
+                                                fit: [7, 50],
+                                                rowSpan: 2,
+                                            },
+
+                                            {
+                                                text: "ALUNO",
+                                                style: "tableHeader2",
+                                                rowSpan: 2,
+                                                margin: [0, 7, 0, 0]
+                                            },
+
+                                            {
+                                                text: "INFORMAÇÕES DO DESTINO",
+                                                style: "tableHeader1",
+                                                colSpan: 3
+                                            },
+
+                                            {},
+
+                                            {},
+
+                                            {
+                                                text: 'SAÍDA',
+                                                style: 'tableHeader2',
+                                                colSpan: 2,
+                                            },
+
+                                            {},
+
+                                            {
+                                                text: "CHEGADA",
+                                                style: "tableHeader2",
+                                                colSpan: 2,
+                                            },
+
+                                            {},
+                                        ],
+
+                                        [
+                                            {},
+                                            {},
+                                            
+                                            {
+                                                text: 'ENDEREÇO',
+                                                style: 'tableHeader1',
+                                                margin: [0, 4, 0, 0]
+                                            },
+                                            
+                                            {
+                                                text: 'NOME',
+                                                style: 'tableHeader1',
+                                                margin: [0, 4, 0, 0]
+                                            },
+                                            
+                                            {
+                                                text: 'TELEFONE',
+                                                style: 'tableHeader1',
+                                                margin: [0, 4, 0, 0]
+                                            },
+
+                                            {
+                                                text: 'DATA',
+                                                style: 'tableHeader1',
+                                                margin: [0, 4, 0, 0]
+                                            },
+                                            
+                                            {
+                                                text: 'HORA',
+                                                style: 'tableHeader1',
+                                                margin: [0, 4, 0, 0]
+                                            },
+
+                                            {
+                                                text: "DATA",
+                                                style: "tableHeader1",
+                                                margin: [0, 4, 0, 0]
+                                            },
+
+                                            {
+                                                text: "HORA",
+                                                style: "tableHeader1",
+                                                margin: [0, 4, 0, 0]
+                                            }
+                                        ]
+                                    ],
+                                
+                                    style: "table"
+                                },
+                            
+                                layout: {
+                                    hLineWidth: function (i, node) {
+                                        return 1;
+                                    },
+                                    vLineWidth: function (i, node) {
+                                        return 1;
+                                    },
+                                    hLineColor: function (i, node) {
+                                        return "#444";
+                                    },
+                                    vLineColor: function (i, node) {
+                                        return "#444";
+                                    },
+                                    paddingTop: (index, node) => {
+                                        applyVerticalAlignment(node, index, 'center', []);
+                                        return 0;
+                                    },
+                                },
+                            
+                                style: "table",
+                                colSpan: 2
+                            },
+
+                            {}
+                        ]
+                    ]
+                },
+
+                style: "table",
+
+                layout: {
+                    hLineWidth: function (i, node) {
+                        return 0;
+                    },
+                    vLineWidth: function (i, node) {
+                        return 0;
+                    },
+                }
+            }
+        ],
+
+        styles: {
+            header: {
+                fontSize: 14,
+                bold: true
+            },
+
+            simpleText: {
+                fontSize: 10,
+                bold: false
+            },
+
+            table: {
+                margin: 0
+            },
+
+            tableHeader1: {
+                fontSize: 10,
+                bold: true
+            },
+
+            tableHeader2: {
+                fontSize: 11,
+                bold: true
+            }
+        },
+
+        images: {
+            logo: "IF Logo.png"
+        },
+
+        defaultStyle: {
+            font: "Arial",
+            fontSize: 12,
+            alignment: "center"
+        }
+    };
+
+    for (let i = 0; i < dataLength; i++)
+    {
+        docDefinition.content[0].table.body[1][0].table.body.push(
+            getPernoiteData(i)
+        );
+    }
+
+    pdfMake.fonts = {
+        Arial: {
+            normal: "arial regular.ttf",
+            bold: "arial bold.ttf",
+            light: "arial light.ttf",
+        },
+    };
+
+    pdfMake.createPdf(docDefinition).print();
 }
+
+function getPernoiteData(index)
+{
+    let res = [
+        {
+            text: data[index].quarto,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].nome,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].destino,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].responsavel,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].telefone,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+
+        {
+            text: data[index].dataSaida,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].horaSaida,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+
+        {
+            text: data[index].dataChegada,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        },
+        
+        {
+            text: data[index].horaChegada,
+            style: "simpleText",
+            margin: [0, 2, 0, 2]
+        }
+    ];
+
+    return res;
+}
+
+function initialize()
+{
+    try {
+        let obj = JSON.parse(localStorage.getItem("data"));
+        localStorage.removeItem("data");
+        data = obj.dados;
+        dataLength = data.length;
+
+        switch (obj.lista)
+        {
+            case "vai_volta":
+                printVaiVoltaPDF();
+                break;
+
+            case "saida":
+                printSaidaPDF();
+                break;
+
+            case "pernoite":
+                printPernoitePDF();
+                break;
+        }
+    }
+    
+    finally {
+        location.href = obj.redirect;
+    }
+}
+
+initialize();
