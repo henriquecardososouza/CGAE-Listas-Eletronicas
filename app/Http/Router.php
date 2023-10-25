@@ -176,6 +176,29 @@ class Router
                     $methods[$httpMethod]["variables"] = array_combine($keys, $matches);
                     $methods[$httpMethod]["variables"]["request"] = $this->request;
 
+                    foreach ($methods[$httpMethod]["variables"] as $key => $value)
+                    {
+                        switch ($key)
+                        {
+                            case "request":
+                                continue 2;
+
+                            default:
+                                if (count(explode("/", $value)) > 1)
+                                {
+                                    $methods[$httpMethod]["variables"][$key] = explode("/", $value)[0];
+                                }
+
+                                break;
+                        }
+                    }
+
+                    if (isset($methods[$httpMethod]["variables"]["id"]))
+                    {
+                        if (!is_numeric($methods[$httpMethod]["variables"]["id"]))
+                        throw new \Exception("parameter invalid", 500);
+                    }
+
                     // RETORNANDO A ROTA ATUAL
                     return $methods[$httpMethod];
                 }
@@ -260,27 +283,22 @@ class Router
         {
             // PÁGINA NÃO ENCONTRADA
             case 404:
-                $content = Error\Error404::getError404();
+                $content = Error\Error404::getError404($e->getMessage());
                 break;
 
             // MÉTODO NÃO PERMITIDO
             case 405:
-                $content = Error\Error405::getError405();
+                $content = Error\Error405::getError405($e->getMessage());
                 break;
 
             // FALHA AO PROCESSAR A URL
             case 503:
-                $content = Error\Error503::getError503();
-                break;
-
-            // ERRO DA BASE DE DADOS
-            case 2002:
-                $content = "sql 2002 error";
+                $content = Error\Error503::getError503($e->getMessage());
                 break;
 
             // ERRO GERAL DO SERVIDOR
             default:
-                $content = Error\Error500::getError500();
+                $content = Error\Error500::getError500($e->getMessage());
                 break;
         }
         

@@ -144,20 +144,6 @@ $router->post("/ass/alunos/atualizar/{id}", [
     }
 ]);
 
-// ADICIONANDO A ROTA DE EXCLUSÃO DE ALUNO
-$router->get("/ass/alunos/excluir/{id}", [
-    "middlewares" => [
-        "recover-cookies",
-        "require-assistant-login",
-        "update-lists"
-    ],
-
-    function ($id)
-    {
-        return new Response(200, Student\Delete::getDelete($id));
-    }
-]);
-
 // ADICIONANDO A ROTA DE EXCLUSÃO DE ALUNO (POST)
 $router->post("/ass/alunos/excluir/{id}", [
     "middlewares" => [

@@ -17,7 +17,7 @@ class Home extends Page
         parent::setActiveModule("home");
 
         // RENDERIZA A PÁGINA
-        $content = parent::render("home");
+        $content = parent::render("home/index");
 
         return parent::getPage("Painel", $content, true);
     }

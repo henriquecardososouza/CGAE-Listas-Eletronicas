@@ -8,25 +8,6 @@ use App\Model\Entity\Aluno;
 class Delete extends Page
 {
     /**
-     * Retorna a view de exclusão de aluno
-     * @param int $id
-     * @return string
-     */
-    public static function getDelete($id)
-    {
-        parent::setActiveModule("students");
-
-        $ob = Aluno::getAlunoById($id);
-
-        $content = parent::render("student/delete/index", [
-            "id" => $ob->id,
-            "nome" => $ob->nome
-        ]);
-
-        return parent::getPage("Alunos", $content);
-    }
-
-    /**
      * Realiza a exclusão de um aluno
      * @param Request $request
      * @param int $id
@@ -34,6 +15,8 @@ class Delete extends Page
      */
     public static function setDelete($request, $id)
     {
+        if ($request->getPostVars()['acao'] != "excluir") throw new \Exception("credentials missing", 500);
+
         $ob = Aluno::getAlunoById($id);
         $ob->excluir();
 

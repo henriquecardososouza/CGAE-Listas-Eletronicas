@@ -40,21 +40,16 @@ class RecoverCookies
         // CONFIGURA A SESSÃO REALIZANDO O LOGIN
         if ($_COOKIE['user'] == "student")
         {
-            $ob = \App\Model\Entity\Student::getStudentById($_COOKIE['id']);
+            $ob = \App\Model\Entity\Aluno::getAlunoById($_COOKIE['id']);
 
         }
 
         else if ($_COOKIE['user'] == "assistant")
         {
-            $ob = \App\Model\Entity\Assistant::getAssistantById($_COOKIE['id']);
+            $ob = \App\Model\Entity\Assistente::getAssistenteById($_COOKIE['id']);
         }
 
-        else
-        {
-            $ob['nome'] = \App\Model\Entity\Admin::NOME;
-            $ob['email'] = \App\Model\Entity\Admin::EMAIL;
-            $ob['senha'] = \App\Model\Entity\Admin::SENHA;
-        }
+        else return;
             
         \App\Session\Login::login($ob);
     }

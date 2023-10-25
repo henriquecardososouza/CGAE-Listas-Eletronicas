@@ -22,7 +22,8 @@
 
                                 <ul>
                                     <select class="form-select bg-dark text-light" name="serie" id="serie">
-                                        <option value="1" selected>1° série</option>
+                                        <option value="0" selected>Todos</option>
+                                        <option value="1">1° série</option>
                                         <option value="2">2° série</option>
                                         <option value="3">3° série</option>
                                     </select>
@@ -35,9 +36,10 @@
                                 <h5>Por sexo</h5>
     
                                 <ul>
-                                    <select class="form-select bg-dark text-light" name="sexo" id="sexo">
-                                        <option value="1" selected>Masculino</option>
-                                        <option value="2">Feminino</option>
+                                    <select class="form-select bg-dark text-light" name="sexo" id="sexo" onchange="setQuartoFilter()">
+                                        <option value="0" selected>Todos</option>
+                                        <option value="masculino">Masculino</option>
+                                        <option value="feminino">Feminino</option>
                                     </select>
                                 </ul>
                             </div>
@@ -49,24 +51,20 @@
     
                                 <ul>
                                     <select class="form-select bg-dark text-light" name="quarto" id="quarto">
-                                        <option value="1" selected>1.1</option>
-                                        <option value="2" selected>1.1</option>
-                                        <option value="3" selected>1.1</option>
-                                        <option value="1" selected>1.1</option>
-                                        <option value="1" selected>1.1</option>
-                                        <option value="1" selected>1.1</option>
-                                        <option value="1" selected>1.1</option>
-                                        <option value="1" selected>1.1</option>
-                                        <option value="1" selected>1.1</option>
-                                        <option value="1" selected>1.1</option>
-                                        <option value="1" selected>1.1</option>
-                                        <option value="1" selected>1.1</option>
-                                        <option value="1" selected>1.1</option>
-                                        <option value="1" selected>1.1</option>
-                                        <option value="1" selected>1.1</option>
-                                        <option value="1" selected>1.1</option>
-                                        <option value="1" selected>1.1</option>
-                                        <option value="1" selected>1.1</option>
+                                        <option value="0" selected>Todos</option>
+                                        <option value="1-1">1.1</option>
+                                        <option value="1-2">1.2</option>
+                                        <option value="1-3">1.3</option>
+                                        <option value="1-4">1.4</option>
+                                        <option value="1-5">1.5</option>
+                                        <option value="2-1">2.1</option>
+                                        <option value="2-2">2.2</option>
+                                        <option value="2-3">2.3</option>
+                                        <option value="2-4">2.4</option>
+                                        <option value="3-1">3.1</option>
+                                        <option value="3-2">3.2</option>
+                                        <option value="3-3">3.3</option>
+                                        <option value="3-4">3.4</option>
                                     </select>
                                 </ul>
                             </div>
@@ -98,6 +96,8 @@
             <a href="{{URL}}/ass/alunos/atualizar" type="button" class="btn btn-outline-primary">Atualizar alunos</a>
             <a href="{{URL}}/ass/alunos/desativar" type="button" class="btn btn-outline-danger">Desativar alunos</a>
         </div>
+    
+        <br>
 
         <div id="pagination">
             <nav>
@@ -138,9 +138,7 @@
     let actualPage = 0;
     let numberOfPages = undefined;
 
-    window.addEventListener("DOMContentLoaded", (event) => {
-        applyEffects();
-    });
+    window.addEventListener("DOMContentLoaded", applyEffects);
 
     function createTable(itens, allItens = true)
     {
@@ -266,64 +264,65 @@
     {
         activesFilters = [];
 
-        if (document.getElementById("vai_volta").checked)
+        if (document.getElementById("quarto").options.selectedIndex)
         {
-            activesFilters.push("vai_volta");
+            activesFilters.push("quarto:" + document.getElementById("quarto").options[document.getElementById("quarto").options.selectedIndex].value);
         }
         
-        if (document.getElementById("saida").checked)
+        if (document.getElementById("sexo").options.selectedIndex)
         {
-            activesFilters.push("saida");
+            activesFilters.push("sexo:" + document.getElementById("sexo").options[document.getElementById("sexo").options.selectedIndex].value);
         }
         
-        if (document.getElementById("pernoite").checked)
+        if (document.getElementById("serie").options.selectedIndex)
         {
-            activesFilters.push("pernoite");
-        }
-
-        if (document.getElementById("date_initial").value.length > 0)
-        {
-            activesFilters.push(
-                {
-                    date: {
-                        initial: verifyDates(prepareDate(document.getElementById("date_initial").value), prepareDate(document.getElementById("date_final").value)) == 1 ? prepareDate(document.getElementById("date_final").value) : prepareDate(document.getElementById("date_initial").value),
-                        final: document.getElementById("date_final").value.length > 0 ? (verifyDates(prepareDate(document.getElementById("date_initial").value), prepareDate(document.getElementById("date_final").value)) == 1 ? prepareDate(document.getElementById("date_initial").value) : prepareDate(document.getElementById("date_final").value)) : prepareDate(document.getElementById("date_initial").value)
-                    }
-                }
-            );
+            activesFilters.push("serie:" + document.getElementById("serie").options[document.getElementById("serie").options.selectedIndex].value);
         }
     }
 
     function filterItens()
     {
-        let itens = [];
-
-        if (activesFilters.length == 0) return results;
+        let itens = results;
+        let aux = [];
 
         activesFilters.forEach(item => {
-            if (typeof item == "string")
+            switch (item.split(":")[0])
             {
-                let aux = results;
+                case "quarto":
+                    let quarto = item.split(":")[1];
+                    aux = [];
 
-                aux.forEach(res => {
-                    if (res.lista == item)
-                    {
-                        itens.push(res);
-                    }
-                });
-            }
+                    itens.forEach(item => {
+                        if (item.quarto == quarto) aux.push(item);    
+                    });
 
-            else
-            {
-                let aux = itens.length == 0 ? results : itens;
-                itens = [];
+                    itens = aux;
 
-                aux.forEach(res => {
-                    if (verifyDates(item.date.initial, res.data) <= 0 && verifyDates(item.date.final, res.data) >= 0)
-                    {
-                        itens.push(res);
-                    }
-                })
+                    break;
+
+                case "serie":
+                    let serie = item.split(":")[1];
+                    aux = [];
+
+                    itens.forEach(item => {
+                        if (item.serie == serie) aux.push(item);    
+                    });
+
+                    itens = aux;
+
+                    break;
+
+                case "sexo":
+                    let sexo = item.split(":")[1];
+                    aux = [];
+
+                    itens.forEach(item => {
+                        if (item.sexo == sexo) aux.push(item);    
+                    });
+
+                    itens = aux;
+
+                    break;
             }
         });
 
@@ -339,25 +338,46 @@
 
     function updateFilterElements()
     {
-        let aux = "";
+        let quarto = "0", serie = "0", sexo = "0";
+        
 
         activesFilters.forEach(item => {
-            if (typeof item == "string")
+            if (item.includes("quarto"))
             {
-                aux += item;
+                quarto = item.split(":")[1];
             }
 
-            else
+            else if (item.includes("serie"))
             {
-                aux += "date";
+                serie = item.split(":")[1];
+            }
+
+            else if (item.includes("sexo"))
+            {
+                sexo = item.split(":")[1];
             }
         });
 
-        document.getElementById("vai_volta").checked = aux.includes("vai_volta") ? true : false;
-        document.getElementById("saida").checked = aux.includes("saida") ? true : false;
-        document.getElementById("pernoite").checked = aux.includes("pernoite") ? true : false;
-        document.getElementById("date_initial").value = aux.includes("date") ? document.getElementById("date_initial").value : "";
-        document.getElementById("date_final").value = aux.includes("date") ? document.getElementById("date_final").value : "";
+        let selectQuarto = document.getElementById("quarto");
+
+        for (let i = 0; i < selectQuarto.options.length; i++)
+        {
+            selectQuarto.options[selectQuarto.options.selectedIndex].selected = selectQuarto.options[selectQuarto.options.selectedIndex].value == quarto;
+        }
+
+        let selectSerie = document.getElementById("serie");
+
+        for (let i = 0; i < selectSerie.options.length; i++)
+        {
+            selectSerie.options[selectSerie.options.selectedIndex].selected = selectSerie.options[selectSerie.options.selectedIndex].value == serie;
+        }
+
+        let selectSexo = document.getElementById("sexo");
+
+        for (let i = 0; i < selectSexo.options.length; i++)
+        {
+            selectSexo.options[selectSexo.options.selectedIndex].selected = selectSexo.options[selectSexo.options.selectedIndex].value == sexo;
+        }
     }
 
     function applyOrder(itens, order, reverse = true)
@@ -538,22 +558,18 @@
         let btn = [];
 
         activesFilters.forEach(item => {
-            switch (item)
+            switch (item.split(":")[0])
             {
-                case "vai_volta":
-                    btn.push(createFilterButton("vai_volta", "Vai e Volta"));
+                case "quarto":
+                    btn.push(createFilterButton("quarto", "Quarto"));
                     break;
                     
-                case "saida":
-                    btn.push(createFilterButton("saida", "Saída"));
+                case "serie":
+                    btn.push(createFilterButton("serie", "Série"));
                     break;
                     
-                case "pernoite":
-                    btn.push(createFilterButton("pernoite", "Pernoite"));
-                    break;
-                    
-                default:
-                    btn.push(createFilterButton("date", "Data"));
+                case "sexo":
+                    btn.push(createFilterButton("sexo", "Sexo"));
                     break;
             }
         });
@@ -593,17 +609,9 @@
         let aux = [];
 
         activesFilters.forEach(item => {
-            if (typeof item == "string")
+            if (item.split(":")[0] != filter)
             {
-                if (item != filter)
-                {
-                    aux.push(item);
-                }
-            }
-
-            else
-            {
-                if (filter != "date") aux.push(item);
+                aux.push(item);
             }
         });
         
@@ -682,6 +690,40 @@
     function calcTotalPages(itens, limit)
     {
         return Math.ceil(itens / limit);
+    }
+
+    function setQuartoFilter()
+    {
+        let quarto = document.getElementById("quarto");
+        let sexo = document.getElementById("sexo");
+        sexo = sexo.options[sexo.options.selectedIndex].value;
+
+        switch (sexo)
+        {
+            case "0":
+                for (let i = 0; i < quarto.children.length; i++)
+                {
+                    quarto.children[i].disabled = false;
+                }
+
+                break;
+
+            case "masculino":
+                for (let i = 0; i < quarto.children.length; i++)
+                {
+                    quarto.children[i].disabled = i == 5;
+                }
+
+                break;
+
+            case "feminino":
+                for (let i = 0; i < quarto.children.length; i++)
+                {
+                    quarto.children[i].disabled = i > 5;
+                }
+
+                break;
+        }
     }
 
 </script>

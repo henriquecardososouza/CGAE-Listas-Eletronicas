@@ -37,8 +37,7 @@
 
             <div class="form-group mb-4">
                 <label for="telefone">Telefone do responsável</label>
-                <input type="tel" name="telefone" class="form-control bg-dark text-light" id="telefone" placeholder="(99) 00000000"  pattern="\([0-9]{2}\) [0-9]{8,}" required value="{{telefone}}">
-                <small>Formato: (99) 00000000</small>
+                <input type="tel" name="telefone" class="form-control bg-dark text-light" id="telefone" placeholder="(99) 99999999" required value="{{telefone}}">
             </div>
             
             <div class="form-group mb-4">
@@ -58,14 +57,15 @@
                     <option value="12" {{selected-1}}>1.2</option>
                     <option value="13" {{selected-2}}>1.3</option>
                     <option value="14" {{selected-3}}>1.4</option>
-                    <option value="21" {{selected-4}}>2.1</option>
-                    <option value="22" {{selected-5}}>2.2</option>
-                    <option value="23" {{selected-6}}>2.3</option>
-                    <option value="24" {{selected-7}}>2.4</option>
-                    <option value="31" {{selected-8}}>3.1</option>
-                    <option value="32" {{selected-9}}>3.2</option>
-                    <option value="33" {{selected-10}}>3.3</option>
-                    <option value="34" {{selected-11}}>3.4</option>
+                    <option value="15" {{selected-4}}>1.5</option>
+                    <option value="21" {{selected-5}}>2.1</option>
+                    <option value="22" {{selected-6}}>2.2</option>
+                    <option value="23" {{selected-7}}>2.3</option>
+                    <option value="24" {{selected-8}}>2.4</option>
+                    <option value="31" {{selected-9}}>3.1</option>
+                    <option value="32" {{selected-10}}>3.2</option>
+                    <option value="33" {{selected-11}}>3.3</option>
+                    <option value="34" {{selected-12}}>3.4</option>
                 </select>
             </div>
             
@@ -79,12 +79,12 @@
             </div>
 
             <div class="form-group mb-4">
-                <label for="itens">Sexo</label>
-                <div id="itens">
-                    <input type="radio" class="bg-dark text-light" name="sexo" id="sexo-masc" value="masculino" {{checked-0}}>
+                <span>Sexo</span>
+                <div>
+                    <input type="radio" class="bg-dark text-light" name="sexo" id="sexo-masc" value="masculino" {{checked-0}} onchange="setQuartoSelect('masculino')">
                     <label for="sexo-masc" class="form-check-label">Maculino</label>
                     <br>
-                    <input type="radio" class="bg-dark text-light" name="sexo" id="sexo-fem" value="feminino" {{checked-1}}>
+                    <input type="radio" class="bg-dark text-light" name="sexo" id="sexo-fem" value="feminino" {{checked-1}} onchange="setQuartoSelect('feminino')">
                     <label for="sexo-fem" class="form-check-label">Feminino</label>
                 </div>
             </div>
@@ -103,6 +103,45 @@
         </form>
     </div>
 </section>
+
+
+<script>
+    document.getElementById('telefone').addEventListener('blur', function (e) {
+        var x = e.target.value.replace(/\D/g, '').match(/(\d{2})(\d{4})(\d{4,})/);
+        e.target.value = '(' + x[1] + ') ' + x[2] + x[3];
+    });
+
+    document.addEventListener("DOMContentLoaded", setQuartoSelect("{{checked-0}}" == "checked" ? "masculino" : "feminino"))
+
+    function setQuartoSelect(sexo)
+    {
+        let select = document.getElementById("quarto");
+
+        switch (sexo)
+        {
+            case "masculino":
+                for (let i = 0; i < select.options.length; i++)
+                {
+                    select.options[i].disabled = i == 4;
+                }
+                
+                if (select.options.selectedIndex == 4) select.options.selectedIndex = 3;
+
+                break;
+
+            case "feminino":
+                for (let i = 0; i < select.options.length; i++)
+                {
+                    select.options[i].disabled = i > 4;
+                }
+
+                if (select.options.selectedIndex > 4) select.options.selectedIndex = 4;
+
+                break;
+        }
+    }
+
+</script>
 
 <style>
     #form

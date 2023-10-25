@@ -91,10 +91,26 @@ class Update extends Page
             "serie" => 0
         ];
 
-        $index['quarto'] = round(((floor($ob->quarto / 10) - 1) * 4) + ((1 - (ceil($ob->quarto / 10) - $ob->quarto / 10)) * 10 - 1) + 1);
+        $map = [
+            "11" => 0,
+            "12" => 1,
+            "13" => 2,
+            "14" => 3,
+            "15" => 4,
+            "21" => 5,
+            "22" => 6,
+            "23" => 7,
+            "24" => 8,
+            "31" => 9,
+            "32" => 10,
+            "33" => 11,
+            "34" => 12
+        ];
+         
+        $index['quarto'] = $map[(string)$ob->quarto];
         $index['serie'] = round((int)$ob->serie) - 1;
 
-        for ($i = 0; $i < 12; $i++)
+        for ($i = 0; $i < 13; $i++)
         {
             if ($i == $index['quarto'])
             {

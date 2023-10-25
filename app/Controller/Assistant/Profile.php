@@ -17,7 +17,7 @@ class Profile extends Page
     public static function getProfile()
     {
         // CONFIGURA A NAVBAR
-        parent::setActiveModule("profile");
+        parent::setActiveModule("profile/index");
         
         // INICIALIZA A SESSÃO
         \App\Session\Login::init();
@@ -38,7 +38,7 @@ class Profile extends Page
     public static function getEditProfile($request, $message = null, $success = false)
     {
         parent::setActiveModule("profile");
-        $content = parent::render("edit_profile", self::getAttributes($request, $message, $success));
+        $content = parent::render("profile/edit", self::getAttributes($request, $message, $success));
         return parent::getPage("Editar", $content);
     }
     
