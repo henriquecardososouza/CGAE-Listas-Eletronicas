@@ -1117,9 +1117,10 @@ function getPernoiteData(index)
 
 function initialize()
 {
+    let obj = JSON.parse(localStorage.getItem("data"));
+    localStorage.removeItem("data");
+    
     try {
-        let obj = JSON.parse(localStorage.getItem("data"));
-        localStorage.removeItem("data");
         data = obj.dados;
         dataLength = data.length;
 
