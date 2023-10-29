@@ -1,0 +1,32 @@
+.grid {
+    display: flex;
+    justify-content: space-around;
+}
+
+.card {
+    width: 300px;
+    height: 300px;
+    box-shadow: 6px 6px 30px 0 black;
+    border-radius: 20px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.4s;
+}
+
+.card:hover {
+    background-color: #292929;
+}
+
+.card img {
+    width: 128px;
+    height: 128px;
+}
+
+.card h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin: 0;
+}

@@ -1,0 +1,30 @@
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 100px 0 50px 0;
+}
+
+.footer-logo {
+    width: 240px;
+    height: 102px;
+    user-select: none;
+}
+
+.footer-line {
+    width: 2px;
+    height: 170px;
+    background-color: white;
+    margin: 0 52px;
+}
+
+.footer-contact {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 10px;
+}
+
+.footer-contact img {
+    margin-right: 14px;
+}
