@@ -7,7 +7,6 @@ footer {
 
 .footer-logo {
     width: 240px;
-    height: 102px;
     user-select: none;
 }
 
@@ -22,9 +21,114 @@ footer {
     display: flex;
     align-items: center;
     justify-content: start;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
 .footer-contact img {
     margin-right: 14px;
+}
+
+@media (max-width: 768px) {
+    footer {
+        margin-top: 70px;
+        margin-bottom: 20px;
+    }
+
+    .footer-logo {
+        width: 180px;
+    }
+
+    .footer-line {
+        height: 120px;
+        margin: 0 20px;
+        width: 2px;
+    }
+
+    .footer-contact img {
+        width: 14px;
+        margin-right: 10px;
+    }
+
+    span {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 540px) {
+    footer {
+        margin-top: 50px;
+        margin-bottom: 20px;
+    }
+
+    .footer-logo {
+        width: 150px;
+    }
+
+    .footer-line {
+        height: 100px;
+        margin: 0 20px;
+        width: 1px;
+    }
+
+    .footer-contact img {
+        width: 12px;
+        margin-right: 10px;
+    }
+
+    span {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 465px) {
+    footer {
+        margin-top: 50px;
+        margin-bottom: 20px;
+    }
+
+    .footer-logo {
+        width: 120px;
+    }
+
+    .footer-line {
+        height: 80px;
+        margin: 0 20px;
+        width: 1px;
+    }
+
+    .footer-contact img {
+        width: 10px;
+        margin-right: 10px;
+    }
+
+    span {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 300px) {
+    footer {
+        margin-top: 50px;
+        margin-bottom: 20px;
+    }
+
+    .footer-logo {
+        width: 100px;
+    }
+
+    .footer-line {
+        height: 70px;
+        margin: 0 10px;
+        width: 1px;
+    }
+
+    .footer-contact img {
+        width: 8px;
+        margin-right: 5px;
+    }
+
+    span {
+        font-size: 8px;
+    }
 }
