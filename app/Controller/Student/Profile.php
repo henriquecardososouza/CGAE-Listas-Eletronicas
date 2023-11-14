@@ -2,8 +2,6 @@
 
 namespace App\Controller\Student;
 
-use App\Utils\View;
-
 /**
  * Controlador da página de perfil (aluno)
  */
@@ -30,6 +28,7 @@ class Profile extends Page
             "nome" => $ob->nome,
             "email" => $ob->email,
             "quarto" => $quarto,
+            "cama" => $ob->cama,
             "serie" => $ob->serie."° ano",
             "numero" => $ob->idRefeitorio,
             "pernoite" => $ob->pernoite ? "Sim" : "Não"

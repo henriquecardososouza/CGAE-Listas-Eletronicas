@@ -66,9 +66,19 @@ class Pernoite extends Page
         $horaAtual = date("H:i:s", time() + 60);
 
         // VERIFICA SE OS DADOS DA ASSINATURA SÃO VÁLIDOS
-        if (!("05:00:00" < $horaSaida && $horaSaida < "23:00:00"))
+        if (!("05:00:00" <= $horaSaida && $horaSaida <= "23:00:00"))
         {
             return self::getPernoite("O horário de saída deve estar compreendido entre 05:00 e 23:00 horas!");
+        }
+
+        if (!("05:00:00" <= $horaChegada && $horaChegada <= "23:00:00"))
+        {
+            return self::getPernoite("O horário de chegada deve estar compreendido entre 05:00 e 23:00 horas!");
+        }
+
+        if ($dataAtual > $dataSaida)
+        {
+            return self::getPernoite("A data de saída não pode ser anterior a data atual!");
         }
 
         if ($dataAtual == $dataSaida)
@@ -79,24 +89,17 @@ class Pernoite extends Page
             }
         }
 
-        if (!("07:00:00" < $horaChegada && $horaChegada < "23:00:00"))
-        {
-            return self::getPernoite("O horário de chegada deve estar compreendido entre 05:00 e 23:00 horas!");
-        }
-
         if ($dataSaida >= $dataChegada)
         {
             return self::getPernoite("A data de chegada deve ser posterior a data de saída!");
         }
 
-        if ($horaSaida >= $horaChegada)
+        if ($dataSaida == $dataChegada)
         {
-            return self::getPernoite("O horário de saída deve ser anterior ao horário de chegada!");
-        }
-
-        if ($dataAtual > $dataSaida)
-        {
-            return self::getPernoite("A data de saída não pode ser anterior a data atual!");
+            if ($horaSaida >= $horaChegada)
+            {
+                return self::getPernoite("O horário de saída deve ser anterior ao horário de chegada!");
+            }
         }
 
         // VERIFICA SE O ALUNO JÁ POSSUI UMA ASSINATURA EM ABERTO

@@ -58,12 +58,22 @@ class Saida extends Page
         // VERIFICA SE OS DADOS DA ASSINATURA SÃO VÁLIDOS
         if (!($hourInitial < $horaAtual && $horaAtual < $hourFinal))
         {
-            return self::getSaida("O horário para cadastro de assinaturas já se encerrou!<br>Contate um assistente para realizar sua assinatura.");
+            return self::getSaida("O horário para cadastro de assinaturas na lista de saída já se encerrou!<br>Contate um assistente para realizar sua assinatura.");
         }
 
-        if (!("07:00:00" < $horaSaida && $horaSaida < "23:00:00"))
+        if (!("05:00:00" <= $horaSaida && $horaSaida <= "23:00:00"))
         {
-            return self::getSaida("O horário de saída deve estar compreendido entre as 07:00 e as 23:00 horas!");
+            return self::getSaida("O horário de saída deve estar compreendido entre as 05:00 e as 23:00 horas!");
+        }
+
+        if (!("05:00:00" < $horaChegada && $horaChegada < "23:00:00"))
+        {
+            return self::getSaida("O horário de chegada deve estar compreendido entre as 05:00 e as 23:00 horas!");
+        }
+
+        if ($dataAtual > $dataSaida)
+        {
+            return self::getSaida("A data de saída não pode ser anterior a data atual!");
         }
 
         if ($dataAtual == $dataSaida)
@@ -74,24 +84,14 @@ class Saida extends Page
             }
         }
 
-        if (!("07:00:00" < $horaChegada && $horaChegada < "23:00:00"))
-        {
-            return self::getSaida("O horário de chegada deve estar compreendido entre as 07:00 e as 23:00 horas!");
-        }
-
         if ($horaSaida >= $horaChegada && $dataSaida == $dataChegada)
         {
             return self::getSaida("O horário de chegada deve ser posterior ao horário de saída!");
         }
 
-        if ($dataAtual > $dataSaida)
-        {
-            return self::getSaida("A data de saída deve ser posteior a data atual!");
-        }
-
         if ($dataSaida > $dataChegada)
         {
-            return self::getSaida("A data de chegada deve ser posteior ou igual a data de saída!");
+            return self::getSaida("A data de chegada não pode ser anterior a data de saída!");
         }
 
         // INICIALIZA A SESSÃO

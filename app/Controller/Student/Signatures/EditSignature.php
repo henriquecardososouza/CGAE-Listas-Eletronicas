@@ -2,6 +2,7 @@
 
 namespace App\Controller\Student\Signatures;
 
+use App\Controller\Common\Alert;
 use App\Controller\Student\Page;
 use App\Model\Entity\Listas\Pernoite;
 use App\Model\Entity\Listas\Saida;
@@ -9,7 +10,7 @@ use App\Model\Entity\Listas\VaiVolta;
 
 class EditSignature extends Page
 {
-    public static function getSignature($list, $id)
+    public static function getSignature($list, $id, $message = null)
     {
         parent::setActiveModule("assinaturas");
 
@@ -32,6 +33,7 @@ class EditSignature extends Page
         }
 
         $content = parent::render("signature/edit/index", [
+            "alert" => is_null($message) ? "" : "<hr>".Alert::getError($message)."<hr>",
             "form" => $form
         ]);
 
@@ -46,37 +48,49 @@ class EditSignature extends Page
         {
             if ($postVars['acao'] != "editar") throw new \Exception();
 
-            $var = [];
-
-            foreach ($postVars as $key => $value)
-            {
-                if ($key == "acao") continue;
-
-                $var[$key] = $value;
-            }
-
             switch ($list)
             {
                 case "vai_volta":
+                    $res = self::verifyVaiVoltaData($postVars);
+
+                    if (!is_null($res))
+                    {
+                        return self::getSignature($list, $id, $res);
+                    }
+
                     $ob = new VaiVolta(-1, $_SESSION['user']['usuario']['id'], null, true, $postVars['destino'], $postVars['data'], $postVars['hora_saida'], $postVars['hora_chegada']);
                     $ob->cadastrar();
                     VaiVolta::atualizarAssinaturas("id = ".$id, ["ativa" => false, "pai" => $ob->id]);
                     break;
 
                 case "saida":
+                    $res = self::verifySaidaData($postVars);
+
+                    if (!is_null($res))
+                    {
+                        return self::getSignature($list, $id, $res);
+                    }
+
                     $ob = new Saida(-1, $_SESSION['user']['usuario']['id'], null, true, $postVars['destino'], $postVars['data_saida'], $postVars['data_chegada'], $postVars['hora_saida'], $postVars['hora_chegada']);
                     $ob->cadastrar();
                     Saida::atualizarAssinaturas("id = ".$id, ["ativa" => false, "pai" => $ob->id]);
                     break;
 
                 case "pernoite":
+                    $res = self::verifyPernoiteData($postVars);
+
+                    if (!is_null($res))
+                    {
+                        return self::getSignature($list, $id, $res);
+                    }
+
                     $ob = new Pernoite(-1, $_SESSION['user']['usuario']['id'], null, true, $postVars['endereco'], $postVars['nome_responsavel'], $postVars['telefone'], $postVars['data_saida'], $postVars['data_chegada'], $postVars['hora_saida'], $postVars['hora_chegada']);
                     $ob->cadastrar();
                     Pernoite::atualizarAssinaturas("id = ".$id, ["ativa" => false, "pai" => $ob->id]);
                     break;
 
                 default:
-                    throw new \Exception();
+                    throw new \Exception("not found", 404);
                     break;
             }
 
@@ -94,7 +108,7 @@ class EditSignature extends Page
         $ob = VaiVolta::getSignatureById($id) ?? throw new \Exception("not found", 404);
 
         $content = parent::render("signature/edit/vai_volta", [
-            "endereco" => $ob->destino,
+            "destino" => $ob->destino,
             "data" => $ob->data,
             "hora_saida" => $ob->horaSaida,
             "hora_chegada" => $ob->horaChegada
@@ -133,5 +147,75 @@ class EditSignature extends Page
         ]);
 
         return $content;
+    }
+
+    /**
+     * 
+     * @param array $vars
+     * @return string|null
+     */
+    private static function verifyVaiVoltaData($vars)
+    {
+        $destino = $vars['destino'];
+        $data = $vars['data'];
+        $horaSaida = $vars['hora_saida'].":00";
+        $horaChegada = $vars['hora_chegada'].":00";
+
+        // OBTÉM A DATA E HORA ATUAIS
+        date_default_timezone_set("America/Sao_Paulo");
+        $dataAtual = date("Y-m-d", time());
+        $horaAtual = date("H:i:s", time() + 60);
+
+        // VERIFICA SE OS DADOS DA ASSINATURA SÃO VÁLIDOS
+
+        if ($dataAtual > $data)
+        {
+            return "A data de saída não pode ser anterior a data atual!";
+        }
+
+        if (!("05:00:00" <= $horaSaida && $horaSaida <= "23:00:00"))
+        {
+            return "O horário de saída deve estar compreendido entre as 05:00 e as 23:00 horas!";
+        }
+
+        if (!("05:00:00" <= $horaChegada && $horaChegada <= "23:00:00"))
+        {
+            return "O horário de chegada deve estar compreendido entre as 05:00 e as 23:00 horas!";
+        }
+
+        if ($dataAtual == $data)
+        {
+            if ($horaAtual > $horaSaida)
+            {
+                return "O horário de saída deve ser posteior ao horário atual!";
+            }
+        }
+
+        if ($horaSaida >= $horaChegada)
+        {
+            return "O horário de chegada deve ser posteior ao horário de saída!";
+        }
+
+        return null;
+    }
+
+    /**
+     * 
+     * @param array $vars
+     * @return string|null
+     */
+    private static function verifySaidaData($vars)
+    {
+        
+    }
+
+    /**
+     * 
+     * @param array $vars
+     * @return string|null
+     */
+    private static function verifyPernoiteData($vars)
+    {
+        
     }
 }

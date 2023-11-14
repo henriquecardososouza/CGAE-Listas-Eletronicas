@@ -50,9 +50,20 @@ class VaiVolta extends Page
         $horaAtual = date("H:i:s", time() + 60);
 
         // VERIFICA SE OS DADOS DA ASSINATURA SÃO VÁLIDOS
-        if (!("07:00:00" < $horaSaida && $horaSaida < "23:00:00"))
+
+        if ($dataAtual > $data)
         {
-            return self::getVaiVolta("O horário de saída deve estar compreendido entre as 07:00 e as 23:00 horas!");
+            return self::getVaiVolta("A data de saída não pode ser anterior a data atual!");
+        }
+
+        if (!("05:00:00" <= $horaSaida && $horaSaida <= "23:00:00"))
+        {
+            return self::getVaiVolta("O horário de saída deve estar compreendido entre as 05:00 e as 23:00 horas!");
+        }
+
+        if (!("05:00:00" <= $horaChegada && $horaChegada <= "23:00:00"))
+        {
+            return self::getVaiVolta("O horário de chegada deve estar compreendido entre as 05:00 e as 23:00 horas!");
         }
 
         if ($dataAtual == $data)
@@ -63,19 +74,9 @@ class VaiVolta extends Page
             }
         }
 
-        if (!("07:00:00" < $horaChegada && $horaChegada < "23:00:00"))
-        {
-            return self::getVaiVolta("O horário de chegada deve estar compreendido entre as 07:00 e as 23:00 horas!");
-        }
-
         if ($horaSaida >= $horaChegada)
         {
             return self::getVaiVolta("O horário de chegada deve ser posteior ao horário de saída!");
-        }
-
-        if ($dataAtual > $data)
-        {
-            return self::getVaiVolta("A data deve ser posteior ou igual a data atual!");
         }
 
         // INICIALIZA A SESSÃO

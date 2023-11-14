@@ -17,13 +17,13 @@ class Profile extends Page
     public static function getProfile()
     {
         // CONFIGURA A NAVBAR
-        parent::setActiveModule("profile/index");
+        parent::setActiveModule("profile");
         
         // INICIALIZA A SESSÃO
         \App\Session\Login::init();
 
         // RENDERIZA A VIEW
-        $content = parent::render("profile", [
+        $content = parent::render("profile/index", [
             "nome" => $_SESSION['user']['usuario']['nome'],
             "email" => $_SESSION['user']['usuario']['email']
         ]);

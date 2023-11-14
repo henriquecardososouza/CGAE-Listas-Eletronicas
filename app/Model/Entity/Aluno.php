@@ -40,6 +40,12 @@ class Aluno
     public $quarto;
 
     /**
+     * Cama do aluno
+     * @var int
+     */
+    public $cama;
+
+    /**
      * Série do aluno
      * @var int
      */
@@ -103,13 +109,14 @@ class Aluno
      * @param string $telefoneResponsavel
      * @param bool $ativo
      */
-    public function __construct($id = -1, $nome = null, $sexo = null, $email = null, $quarto = -1, $serie = -1, $idRefeitorio = -1, $senha = null, $pernoite = false, $nomeResponsavel = null, $cidade = null, $telefoneResponsavel = null, $ativo = false)
+    public function __construct($id = -1, $nome = null, $sexo = null, $email = null, $quarto = -1, $cama = -1, $serie = -1, $idRefeitorio = -1, $senha = null, $pernoite = false, $nomeResponsavel = null, $cidade = null, $telefoneResponsavel = null, $ativo = false)
     {
         $this->id = $id;
         $this->nome = $nome;
         $this->sexo = $sexo;
         $this->email = $email;
         $this->quarto = $quarto;
+        $this->cama = $cama;
         $this->serie = $serie;
         $this->idRefeitorio = $idRefeitorio;
         $this->senha = $senha;
@@ -174,6 +181,7 @@ class Aluno
             "sexo" => $this->sexo,
             "email" => $this->email,
             "quarto" => $this->quarto,
+            "cama" => $this->cama,
             "serie" => $this->serie,
             "id_refeitorio" => $this->idRefeitorio,
             "senha" => $this->senha,
@@ -198,6 +206,7 @@ class Aluno
             "sexo" => $this->sexo,
             "email" => $this->email,
             "quarto" => $this->quarto,
+            "cama" => $this->cama,
             "serie" => $this->serie,
             "id_refeitorio" => $this->idRefeitorio,
             "senha" => $this->senha,
@@ -239,7 +248,7 @@ class Aluno
 
         foreach ($results as $result)
         {
-            $itens[] = new self($result['id'], $result['nome'], $result['sexo'], $result['email'], $result['quarto'], $result['serie'], $result['id_refeitorio'], $result['senha'], $result['pernoite'], $result['responsavel'], $result['cidade'], $result['telefone_responsavel'], $result['ativo']);
+            $itens[] = new self($result['id'], $result['nome'], $result['sexo'], $result['email'], $result['quarto'], $result['cama'], $result['serie'], $result['id_refeitorio'], $result['senha'], $result['pernoite'], $result['responsavel'], $result['cidade'], $result['telefone_responsavel'], $result['ativo']);
         }
 
         return $itens;
