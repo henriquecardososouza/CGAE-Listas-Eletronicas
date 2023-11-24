@@ -54,14 +54,7 @@ class Login
 
         else
         {
-            $_SESSION['user'] = [
-                'usuario' => [
-                    "id" => -1,
-                    "nome" => Entity\Admin::NOME,
-                    "email" => Entity\Admin::EMAIL,
-                    "type" => "admin"
-                ]
-            ];
+            throw new \Exception("user not valid", 500);
         }
 
         return true;

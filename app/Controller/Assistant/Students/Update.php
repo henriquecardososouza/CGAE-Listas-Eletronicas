@@ -5,11 +5,14 @@ namespace App\Controller\Assistant\Students;
 use App\Controller\Assistant\Page;
 use App\Model\Entity\Aluno;
 
+/**
+ * Controlador da página de atualizar alunos
+ */
 class Update extends Page
 {
     /**
-     * Retorna a view da página de confirmação de atualização de todos os alunos
-     * @return string
+     * Entrypoint GET da rota
+     * @return string View renderizada
      */
     public static function getView()
     {
@@ -21,8 +24,8 @@ class Update extends Page
     }
 
     /**
-     * Atualiza os alunos e realiza o redirecionamento adequado
-     * @param Request $request
+     * Entrypoint POST da rota
+     * @param Request $request Objeto de requisição
      */
     public static function setView($request)
     {

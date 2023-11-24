@@ -6,13 +6,18 @@ use App\Controller\Assistant\Page;
 use App\Model\Entity\Listas;
 use App\Model\Entity\Aluno;
 
+/**
+ * Controlador da página de consultar assinatura
+ */
 class Signature extends Page
 {
     /**
-     * Retorna a view da página de assinatura
-     * @return string
+     * Entrypoint GET da rota
+     * @param string $list Lista da assinatura
+     * @param int $id ID da assinatura a ser consultada
+     * @return string View renderizada
      */
-    public static function getSignature($list, $id)
+    public static function getView($list, $id)
     {
         parent::setActiveModule("signatures");
 
@@ -26,6 +31,12 @@ class Signature extends Page
         return parent::getPage("Assinatura", $content);
     }
 
+    /**
+     * Configura a view segundo os dados da assinatura
+     * @param string $list Lista da assinatura
+     * @param int $id ID da assinatura
+     * @return string View renderizada
+     */
     private static function getDados($list, $id)
     {
         $ob = null;
@@ -56,6 +67,12 @@ class Signature extends Page
         return $content;
     }
 
+    /**
+     * Inicializa um objeto JS a partir uma instância de assinatura
+     * @param array $arr Instância da assinatura convertida em Array
+     * @param string $type Lista da assinatura
+     * @return string Objeto JS
+     */
     private static function createJsObj($arr, $type)
     {
         $keys = array_keys($arr);
@@ -109,6 +126,12 @@ class Signature extends Page
         return substr($res, 0, -2)."}";
     }
 
+    /**
+     * Inicializa um objeto JS a partir uma instância de assinatura
+     * @param array $arr Instância da assinatura convertida em Array
+     * @param string $list Lista da assinatura
+     * @return string Objeto JS
+     */
     private static function createEditJsObj($arr, $list)
     {
         $keys = array_keys($arr);
@@ -154,10 +177,16 @@ class Signature extends Page
 
             $res .= ($keys[$i] == "id" ? "id" : ucfirst($keys[$i])).": "."'".$values[$i]."', ";
         }
-
+        
         return substr($res, 0, -2)."}";
     }
 
+    /**
+     * Configura a view de edições realizadas
+     * @param string $list Lista da assinatura
+     * @param int $id ID da assinatura
+     * @return string View renderizada
+     */
     private static function getEdit($list, $id)
     {
         $arr = [];

@@ -6,13 +6,16 @@ use App\Controller\Assistant\Page;
 use App\Model\Entity\Listas;
 use App\Model\Entity\Aluno;
 
+/**
+ * Controlador da página de consulta de assinaturas
+ */
 class Signatures extends Page
 {
     /**
-     * Retorna a view da página de consulta de listas
-     * @return string
+     * Entrypoint GET da rota
+     * @return string View renderizada
      */
-    public static function getSignatures()
+    public static function getView()
     {
         parent::setActiveModule("signatures");
 
@@ -27,16 +30,28 @@ class Signatures extends Page
         return parent::getPage("Listas", $content);
     }
 
+    /**
+     * Retorna a view "sem dados"
+     * @return string View renderizada
+     */
     private static function getNoItens()
     {
         return parent::render("signatures/no_itens");
     }
 
+    /**
+     * Retorna a view "não encontrado"
+     * @return string View renderizada
+     */
     private static function getNotFound()
     {
         return parent::render("signatures/not_found");
     }
 
+    /**
+     * Configura a view segundo os dados das assinaturas
+     * @return string View renderizada
+     */
     private static function getItens()
     {
         // INICIALIZA A SESSÃO

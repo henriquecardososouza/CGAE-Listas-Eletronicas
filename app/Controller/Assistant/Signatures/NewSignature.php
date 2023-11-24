@@ -7,16 +7,19 @@ use App\Controller\Assistant\Page;
 use App\Model\Entity\Aluno;
 use App\Model\Entity\Listas;
 
+/**
+ * Controlador da página de cadastrar assinatura
+ */
 class NewSignature extends Page
 {
     /**
-     * Retorna a view da página de cadastro de assinatura
-     * @param string $name
-     * @param string $message
-     * @param bool $success
-     * @return string
+     * Entrypoint GET da rota
+     * @param string $name Lista da assinatura
+     * @param string $message Mensagem de status
+     * @param bool $success Tipo da mensagem de status
+     * @return string View renderizada
      */
-    public static function getNewSignature($name = "null", $message = null, $success = false)
+    public static function getView($name = "null", $message = null, $success = false)
     {
         parent::setActiveModule("signatures");
 
@@ -29,11 +32,11 @@ class NewSignature extends Page
     }
 
     /**
-     * Cadastra a assinatura
-     * @param Request $request
-     * @return string
+     * Entrypoint POST da rora
+     * @param Request $request Objeto de requisição
+     * @return string View renderizada
      */
-    public static function setNewSignature($request)
+    public static function setView($request)
     {
         $postVars = $request->getPostVars();
         $message = null;
@@ -51,15 +54,15 @@ class NewSignature extends Page
         else
         {
             $hourFinal = "23:00:00";
-            $hourInitial = "07:00:00";
+            $hourInitial = "05:00:00";
 
             switch ($postVars['type'])
             {
                 case "vai_volta":
                     $destino = $postVars['destino'];
                     $data = $postVars['data'];
-                    $horaSaida = $postVars['hora_saida'].":00";
-                    $horaChegada = $postVars['hora_chegada'].":00";
+                    $horaSaida = $postVars['hora_saida'].(strlen($postVars['hora_saida']) == 5 ? ":00" : "");
+                    $horaChegada = $postVars['hora_chegada'].(strlen($postVars['hora_chegada']) == 5 ? ":00" : "");
 
                     date_default_timezone_set("America/Sao_Paulo");
                     $dataAtual = date("Y-m-d", time());
@@ -73,7 +76,7 @@ class NewSignature extends Page
                         {
                             if ($item->ativa)
                             {
-                                $message = "O aluno já possui uma assinatura ativa cadastrada!";
+                                $message = "O aluno já possui uma assinatura ativa nesta lista!";
                                 $pass = false;
                                 break;
                             }
@@ -85,29 +88,29 @@ class NewSignature extends Page
                         break;
                     }
 
-                    if (!($hourInitial < $horaSaida && $horaSaida < $hourFinal))
+                    if (!($hourInitial <= $horaSaida && $horaSaida <= $hourFinal))
                     {
-                        $message = "O horário de saída não é válido";
+                        $message = "O horário de saída deve estar compreendido entre as 05:00 e as 23:00 horas!";
                     }
 
-                    else if (!($hourInitial < $horaChegada && $horaChegada < $hourFinal))
+                    else if (!($hourInitial <= $horaChegada && $horaChegada <= $hourFinal))
                     {
-                        $message = "O horário de chegada não é válido";
+                        $message = "O horário de chegada deve estar compreendido entre as 05:00 e as 23:00 horas!";
                     }
 
                     else if ($horaSaida >= $horaChegada)
                     {
-                        $message = "O horário de chegada não é válido!";
+                        $message = "O horário de chegada deve ser posteior ao horário de saída!";
                     }
 
                     else if ($dataAtual > $data)
                     {
-                        $message = "A data informada não é válida!";
+                        $message = "A data de saída não pode ser anterior a data atual!";
                     }
 
                     else if ($dataAtual == $data && $horaAtual > $horaSaida)
                     {
-                        $message = "O horário de saída não é válido!";
+                        $message = "O horário de saída deve ser posteior ao horário atual!";
                     }
 
                     else
@@ -124,8 +127,8 @@ class NewSignature extends Page
                     $destino = $postVars['destino'];
                     $dataSaida = $postVars['data_saida'];
                     $dataChegada = $postVars['data_chegada'];
-                    $horaSaida = $postVars['hora_saida'].":00";
-                    $horaChegada = $postVars['hora_chegada'].":00";
+                    $horaSaida = $postVars['hora_saida'].(strlen($postVars['hora_saida']) == 5 ? ":00" : "");
+                    $horaChegada = $postVars['hora_chegada'].(strlen($postVars['hora_chegada']) == 5 ? ":00" : "");
 
                     date_default_timezone_set("America/Sao_Paulo");
                     $dataAtual = date("Y-m-d", time());
@@ -139,7 +142,7 @@ class NewSignature extends Page
                         {
                             if ($item->ativa)
                             {
-                                $message = "O aluno já possui uma assinatura ativa cadastrada!";
+                                $message = "O aluno já possui uma assinatura ativa nesta lista!";
                                 $pass = false;
                                 break 2;
                             }
@@ -151,34 +154,34 @@ class NewSignature extends Page
                         break;
                     }
 
-                    if (!($hourInitial < $horaSaida && $horaSaida < $hourFinal))
+                    if (!($hourInitial <= $horaSaida && $horaSaida <= $hourFinal))
                     {
-                        $message = "O horário de saída não é válido";
+                        $message = "O horário de saída deve estar compreendido entre as 05:00 e as 23:00 horas!";
                     }
 
-                    else if (!($hourInitial < $horaChegada && $horaChegada < $hourFinal))
+                    else if (!($hourInitial <= $horaChegada && $horaChegada <= $hourFinal))
                     {
-                        $message = "O horário de chegada não é válido";
+                        $message = "O horário de chegada deve estar compreendido entre as 05:00 e as 23:00 horas!";
                     }
 
                     else if ($dataSaida > $dataChegada)
                     {
-                        $message = "A Data de Chegada não é Válida!";
+                        $message = "A data de chegada não pode ser anterior a data de saída!";
                     }
 
                     else if ($horaSaida >= $horaChegada && $dataSaida == $dataChegada)
                     {
-                        $message = "O Horário de Chegada não é Válido!";
+                        $message = "O horário de chegada deve ser posterior ao horário de saída!";
                     }
 
                     else if ($dataAtual > $dataSaida)
                     {
-                        $message = "A Data de Saída Informada não é Válida!";
+                        $message = "A data de saída não pode ser anterior a data atual!";
                     }
 
                     else if ($dataAtual == $dataSaida && $horaAtual > $horaSaida)
                     {
-                        $message = "O Horário de Saída não é Válido!";
+                        $message = "O horário de saída deve ser posterior ao horário atual!";
                     }
 
                     else
@@ -198,8 +201,8 @@ class NewSignature extends Page
                     $telefone = trim($postVars['telefone']);
                     $dataSaida = $postVars['data_saida'];
                     $dataChegada = $postVars['data_chegada'];
-                    $horaSaida = $postVars['hora_saida'].":00";
-                    $horaChegada = $postVars['hora_chegada'].":00";
+                    $horaSaida = $postVars['hora_saida'].(strlen($postVars['hora_saida']) == 5 ? ":00" : "");
+                    $horaChegada = $postVars['hora_chegada'].(strlen($postVars['hora_chegada']) == 5 ? ":00" : "");
             
                     date_default_timezone_set("America/Sao_Paulo");
                     $dataAtual = date("Y-m-d", time());
@@ -213,7 +216,7 @@ class NewSignature extends Page
                         {
                             if ($item->ativa)
                             {
-                                $message = "O aluno já possui uma assinatura ativa cadastrada!";
+                                $message = "O aluno já possui uma assinatura ativa nesta lista!";
                                 $pass = false;
                                 break;
                             }
@@ -225,34 +228,29 @@ class NewSignature extends Page
                         break;
                     }
 
-                    if (!($hourInitial < $horaSaida && $horaSaida < $hourFinal))
+                    if (!($hourInitial <= $horaSaida && $horaSaida <= $hourFinal))
                     {
-                        $message = "O horário de saída não é válido";
+                        $message = "O horário de saída deve estar compreendido entre 05:00 e 23:00 horas!";
                     }
 
-                    else if (!($hourInitial < $horaChegada && $horaChegada < $hourFinal))
+                    else if (!($hourInitial <= $horaChegada && $horaChegada <= $hourFinal))
                     {
-                        $message = "O horário de chegada não é válido";
+                        $message = "O horário de chegada deve estar compreendido entre 05:00 e 23:00 horas!";
                     }
 
-                    else if ($dataSaida > $dataChegada)
+                    else if ($dataSaida >= $dataChegada)
                     {
-                        $message = "A data de chegada não é válida!";
+                        $message = "A data de chegada deve ser posterior a data de saída!";
                     }
             
                     else if ($dataAtual > $dataSaida)
                     {
-                        $message = "A data de saída informada não é válida!";
-                    }
-            
-                    else if ($horaSaida >= $horaChegada && $dataSaida == $dataChegada)
-                    {
-                        $message = "O horário de chegada não é válido!";
+                        $message = "A data de saída não pode ser anterior a data atual!";
                     }
             
                     else if ($dataAtual == $dataSaida && $horaAtual > $horaSaida)
                     {
-                        $message = "O horário de saída não é válido!";
+                        $message = "O horário de saída deve ser posterior ao horário atual!";
                     }
 
                     else
@@ -268,6 +266,6 @@ class NewSignature extends Page
             }
         }
 
-        return self::getNewSignature($postVars['type'], $message, $success);
+        return self::getView($postVars['type'], $message, $success);
     }
 }

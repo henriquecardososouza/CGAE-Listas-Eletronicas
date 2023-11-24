@@ -156,10 +156,9 @@ class EditSignature extends Page
      */
     private static function verifyVaiVoltaData($vars)
     {
-        $destino = $vars['destino'];
         $data = $vars['data'];
-        $horaSaida = $vars['hora_saida'].":00";
-        $horaChegada = $vars['hora_chegada'].":00";
+        $horaSaida = strlen($vars['hora_saida']) == 5 ? $vars['hora_saida'].":00" : $vars['hora_saida'];
+        $horaChegada = strlen($vars['hora_chegada']) == 5 ? $vars['hora_chegada'].":00" : $vars['hora_chegada'];
 
         // OBTÉM A DATA E HORA ATUAIS
         date_default_timezone_set("America/Sao_Paulo");
@@ -206,7 +205,58 @@ class EditSignature extends Page
      */
     private static function verifySaidaData($vars)
     {
-        
+        $dataSaida = $vars['data_saida'];
+        $dataChegada = $vars['data_chegada'];
+        $horaSaida = $vars['hora_saida'].":00";
+        $horaChegada = $vars['hora_chegada'].":00";
+
+        // OBTÉM A DATA E HORA ATUAIS
+        date_default_timezone_set("America/Sao_Paulo");
+        $dataAtual = date("Y-m-d", time());
+        $horaAtual = date("H:i:s", time() + 60);
+
+        // RECUPERA O HORÁRIO LIMITE PARA ASSINATURAS
+        $hourInitial = getenv("HOUR_INITIAL");
+        $hourFinal = getenv("HOUR_FINAL");
+
+        // VERIFICA SE OS DADOS DA ASSINATURA SÃO VÁLIDOS
+        if (!($hourInitial < $horaAtual && $horaAtual < $hourFinal))
+        {
+            return "O horário para cadastro de assinaturas na lista de saída já se encerrou!<br>Contate um assistente para realizar sua assinatura.";
+        }
+
+        if (!("05:00:00" <= $horaSaida && $horaSaida <= "23:00:00"))
+        {
+            return "O horário de saída deve estar compreendido entre as 05:00 e as 23:00 horas!";
+        }
+
+        if (!("05:00:00" <= $horaChegada && $horaChegada <= "23:00:00"))
+        {
+            return "O horário de chegada deve estar compreendido entre as 05:00 e as 23:00 horas!";
+        }
+
+        if ($dataAtual > $dataSaida)
+        {
+            return "A data de saída não pode ser anterior a data atual!";
+        }
+
+        if ($dataAtual == $dataSaida)
+        {
+            if ($horaAtual > $horaSaida)
+            {
+                return "O horário de saída deve ser posterior ao horário atual!";
+            }
+        }
+
+        if ($horaSaida >= $horaChegada && $dataSaida == $dataChegada)
+        {
+            return "O horário de chegada deve ser posterior ao horário de saída!";
+        }
+
+        if ($dataSaida > $dataChegada)
+        {
+            return "A data de chegada não pode ser anterior a data de saída!";
+        }
     }
 
     /**
@@ -216,6 +266,51 @@ class EditSignature extends Page
      */
     private static function verifyPernoiteData($vars)
     {
-        
+        $dataSaida = $vars['data_saida'];
+        $dataChegada = $vars['data_chegada'];
+        $horaSaida = $vars['hora_saida'].":00";
+        $horaChegada = $vars['hora_chegada'].":00";
+
+        // OBTÉM A DATA E HORA ATUAL
+        date_default_timezone_set("America/Sao_Paulo");
+        $dataAtual = date("Y-m-d", time());
+        $horaAtual = date("H:i:s", time() + 60);
+
+        // VERIFICA SE OS DADOS DA ASSINATURA SÃO VÁLIDOS
+        if (!("05:00:00" <= $horaSaida && $horaSaida <= "23:00:00"))
+        {
+            return "O horário de saída deve estar compreendido entre 05:00 e 23:00 horas!";
+        }
+
+        if (!("05:00:00" <= $horaChegada && $horaChegada <= "23:00:00"))
+        {
+            return "O horário de chegada deve estar compreendido entre 05:00 e 23:00 horas!";
+        }
+
+        if ($dataAtual > $dataSaida)
+        {
+            return "A data de saída não pode ser anterior a data atual!";
+        }
+
+        if ($dataAtual == $dataSaida)
+        {
+            if ($horaAtual > $horaSaida)
+            {
+                return "O horário de saída deve ser posterior ao horário atual!";
+            }
+        }
+
+        if ($dataSaida >= $dataChegada)
+        {
+            return "A data de chegada deve ser posterior a data de saída!";
+        }
+
+        if ($dataSaida == $dataChegada)
+        {
+            if ($horaSaida >= $horaChegada)
+            {
+                return "O horário de saída deve ser anterior ao horário de chegada!";
+            }
+        }
     }
 }

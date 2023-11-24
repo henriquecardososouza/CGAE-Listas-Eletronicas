@@ -1,17 +1,17 @@
 <section>
     <hr>
     <div id="assinaturas">
-        <h5 class="display-5">Assinaturas cadastradas</h5>
+        <h5 class="display-5">Assinaturas</h5>
 
         <hr>
 
         <div id="filters">
             <div class="input-group" style="display: flex; justify-content: space-between;">
-                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal-filter">Filtrar</button>
+                <button type="button" class="btn btn-outline-primary my-1" data-toggle="modal" data-target="#modal-filter" style="border-radius: 0.375rem;">Filtrar</button>
 
                 <div style="display: flex;">
-                    <input type="search" class="form-control rounded bg-dark text-light" placeholder="Search" aria-label="Search" aria-describedby="search-addon" style="max-width: 200px;" id="search">
-                    <button type="button" class="btn btn-outline-success" onclick="applyEffects(false, null, undefined, document.getElementById('search').value)">Buscar</button>
+                    <input type="search" class="form-control rounded bg-dark text-light my-1" placeholder="Search" aria-label="Search" aria-describedby="search-addon" style="max-width: 200px;" id="search">
+                    <button type="button" class="btn btn-outline-success mx-1 my-1" onclick="applyEffects(false, null, undefined, document.getElementById('search').value)">Buscar</button>
                 </div>
             </div>
         
@@ -98,8 +98,8 @@
         </div>
 
         <div id="actions">
-            <a href="{{URL}}/ass/listas/cadastrar" class="btn btn-outline-success">Cadastrar assinatura</a>
-            <a href="{{URL}}/ass/listas/exportar" class="btn btn-outline-primary mx-2">Exportar dados</a>
+            <a href="{{URL}}/ass/listas/cadastrar" class="btn btn-outline-success my-1">Cadastrar assinatura</a>
+            <a href="{{URL}}/ass/listas/exportar" class="btn btn-outline-primary my-1">Exportar dados</a>
         </div>
 
         <div id="pagination">
@@ -140,9 +140,7 @@
     let actualPage = 0;
     let numberOfPages = undefined;
 
-    window.addEventListener("DOMContentLoaded", (event) => {
-        applyEffects()
-    });
+    window.addEventListener("DOMContentLoaded", applyEffects);
 
     function createTable(itens, allItens = true)
     {
@@ -172,7 +170,7 @@
         }
         
         let table = document.createElement("table");
-        table.setAttribute("class", "table table-dark table-bordered table-hover");
+        table.setAttribute("class", "table table-dark table-bordered table-hover table-striped");
         table.setAttribute("id", "table");
 
         let thead = document.createElement("thead");
@@ -700,7 +698,7 @@
     function createFilterButton(filter, name)
     {
         let btn = document.createElement("button");
-        btn.setAttribute("class", "btn text-light btn-outline-primary mx-1");
+        btn.setAttribute("class", "btn text-light btn-outline-primary mx-1 my-1");
         btn.setAttribute("type", "button");
         btn.setAttribute("onclick", "disableFilter('" + filter + "')");
         btn.textContent = name + " ×";
@@ -823,9 +821,14 @@
     .page-link.disabled:hover {
         background-color: transparent !important;
     }
+
+    #res {
+        overflow-x: scroll;
+    }
     
     table {
         user-select: none;
+        min-width: 500px;
     }
 
     .sort-header {
@@ -840,5 +843,18 @@
 
     .sort-header:hover {
         background-color: rgb(71, 71, 71);
+    }
+    
+    @media (max-width: 500px)
+    {
+        #actions
+        {
+            display: grid;
+        }
+
+        #actions button
+        {
+            margin-bottom: 10px;
+        }
     }
 </style>

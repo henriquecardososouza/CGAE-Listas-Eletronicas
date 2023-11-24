@@ -6,14 +6,17 @@ use App\Controller\Common\Alert;
 use App\Controller\Assistant\Page;
 use App\Model\Entity\Aluno;
 
+/**
+ * Controlador da página de atualizar aluno
+ */
 class Update extends Page
 {
     /**
-     * Retorna a view do formulário de atualização de aluno
-     * @param int $id
-     * @return string
+     * Entrypoint GET da rota
+     * @param int $id ID do aluno a ser editado
+     * @return string View renderizada
      */
-    public static function getUpdate($id, $message = null, $success = false)
+    public static function getView($id, $message = null, $success = false)
     {
         parent::setActiveModule("students");
 
@@ -23,12 +26,12 @@ class Update extends Page
     }
 
     /**
-     * Configura a view de atualização de aluno
-     * @param Request $request
-     * @param int $id
-     * @return string
+     * Entrypoint POST da rota
+     * @param Request $request Objeto de requisição
+     * @param int $id ID doa aluno a ser atualizado
+     * @return string View renderizada
      */
-    public static function setUpdate($request, $id)
+    public static function setView($request, $id)
     {
         $postVars = $request->getPostVars();
 
@@ -39,12 +42,12 @@ class Update extends Page
 
         if (!is_null($ob1))
         {
-            return self::getUpdate($id, "O número do Refeitório informado já<br>está sendo utilizado por outro aluno!", false);
+            return self::getView($id, "O número do refeitório informado já está sendo utilizado por outro aluno!", false);
         }
         
         if (!is_null($ob2))
         {
-            return self::getUpdate($id, "O email informado já está<br>sendo utilizado por outro aluno!", false);
+            return self::getView($id, "O email informado já está sendo utilizado por outro aluno!", false);
         }
 
         $senha = empty($postVars['senha']) ? $ob->senha : password_hash($postVars['senha'], PASSWORD_DEFAULT);
@@ -63,13 +66,13 @@ class Update extends Page
 
         $ob->atualizar();
 
-        return self::getUpdate($id, "Atualizado com sucesso!", true);
+        return self::getView($id, "Atualizado com sucesso!", true);
     }
 
     /**
-     * Retorna as variáveis da view de update
-     * @param int $id
-     * @return array
+     * Configura as variáveis da view
+     * @param int $id ID do aluno a ser atualizado
+     * @return array Variáveis da view
      */
     private static function getForm($id, $message, $success)
     {
@@ -149,6 +152,12 @@ class Update extends Page
         return $content;
     }
 
+    /**
+     * Retorna mensagens de status
+     * @param string $message Conteúdo da mensagem
+     * @param bool $success Tipo da mensagem
+     * @return string|null View renderizada
+     */
     private static function getStatus($message, $success)
     {
         if (is_null($message))

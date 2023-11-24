@@ -17,7 +17,6 @@ class Signature extends Page
 {
     /**
      * Retorna a view da página de assinatura
-     * @param Request $request Objeto de requisição
      * @param string $list Nome da lista correspondente a assinatura
      * @param int $id ID da assinatura no banco
      * @param string $message Texto da mensagem de alerta
@@ -107,26 +106,91 @@ class Signature extends Page
         switch ($list)
         {
             case "vai_volta":
-                VaiVolta::atualizarAssinaturas("id = ".$id, [
-                    "hora_chegada" => $horaAtual,
+                $ob = VaiVolta::getSignatureById($id);
+
+                if ($ob->data == $dataAtual)
+                {
+                    if ($ob->horaSaida > $horaAtual)
+                    {
+                        $ob->horaSaida = $horaAtual;
+                    }
+                }
+
+                else if ($ob->data > $dataAtual)
+                {
+                    $ob->data = $dataAtual;
+                    $ob->horaSaida = $horaAtual;
+                }
+
+                $ob->horaChegada = $horaAtual;
+
+                $ob->atualizar([
+                    "data" => $ob->data,
+                    "hora_saida" => $ob->horaSaida,
+                    "hora_chegada" => $ob->horaChegada,
                     "ativa" => false
                 ]);
+
                 break;
 
             case "saida":
-                Saida::atualizarAssinaturas("id = ".$id, [
-                    "data_chegada" => $dataAtual,
-                    "hora_chegada" => $horaAtual,
+                $ob = Saida::getSignatureById($id);
+
+                if ($ob->dataSaida == $dataAtual)
+                {
+                    if ($ob->horaSaida > $horaAtual)
+                    {
+                        $ob->horaSaida = $horaAtual;
+                    }
+                }
+
+                else if ($ob->dataSaida > $dataAtual)
+                {
+                    $ob->dataSaida = $dataAtual;
+                    $ob->horaSaida = $horaAtual;
+                }
+
+                $ob->horaChegada = $horaAtual;
+                $ob->dataChegada = $dataAtual;
+
+                $ob->atualizar([
+                    "data_saida" => $ob->dataSaida,
+                    "data_chegada" => $ob->dataChegada,
+                    "hora_saida" => $ob->horaSaida,
+                    "hora_chegada" => $ob->horaChegada,
                     "ativa" => false
                 ]);
+
                 break;
 
             case "pernoite":
-                Pernoite::atualizarAssinaturas("id = ".$id, [
-                    "data_chegada" =>$dataAtual,
-                    "hora_chegada" => $horaAtual,
+                $ob = Pernoite::getSignatureById($id);
+
+                if ($ob->dataSaida == $dataAtual)
+                {
+                    if ($ob->horaSaida > $horaAtual)
+                    {
+                        $ob->horaSaida = $horaAtual;
+                    }
+                }
+
+                else if ($ob->dataSaida > $dataAtual)
+                {
+                    $ob->dataSaida = $dataAtual;
+                    $ob->horaSaida = $horaAtual;
+                }
+
+                $ob->horaChegada = $horaAtual;
+                $ob->dataChegada = $dataAtual;
+
+                $ob->atualizar([
+                    "data_saida" => $ob->dataSaida,
+                    "data_chegada" => $ob->dataChegada,
+                    "hora_saida" => $ob->horaSaida,
+                    "hora_chegada" => $ob->horaChegada,
                     "ativa" => false
                 ]);
+
                 break;
         }
 
@@ -212,6 +276,9 @@ class Signature extends Page
                 case "destino":
                     break;
 
+                case "data":
+                    break;
+
                 case "dataSaida":
                     break;
 
@@ -236,7 +303,18 @@ class Signature extends Page
             
             $keys[$i] = strtolower(preg_replace(["/([A-Z]+)/", "/_([A-Z]+)([A-Z][a-z])/"], ["_$1", "_$1_$2"], lcfirst($keys[$i])));
 
-            $res .= ($keys[$i] == "id" ? "id" : ucfirst($keys[$i])).": "."'".$values[$i]."', ";
+            if ($keys[$i] == "endereco") $keys[$i] = "destino";
+            
+            if ($keys[$i] == "data")
+            {
+                $res .= "Data_saida: "."'".$values[$i]."', ";
+                $res .= "Data_chegada: "."'".$values[$i]."', ";
+            }
+
+            else
+            {
+                $res .= ($keys[$i] == "id" ? "id" : ucfirst($keys[$i])).": "."'".$values[$i]."', ";
+            }
         }
 
         return substr($res, 0, -2)."}";

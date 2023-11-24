@@ -1,5 +1,5 @@
 <section class="my-5" style="display: flex; justify-content: center;">
-    <form style="width:500px" method="post" action="" class="border border-light p-5 rounded">
+    <form method="post" action="" class="border border-light rounded">
         <div class="mb-5" style="text-align: center;">
             <h5 class="display-5">Editar assinatura</h5>
             <hr>
@@ -33,8 +33,24 @@
 
         <input type="hidden" name="acao" value="editar">
         
-        <div id="controls" style="justify-content: right; display: grid;">
-            <button type="submit" class="btn btn-outline-success">Editar assinatura</button>
+        <div id="controls" style="justify-content: space-between; display: flex;">
+            <button type="button" class="btn btn-outline-danger" onclick=" location.href = '{{URL}}/ass/listas/{{lista}}/{{id}}'; ">Cancelar</button>
+            <button type="submit" class="btn btn-outline-success">Editar</button>
         </div>
     </form>
 </section>
+
+<style>
+    form {
+        width: 80%;
+        max-width: 500px;
+        padding: 5%;
+    }
+
+    @media (max-width: 768px) {
+        form {
+            width: 90%;
+            padding: 10% 5%;
+        }
+    }
+</style>

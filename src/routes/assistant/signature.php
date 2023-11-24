@@ -13,7 +13,7 @@ $router->get("/ass/listas", [
 
     function ()
     {
-        return new Response(200, Signatures\Signatures::getSignatures());
+        return new Response(200, Signatures\Signatures::getView());
     }
 ]);
 
@@ -27,7 +27,7 @@ $router->post("/ass/listas", [
 
     function ($request)
     {
-        return new Response(200, Signatures\Signatures::getSignatures($request));
+        return new Response(200, Signatures\Signatures::getView($request));
     }
 ]);
 
@@ -41,7 +41,7 @@ $router->get("/ass/listas/cadastrar", [
 
     function ()
     {
-        return new Response(200, Signatures\NewSignature::getNewSignature());
+        return new Response(200, Signatures\NewSignature::getView());
     }
 ]);
 
@@ -55,7 +55,7 @@ $router->post("/ass/listas/cadastrar", [
 
     function ($request)
     {
-        return new Response(200, Signatures\NewSignature::setNewSignature($request));
+        return new Response(200, Signatures\NewSignature::setView($request));
     }
 ]);
 
@@ -69,7 +69,7 @@ $router->get("/ass/listas/exportar", [
 
     function ($request)
     {
-        return new Response(200, Signatures\Export::getContent($request));
+        return new Response(200, Signatures\Export::getView($request));
     }
 ]);
 
@@ -83,7 +83,7 @@ $router->post("/ass/listas/exportar", [
 
     function ($request)
     {
-        return new Response(200, Signatures\Export::setContent($request));
+        return new Response(200, Signatures\Export::setView($request));
     }
 ]);
 
@@ -95,8 +95,8 @@ $router->get("/ass/listas/{list}/{id}/editar", [
         "update-lists"
     ],
 
-    function ($request, $list, $id) {
-        return new Response(200, Signatures\EditSignature::getEditSignature($list, $id));
+    function ($list, $id) {
+        return new Response(200, Signatures\Edit::getView($list, $id));
     }
 ]);
 
@@ -110,7 +110,7 @@ $router->post("/ass/listas/{list}/{id}/editar", [
 
     function ($request, $list, $id)
     {
-        return new Response(200, Signatures\EditSignature::setEditSignature($request, $list, $id));
+        return new Response(200, Signatures\Edit::setView($request, $list, $id));
     }
 ]);
 
@@ -124,11 +124,11 @@ $router->get("/ass/listas/{list}/{id}", [
 
     function ($list, $id)
     {
-        return new Response(200, Signatures\Signature::getSignature($list, $id));
+        return new Response(200, Signatures\Signature::getView($list, $id));
     }
 ]);
 
-// ADICIONANDO A ROTA DE EXCLUSÃO DE ASSINATURA
+// ADICIONANDO A ROTA DE AÇÕES DA ASSINATURA
 $router->post("/ass/listas/{list}/{id}", [
     "middlewares" => [
         "recover-cookies",
@@ -138,7 +138,7 @@ $router->post("/ass/listas/{list}/{id}", [
 
     function ($request, $list, $id)
     {
-        return new Response(200, Signatures\DeleteSignature::deleteSignature($request, $list, $id));
+        return new Response(200, Signatures\Acao::setView($request, $list, $id));
     }
 ]);
 

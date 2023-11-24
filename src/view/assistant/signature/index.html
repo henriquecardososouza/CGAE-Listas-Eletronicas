@@ -12,31 +12,58 @@
     </div>
 
     <div id="actions">
-        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal-edit">Excluir assinatura</button>
-        <button type="button" class="btn btn-outline-primary" onclick=" location.href = '{{URL}}/ass/listas/{{list}}/{{id}}/editar'; ">Editar assinatura</button>
+        <button type="button" class="btn btn-outline-primary my-1" onclick=" location.href = '{{URL}}/ass/listas/{{list}}/{{id}}/editar'; ">Editar assinatura</button>
+        <button type="submit" class="btn btn-outline-success my-1" data-toggle="modal" data-target="#encerrar">Encerrar assinatura</button>
+        <button type="button" class="btn btn-outline-danger my-1" data-toggle="modal" data-target="#excluir">Excluir assinatura</button>
+    </div>
 
-        
-        <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modal-edit-title" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content bg-dark">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-light">Excluir assinatura</h5>
-                        <button type="button" class="btn btn-close bg-white" data-dismiss="modal" aria-label="Close"></button>
+    <div class="modal fade" id="excluir" tabindex="-1" role="dialog" aria-labelledby="excluir-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title text-light">Excluir assinatura</h5>
+                    <button type="button" class="btn btn-close bg-white" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="container">
+                        <p>Deseja realmente excluir a assinatura?<br><strong>Obs: Essa é uma ação irreversível.</strong></p>
                     </div>
-    
-                    <div class="modal-body">
-                        <div class="container">
-                            <p>Deseja realmente excluir a assinatura?<br><strong>Obs: Essa é uma ação irreversível.</strong></p>
-                        </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-success" data-dismiss="modal">Não</button>
+                    
+                    <form action="" method="post">
+                        <input type="hidden" name="acao" value="excluir">
+                        <button type="submit" class="btn btn-outline-danger">Sim</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="encerrar" tabindex="-1" role="dialog" aria-labelledby="encerrar-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title text-light">Encerrar assinatura</h5>
+                    <button type="button" class="btn btn-close bg-white" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="container">
+                        <p>Deseja realmente encerrar a assinatura?<br></p>
                     </div>
-    
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-success" data-dismiss="modal">Não</button>
-                        
-                        <form action="" method="post">
-                            <button type="submit" class="btn btn-outline-danger">Sim</button>
-                        </form>
-                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-success" data-dismiss="modal">Não</button>
+                    
+                    <form action="" method="post">
+                        <input type="hidden" name="acao" value="encerrar">
+                        <button type="submit" class="btn btn-outline-danger">Sim</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -155,3 +182,18 @@
     }
 
 </script>
+
+<style>
+    @media (max-width: 500px)
+    {
+        #actions
+        {
+            display: grid;
+        }
+
+        #actions button
+        {
+            margin-bottom: 10px;
+        }
+    }
+</style>

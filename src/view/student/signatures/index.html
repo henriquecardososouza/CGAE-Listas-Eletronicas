@@ -20,20 +20,18 @@
                             <div class="container">
                                 <h5>Por lista</h5>
 
-                                <ul>
-                                    <input type="checkbox" name="list" value="vai_volta" class="form-check-input bg-dark" id="vai_volta">
-                                    <label class="form-check-label" for="vai_volta">Vai e Volta</label> 
-                                
-                                    <br>
-        
-                                    <input type="checkbox" name="list" value="pernoite" class="form-check-input bg-dark" id="pernoite">
-                                    <label class="form-check-label" for="pernoite">Pernoite</label>  
-                                
-                                    <br>
-        
-                                    <input type="checkbox" name="list" value="saida" class="form-check-input bg-dark" id="saida">
-                                    <label class="form-check-label" for="saida">Saída</label>
-                                </ul>
+                                <input type="checkbox" name="list" value="vai_volta" class="form-check-input bg-dark" id="vai_volta">
+                                <label class="form-check-label" for="vai_volta">Vai e Volta</label> 
+                            
+                                <br>
+    
+                                <input type="checkbox" name="list" value="pernoite" class="form-check-input bg-dark" id="pernoite">
+                                <label class="form-check-label" for="pernoite">Pernoite</label>  
+                            
+                                <br>
+    
+                                <input type="checkbox" name="list" value="saida" class="form-check-input bg-dark" id="saida">
+                                <label class="form-check-label" for="saida">Saída</label>
                             </div>
 
                             <hr>
@@ -41,20 +39,17 @@
                             <div class="container">
                                 <h5>Por data</h5>
     
-                                <ul>
-                                    <label class="form-check-label" for="date_initial">De:</label> 
-                                    <input type="date" name="data_initial" class="form-control bg-dark text-light" id="date_initial" onchange="fillFinalHourInput()">
-                                
-                                    <br>
-        
-                                    <label class="form-check-label" for="date_final">Até:</label>
-                                    <input type="date" name="data_final" class="form-control bg-dark text-light" id="date_final">
-                                </ul>
+                                <label class="form-check-label" for="date_initial">De:</label> 
+                                <input type="date" name="data_initial" class="form-control bg-dark text-light" id="date_initial" onchange="fillFinalHourInput()">
+                            
+                                <br>
+    
+                                <label class="form-check-label" for="date_final">Até:</label>
+                                <input type="date" name="data_final" class="form-control bg-dark text-light" id="date_final">
                             </div>
                         </div>
         
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fechar</button>
                             <button type="button" class="btn btn-outline-success" onclick="clearFilters()" data-dismiss="modal">
                                 Limpar Filtros
                             </button>
@@ -145,7 +140,7 @@
         }
         
         let table = document.createElement("table");
-        table.setAttribute("class", "table table-dark table-bordered table-hover");
+        table.setAttribute("class", "table table-dark table-bordered table-hover table-striped");
         table.setAttribute("id", "table");
 
         let thead = document.createElement("thead");
@@ -285,6 +280,7 @@
     function filterItens()
     {
         let itens = [];
+        let itemsFiltered = false;
 
         if (activesFilters.length == 0) return results;
 
@@ -299,11 +295,13 @@
                         itens.push(res);
                     }
                 });
+
+                itemsFiltered = true;
             }
 
             else
             {
-                let aux = itens.length == 0 ? results : itens;
+                let aux = itens.length == 0 && !itemsFiltered ? results : itens;
                 itens = [];
 
                 aux.forEach(res => {
@@ -632,7 +630,6 @@
             }
         });
         
-        console.log(aux);
         activesFilters = aux;
         applyEffects();
         updateFilterElements();
@@ -672,7 +669,7 @@
         if (numberOfPages <= 1)
         {
             document.getElementById("pagination").style.display = "none";
-            applyEffects();
+            applyEffects(false, "Data de saída");
             return;
         }
 
@@ -699,8 +696,8 @@
             next.setAttribute("onclick", "configPagination(1)");
             next.classList.remove("disabled");
         }
-
-        applyEffects();
+        
+        applyEffects(false, "Data de saída");
     }
 
     function calcTotalPages(itens, limit)
@@ -713,6 +710,11 @@
 <style>
     table {
         user-select: none;
+        min-width: 800px;
+    }
+
+    #res {
+        overflow-x: scroll;
     }
     
     .page-link {

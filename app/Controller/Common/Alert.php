@@ -4,6 +4,9 @@ namespace App\Controller\Common;
 
 use \App\Utils\View;
 
+/**
+ * Controlador da view de alerta
+ */
 class Alert
 {
     /**

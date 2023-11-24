@@ -58,7 +58,7 @@ class Saida extends Page
         // VERIFICA SE OS DADOS DA ASSINATURA SÃO VÁLIDOS
         if (!($hourInitial < $horaAtual && $horaAtual < $hourFinal))
         {
-            return self::getSaida("O horário para cadastro de assinaturas na lista de saída já se encerrou!<br>Contate um assistente para realizar sua assinatura.");
+            return self::getSaida("O horário para cadastro de assinaturas na lista de saída já se encerrou!<br>Contate um assistente para realizar sua assinatura!");
         }
 
         if (!("05:00:00" <= $horaSaida && $horaSaida <= "23:00:00"))
@@ -66,7 +66,7 @@ class Saida extends Page
             return self::getSaida("O horário de saída deve estar compreendido entre as 05:00 e as 23:00 horas!");
         }
 
-        if (!("05:00:00" < $horaChegada && $horaChegada < "23:00:00"))
+        if (!("05:00:00" <= $horaChegada && $horaChegada <= "23:00:00"))
         {
             return self::getSaida("O horário de chegada deve estar compreendido entre as 05:00 e as 23:00 horas!");
         }
@@ -112,7 +112,7 @@ class Saida extends Page
         }
 
         // CADASTRA A ASSINATURA
-        $obList = new EntitySaida(0, $_SESSION['user']['usuario']['id'], true, $destino, $dataSaida, $dataChegada, $horaSaida, $horaChegada);
+        $obList = new EntitySaida(0, $_SESSION['user']['usuario']['id'], null, true, $destino, $dataSaida, $dataChegada, $horaSaida, $horaChegada);
         $obList->cadastrar();
 
         // RETORNA A VIEW

@@ -17,7 +17,7 @@ $router->get("/ass", [
 
     function ()
     {
-        return new Response(200, Assistant\Home::getHome());
+        return new Response(200, Assistant\Home::getView());
     }
 ]);
 
@@ -31,7 +31,7 @@ $router->get("/ass/perfil", [
 
     function ()
     {
-        return new Response(200, Assistant\Profile::getProfile());
+        return new Response(200, Assistant\Profile::getView());
     }
 ]);
 
@@ -45,7 +45,7 @@ $router->get("/ass/perfil/editar", [
 
     function ($request)
     {
-        return new Response(200, Assistant\Profile::getEditProfile($request));
+        return new Response(200, Assistant\Profile::getViewEditProfile($request));
     }
 ]);
 
@@ -59,6 +59,6 @@ $router->post("/ass/perfil/editar", [
 
     function ($request)
     {
-        return new Response(200, Assistant\Profile::setEditProfile($request));
+        return new Response(200, Assistant\Profile::setViewEditProfile($request));
     }
 ]);

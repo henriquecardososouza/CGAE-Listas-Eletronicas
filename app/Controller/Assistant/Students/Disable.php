@@ -6,13 +6,16 @@ use App\Controller\Common\Alert;
 use App\Controller\Assistant\Page;
 use App\Model\Entity\Aluno;
 
+/**
+ * Controlador da página de desativar alunos
+ */
 class Disable extends Page
 {
     /**
-     * Retorna a view de desabilitar alunos
-     * @param string $message
-     * @param bool $success
-     * @return string
+     * Entrypoint GET da rota
+     * @param string $message Mensagem de status
+     * @param bool $success tipo da mensagem de status
+     * @return string View renderizada
      */
     public static function getView($message = null, $success = false)
     {
@@ -26,9 +29,9 @@ class Disable extends Page
     }
 
     /**
-     * Realiza a desabilitação de alunos
-     * @param request $request
-     * @return string
+     * Entrypoint POST da rota
+     * @param Request $request Objeto de requisição
+     * @return string View renderizada
      */
     public static function setView($request)
     {
@@ -55,19 +58,19 @@ class Disable extends Page
 
         if (!empty($obStudents))
         {
-            return self::getConfirm($obStudents, $request);
+            return self::getViewConfirm($obStudents, $request);
         }
 
         return self::getView("Nenhum aluno foi encontrado!");
     }
 
     /**
-     * Retorna a view de confirmação
-     * @param array $obStudents
-     * @param Request $request
-     * @return string
+     * Entrypoint GET da rota de confirmação
+     * @param array $obStudents Array de instâncias de Aluno
+     * @param Request $request Objeto de requisição
+     * @return string View renderizada
      */
-    private static function getConfirm($obStudents, $request)
+    private static function getViewConfirm($obStudents, $request)
     {
         parent::setActiveModule("students");
         
@@ -77,10 +80,10 @@ class Disable extends Page
     }
 
     /**
-     * Retorna o conteúdo da view de confirmação
-     * @param array $obStudents
-     * @param Request $request
-     * @return array
+     * Configura a view de confirmação segundo os dados disponíveis
+     * @param array $obStudents Array de instâncias de Aluno
+     * @param Request $request Objeto de requisição
+     * @return array View renderizada
      */
     private static function getContent($obStudents, $request)
     {
@@ -112,8 +115,8 @@ class Disable extends Page
     }
 
     /**
-     * Desablita os alunos selecionados
-     * @param string $where
+     * Desabilita os alunos
+     * @param string $where Condição da query SQL de DELETE
      */
     private static function disableStudents($where)
     {

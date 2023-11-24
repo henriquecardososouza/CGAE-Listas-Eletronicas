@@ -15,7 +15,7 @@ $router->get("/entrar", [
 
     function ()
     {
-        return new Response(200, Login::getLogin());
+        return new Response(200, Login::getView());
     }
 ]);
 
@@ -27,7 +27,7 @@ $router->post("/entrar", [
 
     function ($request)
     {
-        return new Response(200, Login::setLogin($request));
+        return new Response(200, Login::setView($request));
     }
 ]);
 

@@ -5,13 +5,16 @@ namespace App\Controller\Assistant\Students;
 use App\Controller\Assistant\Page;
 use App\Model\Entity\Aluno;
 
+/**
+ * Controlador da página de consulta de alunos 
+ */
 class Students extends Page
 {
     /**
-     * Retorna a view da página de estudantes cadastrados
-     * @return string
+     * Entrypoint GET da rota
+     * @return string View renderizada
      */
-    public static function getStudents()
+    public static function getView()
     {
         parent::setActiveModule("students");
 
@@ -25,31 +28,41 @@ class Students extends Page
         return parent::getPage("Alunos", $content);
     }
 
+    /**
+     * Retorna a view "não encontrado"
+     * @return string View renderizada
+     */
     private static function getNotFound()
     {
         return parent::render("students/not_found");
     }
     
+    /**
+     * Retorna a view "sem dados"
+     * @return string View renderizada
+     */
     private static function getNoItens()
     {
         return parent::render("students/no_itens");
     }
 
+    /**
+     * Converte instâncias de Aluno em objetos JS
+     * @return string Array de objetos JS
+     */
     private static function getItens()
     {
         // INICIALIZA A SESSÃO
         \App\Session\Login::init();
 
         // RECUPERA OS DADOS DO BANCO
-        $students = Aluno::processData(Aluno::getAlunos());
-        $result = "[";
+        $students = Aluno::processData(Aluno::getAlunos()) ?? [];
+        $result = "";
 
         foreach ($students as $item)
         {
             // CONVERTE OS OBJETOS EM ARRAYS
             $arr = (array) $item;
-            $keys = array_keys($arr);
-            $values = array_values($arr);
 
             // INICIALIZA A ESCRITA DE UM NOVO OBJETO JS 
             $aux = "{";
@@ -67,6 +80,6 @@ class Students extends Page
         }
         
         // RETORNA O OBJETO JS DE DADOS
-        return substr($result, 0, -2)."]";
+        return substr($result, 0, -2);
     }
 }

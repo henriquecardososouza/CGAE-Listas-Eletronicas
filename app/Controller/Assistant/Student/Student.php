@@ -5,14 +5,17 @@ namespace App\Controller\Assistant\Student;
 use App\Controller\Assistant\Page;
 use App\Model\Entity\Aluno;
 
+/**
+ * Controlador da página de consulta de aluno
+ */
 class Student extends Page
 {
     /**
-     * Retorna a view da página de aluno
-     * @param int $id
-     * @return string
+     * Entrypoint GET da rota
+     * @param int $id ID do aluno a ser consultado
+     * @return string View renderizada
      */
-    public static function getStudent($id)
+    public static function getView($id)
     {
         parent::setActiveModule("students");
 
@@ -22,18 +25,18 @@ class Student extends Page
     }
 
     /**
-     * Configura a view da página de estudante
-     * @param int $id
-     * @return string
+     * Entrypoint POST da rota
+     * @param int $id ID do aluno a ser consultado
+     * @return string View renderizada
      */
-    public static function setStudent($request, $id)
+    public static function setView($request, $id)
     {
         $postVars = $request->getPostVars();
         $ob = Aluno::getAlunoById($id);
 
         if (!$ob instanceof Aluno)
         {
-            return self::getStudent($id);
+            return self::getView($id);
         }
 
         if (isset($postVars['acao']))
@@ -54,13 +57,13 @@ class Student extends Page
             $ob->atualizar();
         }
 
-        return self::getStudent($id);
+        return self::getView($id);
     }
 
     /**
-     * Retorna os dados do aluno
-     * @param int $id
-     * @return string
+     * Formata a view com os dados do aluno 
+     * @param int $id ID do aluno a ser consultado
+     * @return string View renderizada
      */
     private static function getContent($id)
     {
@@ -69,7 +72,7 @@ class Student extends Page
 
         if (is_null($ob))
         {
-            $content = parent::render("student/not_found");
+            throw new \Exception("student not found", 404);
         }
 
         else
@@ -79,6 +82,7 @@ class Student extends Page
                 "email" => $ob->email,
                 "refeitorio" => $ob->idRefeitorio,
                 "quarto" => str_split($ob->quarto, 1)[0]."-".str_split($ob->quarto, 1)[1],
+                "cama" => $ob->cama,
                 "serie" => $ob->serie."°",
                 "sexo" => ucfirst($ob->sexo),
                 "pernoite" => $ob->pernoite ? "Sim" : "Não",
@@ -93,9 +97,9 @@ class Student extends Page
     }
 
     /**
-     * Retorna os botões de ação
-     * @param int $id
-     * @return string
+     * Formata a view das ações disponíveis
+     * @param int $id ID do Aluno a ser consultado
+     * @return string View renderizada
      */
     private static function getActions($id)
     {

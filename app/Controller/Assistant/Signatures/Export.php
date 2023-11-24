@@ -7,9 +7,17 @@ use App\Controller\Common\Alert;
 use App\Model\Entity\Listas;
 use App\Model\Entity\Aluno;
 
+/**
+ * Controlador da página de exportar dados
+ */
 class Export extends Page
 {
-    public static function getContent($request)
+    /**
+     * Entrypoint GET da rota
+     * @param Request $request Objeto de requisição
+     * @return string View renderizada
+     */
+    public static function getView($request)
     {
         parent::setActiveModule("signatures");
 
@@ -28,6 +36,10 @@ class Export extends Page
                 case "404":
                     $alert = Alert::getError("Nenhum dado foi encontrado!");
                     break;
+
+                case "503":
+                    $alert = Alert::getError("Permita a abertura de pop-ups nas configurações do seu navegador!");
+                    break;
                     
                 case "500":
                     $alert = Alert::getError("Um erro inesperado ocorreu durante a exportação dos dados!");
@@ -42,7 +54,12 @@ class Export extends Page
         return parent::getPage("Listas", $content);
     }
 
-    public static function setContent($request)
+    /**
+     * Entrypoint POST da rota
+     * @param Request $request Objeto de requisição
+     * @return string View renderizada
+     */
+    public static function setView($request)
     {
         $postVars = $request->getPostVars();
 
@@ -134,6 +151,11 @@ class Export extends Page
         return $content;
     }
 
+    /**
+     * Inicializa objetos JS da lista "vai e volta"
+     * @param VaiVolta $data Instância da assinatura
+     * @return string Objeto JS
+     */
     private static function createVaiVoltaArray($data)
     {
         $res = "[";
@@ -192,6 +214,11 @@ class Export extends Page
         return $res;
     }
 
+    /**
+     * Inicializa objetos JS da lista "saída"
+     * @param Saida $data Instância da assinatura
+     * @return string Objeto JS
+     */
     private static function createSaidaArray($data)
     {
         $res = "[";
@@ -257,6 +284,11 @@ class Export extends Page
         return $res;
     }
 
+    /**
+     * Inicializa objetos JS da lista "pernoite"
+     * @param Pernoite $data Instância da assinatura
+     * @return string Objeto JS
+     */
     private static function createPernoiteArray($data)
     {
         $res = "[";
@@ -331,9 +363,10 @@ class Export extends Page
     }
 
     /**
-     *  1 - Date 1
-     * -1 - Date 2
-     *  0 - Equal
+     * Compara duas datas
+     * @param string $date1 1° data (dd-mm-YYYY)
+     * @param string $date2 2° data (dd-mm-YYYY)
+     * @return int [1] - date1 > date2 | [0] - date1 = date2 | [-1] - date1 < date2
      */
     private static function compareDates($date1, $date2)
     {

@@ -5,15 +5,17 @@ namespace App\Controller\Assistant\Student;
 use App\Controller\Assistant\Page;
 use App\Model\Entity\Aluno;
 
+/**
+ * Controlador da página de excluir aluno
+ */
 class Delete extends Page
 {
     /**
-     * Realiza a exclusão de um aluno
-     * @param Request $request
-     * @param int $id
-     * @return string
+     * Entrypoint POST da rota
+     * @param Request $request Objeto de requisição
+     * @param int $id ID do aluno a ser excluído
      */
-    public static function setDelete($request, $id)
+    public static function setView($request, $id)
     {
         if ($request->getPostVars()['acao'] != "excluir") throw new \Exception("credentials missing", 500);
 

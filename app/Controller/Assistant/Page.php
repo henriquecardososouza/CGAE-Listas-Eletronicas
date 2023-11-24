@@ -5,12 +5,12 @@ namespace App\Controller\Assistant;
 use \App\Utils\View;
 
 /**
- * Controlador da página base (assistente)
+ * Controlador da página base
  */
 class Page
 {
     /**
-     * Todos os módulos do painel
+     * Módulos da navbar
      * @var array
      */
     private static $modules = [
@@ -70,9 +70,10 @@ class Page
     }
 
     /**
-     * Renderiza views de aluno
+     * Renderiza views de assistant
      * @param string $view A view a ser renderizada
      * @param array $params Parâmetros de renderização da view
+     * @param bool $isModule Indica o tipo de view a ser renderizada
      * @return string View renderizada
      */
     protected static function render($view, $params = [], $isModule = true)

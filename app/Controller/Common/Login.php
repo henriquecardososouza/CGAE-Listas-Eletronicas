@@ -12,16 +12,16 @@ use \App\Session;
 class Login
 {
     /**
-     * Retorna a View da página de login
-     * @param Request $request Objeto referente a requisição
+     * Entrypoint GET da rota
+     * @param Request $request Objeto de requisição
      * @param string|null $errorMessage Mensagem de erro
      * @return string View renderizada
      */
-    public static function getLogin($errorMessage = null)
+    public static function getView($errorMessage = null)
     {
         // CARREGA A MENSAGEM DE ERRO
         $status = !is_null($errorMessage) ? Alert::getError($errorMessage) : "";
-        
+
         // RENDERIZA A VIEW
         $content = View::render("common/login", [
             "title"   => "Entrar",
@@ -32,10 +32,11 @@ class Login
     }
 
     /**
-     * Realiza o login
-     * @param Request $request Objeto referente a requisição
+     * Entrypoint POST da rota
+     * @param Request $request Objeto de requisição
+     * @return void|string View renderizada
      */
-    public static function setLogin($request)
+    public static function setView($request)
     {
         // OBTÉM AS VARIÁVEIS DE POST
         $postVars = $request->getPostVars();
@@ -58,7 +59,7 @@ class Login
             if (!$obAux instanceof Entity\Assistente || !password_verify($postVars['senha'], $obAux->senha))
             {
                 // RETORNA A PÁGINA DE LOGIN COM A MENSAGEM DE ERRO
-                return self::getLogin("Usuário ou senha inválidos!");
+                return self::getView("Usuário ou senha inválidos!");
             }
 
             else 
@@ -118,8 +119,8 @@ class Login
     }
 
     /**
-     * Desconecta o usuário
-     * @param Request $request Objeto referente a requisição
+     * Entrypoint GET da rota de logout
+     * @param Request $request Objeto de requisição
      */
     public static function setLogout($request)
     {

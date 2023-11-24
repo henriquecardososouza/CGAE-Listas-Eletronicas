@@ -6,15 +6,15 @@ use App\Model\Entity\Assistente;
 use App\Controller\Common\Alert;
 
 /**
- * Controlador da página de perfil (assistente)
+ * Controlador da página de perfil
  */
 class Profile extends Page
 {
     /**
-     * Retorna a view da página de perfil de assistente
-     * @return string
+     * Entrypoint GET da rota
+     * @return string View renderizada
      */
-    public static function getProfile()
+    public static function getView()
     {
         // CONFIGURA A NAVBAR
         parent::setActiveModule("profile");
@@ -32,21 +32,25 @@ class Profile extends Page
     }
 
     /**
-     * Retorna a view da página de editar perfil
-     * @return string
+     * Entrypoint GET da rota de editar perfil
+     * @param Request $request Objeto de requisição
+     * @param string $message Mensagem de status
+     * @param bool $success Tipo da mensagem de status
+     * @return string View renderizada
      */
-    public static function getEditProfile($request, $message = null, $success = false)
+    public static function getViewEditProfile($request, $message = null, $success = false)
     {
         parent::setActiveModule("profile");
-        $content = parent::render("profile/edit", self::getAttributes($request, $message, $success));
+        $content = parent::render("profile/edit", self::getAttributes($message, $success));
         return parent::getPage("Editar", $content);
     }
     
     /**
-     * Configura a view da página de editar perfil
-     * @return string
+     * Entrypoint POST da rota de editar perfil
+     * @param Request $request Objeto de requisição
+     * @return string View renderizada
      */
-    public static function setEditProfile($request)
+    public static function setViewEditProfile($request)
     {
         \App\Session\Login::init();
 
@@ -62,20 +66,23 @@ class Profile extends Page
 
         $ob->atualizar();
 
+        \App\Session\Login::logout();
         \App\Session\Login::login($ob);
 
         $message = "Atualizado com sucesso!";
         $success = true;
 
-        $content = parent::render("edit_profile", self::getAttributes($request, $message, $success));
+        $content = parent::render("profile/edit", self::getAttributes($message, $success));
         return parent::getPage("Editar", $content);
     }
 
     /**
-     * Retorna os atributos da view de editar perfil
-     * @return array
+     * Configura as variáveis da view de consultar perfil
+     * @param string $message Mensagem de status
+     * @param bool $success Tipo da mensagem de status
+     * @return array Variáveis da view
      */
-    private static function getAttributes($request, $message = null, $success = false)
+    private static function getAttributes($message = null, $success = false)
     {
         $attr = [];
         $ob = Assistente::getAssistenteById($_SESSION['user']['usuario']['id']);

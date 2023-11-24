@@ -1138,6 +1138,12 @@ function initialize()
                 printPernoitePDF();
                 break;
         }
+
+        obj.redirect += "200";
+    }
+
+    catch (e) {
+        obj.redirect += "503";
     }
     
     finally {

@@ -12,23 +12,9 @@ $router->get("/ass/alunos", [
         "update-lists"
     ],
 
-    function ($request)
+    function ()
     {
-        return new Response(200, Students\Students::getStudents($request));
-    }
-]);
-
-// ADICIONANDO A ROTA DE CONSULTA DE ALUNOS (POST)
-$router->post("/ass/alunos", [
-    "middlewares" => [
-        "recover-cookies",
-        "require-assistant-login",
-        "update-lists"
-    ],
-
-    function ($request)
-    {
-        return new Response(200, Students\Students::getStudents($request));
+        return new Response(200, Students\Students::getView());
     }
 ]);
 
@@ -42,7 +28,7 @@ $router->get("/ass/alunos/cadastrar", [
 
     function ()
     {
-        return new Response(200, Students\NewStudent::getView());
+        return new Response(200, Student\NewStudent::getView());
     }
 ]);
 
@@ -56,7 +42,7 @@ $router->post("/ass/alunos/cadastrar", [
 
     function ($request)
     {
-        return new Response(200, Students\NewStudent::setView($request));
+        return new Response(200, Student\NewStudent::setView($request));
     }
 ]);
 
@@ -126,7 +112,7 @@ $router->get("/ass/alunos/atualizar/{id}", [
 
     function ($id)
     {
-        return new Response(200, Student\Update::getUpdate($id));
+        return new Response(200, Student\Update::getView($id));
     }
 ]);
 
@@ -140,7 +126,7 @@ $router->post("/ass/alunos/atualizar/{id}", [
 
     function ($request, $id)
     {
-        return new Response(200, Student\Update::setUpdate($request, $id));
+        return new Response(200, Student\Update::setView($request, $id));
     }
 ]);
 
@@ -154,7 +140,7 @@ $router->post("/ass/alunos/excluir/{id}", [
 
     function ($request, $id)
     {
-        return new Response(200, Student\Delete::setDelete($request, $id));
+        return new Response(200, Student\Delete::setView($request, $id));
     }
 ]);
 
@@ -168,7 +154,7 @@ $router->get("/ass/alunos/{id}", [
 
     function ($id)
     {
-        return new Response(200, Student\Student::getStudent($id));
+        return new Response(200, Student\Student::getView($id));
     }
 ]);
 
@@ -182,7 +168,7 @@ $router->post("/ass/alunos/{id}", [
 
     function ($request, $id)
     {
-        return new Response(200, Student\Student::setStudent($request, $id));
+        return new Response(200, Student\Student::setView($request, $id));
     }
 ]);
 

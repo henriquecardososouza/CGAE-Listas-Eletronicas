@@ -2,7 +2,7 @@
 
 namespace App\Http;
 
-use App\Controller\Error;
+use App\Controller\Common\Error;
 
 class Router
 {
@@ -277,33 +277,8 @@ class Router
      */
     private function getErrorPage($e)
     {
-        $content = null;
-
-        switch ($e->getCode())
-        {
-            // PÁGINA NÃO ENCONTRADA
-            case 404:
-                $content = Error\Error404::getError404($e->getMessage());
-                break;
-
-            // MÉTODO NÃO PERMITIDO
-            case 405:
-                $content = Error\Error405::getError405($e->getMessage());
-                break;
-
-            // FALHA AO PROCESSAR A URL
-            case 503:
-                $content = Error\Error503::getError503($e->getMessage());
-                break;
-
-            // ERRO GERAL DO SERVIDOR
-            default:
-                $content = Error\Error500::getError500($e->getMessage());
-                break;
-        }
-        
         // RETORNA UMA RESPOSTA CONTENDO O CÓDIGO HTTP DA EXCEÇÃO E A DEVIDA PÁGINA DE ERRO
-        return new Response($e->getCode(), $content);
+        return new Response($e->getCode(), Error::getView($e));
     }
 }
 

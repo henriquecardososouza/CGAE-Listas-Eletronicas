@@ -94,14 +94,6 @@ class Pernoite extends Page
             return self::getPernoite("A data de chegada deve ser posterior a data de saída!");
         }
 
-        if ($dataSaida == $dataChegada)
-        {
-            if ($horaSaida >= $horaChegada)
-            {
-                return self::getPernoite("O horário de saída deve ser anterior ao horário de chegada!");
-            }
-        }
-
         // VERIFICA SE O ALUNO JÁ POSSUI UMA ASSINATURA EM ABERTO
         $ob = EntityPernoite::getSignatureByStudent($_SESSION['user']['usuario']['id']);
 

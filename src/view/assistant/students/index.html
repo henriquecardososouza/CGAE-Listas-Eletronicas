@@ -6,8 +6,15 @@
         <hr>
 
         <div id="filters">
-            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal-filter">Filtrar</button>
-        
+            <div class="input-group" style="display: flex; justify-content: space-between;">
+                <button type="button" class="btn btn-outline-primary my-1" data-toggle="modal" data-target="#modal-filter" style="border-radius: 0.375rem;">Filtrar</button>
+
+                <div style="display: flex;">
+                    <input type="search" class="form-control rounded bg-dark text-light my-1" placeholder="Search" aria-label="Search" aria-describedby="search-addon" style="max-width: 200px;" id="search">
+                    <button type="button" class="btn btn-outline-success mx-1 my-1" onclick="applyEffects(false, null, undefined, document.getElementById('search').value)">Buscar</button>
+                </div>
+            </div>
+
             <div class="modal fade" id="modal-filter" tabindex="-1" role="dialog" aria-labelledby="modal-filter-title" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content bg-dark">
@@ -36,7 +43,7 @@
                                 <h5>Por sexo</h5>
     
                                 <ul>
-                                    <select class="form-select bg-dark text-light" name="sexo" id="sexo" onchange="setQuartoFilter()">
+                                    <select class="form-select bg-dark text-light" name="sexo" id="sexo" onchange="setSexoSelect()">
                                         <option value="0" selected>Todos</option>
                                         <option value="masculino">Masculino</option>
                                         <option value="feminino">Feminino</option>
@@ -71,7 +78,6 @@
                         </div>
         
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fechar</button>
                             <button type="button" class="btn btn-outline-success" onclick="clearFilters()" data-dismiss="modal">
                                 Limpar Filtros
                             </button>
@@ -92,14 +98,13 @@
         </div>
         
         <div id="actions">
-            <a href="{{URL}}/ass/alunos/cadastrar" type="button" class="btn btn-outline-success">Cadastrar aluno</a>
-            <a href="{{URL}}/ass/alunos/atualizar" type="button" class="btn btn-outline-primary">Atualizar alunos</a>
-            <a href="{{URL}}/ass/alunos/desativar" type="button" class="btn btn-outline-danger">Desativar alunos</a>
+            <a href="{{URL}}/ass/alunos/cadastrar" type="button" class="btn btn-outline-success my-1">Cadastrar aluno</a>
+            <a href="{{URL}}/ass/alunos/atualizar" type="button" class="btn btn-outline-primary my-1">Atualizar alunos</a>
+            <a href="{{URL}}/ass/alunos/desativar" type="button" class="btn btn-outline-danger my-1">Desativar alunos</a>
         </div>
     
-        <br>
-
         <div id="pagination">
+            <br>
             <nav>
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
@@ -120,12 +125,11 @@
 </section>
 
 <script>
-    const results = {{itens}};
-
+    const results = [{{itens}}];
     const pageLimit = {{page_limit}};
 
     const actualOrder = {
-        order: null,
+        order: "N° Refeitório",
         reverse: false
     };
 
@@ -139,6 +143,43 @@
     let numberOfPages = undefined;
 
     window.addEventListener("DOMContentLoaded", applyEffects);
+
+    function setSexoSelect()
+    {
+        let select = document.getElementById("quarto");
+        let sexoSelect = document.getElementById("sexo");
+
+        switch (sexoSelect.options[sexoSelect.options.selectedIndex].value)
+        {
+            case "masculino":
+                for (let i = 0; i < select.options.length; i++)
+                {
+                    select.options[i].disabled = i == 5;
+                }
+                
+                if (select.options.selectedIndex == 5) select.options.selectedIndex = 4;
+
+                break;
+
+            case "feminino":
+                for (let i = 0; i < select.options.length; i++)
+                {
+                    select.options[i].disabled = i > 5;
+                }
+
+                if (select.options.selectedIndex > 5) select.options.selectedIndex = 5;
+
+                break;
+
+            default:
+                for (let i = 0; i < select.options.length; i++)
+                {
+                    select.options[i].disabled = false;
+                }
+
+                break;
+        }
+    }
 
     function createTable(itens, allItens = true)
     {
@@ -168,7 +209,7 @@
         }
         
         let table = document.createElement("table");
-        table.setAttribute("class", "table table-dark table-bordered table-hover");
+        table.setAttribute("class", "table table-dark table-bordered table-hover table-striped");
         table.setAttribute("id", "table");
 
         let thead = document.createElement("thead");
@@ -327,6 +368,20 @@
         });
 
         return itens;
+    }
+
+    function filterSearch(itens, search)
+    {
+        let aux = [];
+
+        itens.forEach(item => {
+            if (item.nome.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
+            {
+                aux.push(item);
+            }
+        });
+
+        return aux;
     }
 
     function clearFilters()
@@ -508,7 +563,7 @@
         return res;
     }
 
-    function applyEffects(fromFilter = false, order = null, num = undefined)
+    function applyEffects(fromFilter = false, order = null, num = undefined, search = null)
     {
         if (fromFilter)
         {
@@ -517,6 +572,11 @@
         
         let itens = filterItens();
 
+        if (search != null)
+        {
+            itens = filterSearch(itens, search);
+        }
+        
         if (order != null)
         {
             itens = applyOrder(itens, order, order == actualOrder.order);
@@ -596,7 +656,7 @@
     function createFilterButton(filter, name)
     {
         let btn = document.createElement("button");
-        btn.setAttribute("class", "btn text-light btn-outline-primary mx-1");
+        btn.setAttribute("class", "btn text-light btn-outline-primary mx-1 my-1");
         btn.setAttribute("type", "button");
         btn.setAttribute("onclick", "disableFilter('" + filter + "')");
         btn.textContent = name + " ×";
@@ -692,40 +752,6 @@
         return Math.ceil(itens / limit);
     }
 
-    function setQuartoFilter()
-    {
-        let quarto = document.getElementById("quarto");
-        let sexo = document.getElementById("sexo");
-        sexo = sexo.options[sexo.options.selectedIndex].value;
-
-        switch (sexo)
-        {
-            case "0":
-                for (let i = 0; i < quarto.children.length; i++)
-                {
-                    quarto.children[i].disabled = false;
-                }
-
-                break;
-
-            case "masculino":
-                for (let i = 0; i < quarto.children.length; i++)
-                {
-                    quarto.children[i].disabled = i == 5;
-                }
-
-                break;
-
-            case "feminino":
-                for (let i = 0; i < quarto.children.length; i++)
-                {
-                    quarto.children[i].disabled = i > 5;
-                }
-
-                break;
-        }
-    }
-
 </script>
 
 <style>
@@ -746,8 +772,13 @@
         background-color: transparent !important;
     }
     
+    #res {
+        overflow-x: scroll;
+    }
+    
     table {
         user-select: none;
+        min-width: 600px;
     }
 
     .sort-header {
@@ -762,5 +793,18 @@
 
     .sort-header:hover {
         background-color: rgb(71, 71, 71);
+    }
+    
+    @media (max-width: 500px)
+    {
+        #actions
+        {
+            display: grid;
+        }
+
+        #actions button
+        {
+            margin-bottom: 10px;
+        }
     }
 </style>

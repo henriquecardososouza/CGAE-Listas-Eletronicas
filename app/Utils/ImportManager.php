@@ -36,13 +36,9 @@ class ImportManager
         $values = array_values(self::$map[$user][$view]);
         $i = 0;
 
-        foreach ($values as $imports)
+        foreach ($values as $file)
         {
-            foreach ($imports as $file)
-            {
-                $content .= self::renderImport($file, $keys[$i]);
-            }
-
+            $content .= self::renderImport($file, $keys[$i]);
             $i++;
         }
 

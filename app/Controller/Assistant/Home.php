@@ -3,15 +3,15 @@
 namespace App\Controller\Assistant;
 
 /**
- * Controlador da página principal (assistente)
+ * Controlador da página principal
  */
 class Home extends Page
 {
     /**
-     * Retorna a view do painel de assistente 
-     * @return string
+     * Entrypoint GET da rota 
+     * @return string View renderizada
      */
-    public static function getHome()
+    public static function getView()
     {
         // CONFIGURA A NAVBAR
         parent::setActiveModule("home");
