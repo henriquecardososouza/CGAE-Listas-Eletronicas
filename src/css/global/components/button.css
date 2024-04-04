@@ -1,0 +1,18 @@
+.btn {
+    padding: 12px 38px;
+    background-color: transparent;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.4s;
+    font-family: var(--font-default);
+}
+
+.btn-outline-success {
+    border: 1px solid #25A532;
+    color: #25A532;
+}
+
+.btn-outline-success:hover {
+    background-color: #25A532;
+    color: white;
+}

@@ -1,54 +1,16 @@
-@import "navbar.css";
-@import "footer.css";
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&family=Readex+Pro:wght@200&display=swap');
+@import "components.css";
+@import "variables.css";
 
 body {
-    background-color: #191919;
+    background-color: var(--background-default);
     padding: 0;
     margin: 0;
-    font-family: 'Montserrat', sans-serif;;
+    font-family: var(--font-default);
     font-size: 15px;
 }
 
 .container {
     width: 90%;
     margin: auto;
-}
-
-.btn {
-    padding: 12px 38px;
-    background-color: transparent;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: 0.4s;   
-}
-
-.btn-outline-success {
-    border: 1px solid #25A532;
-    color: #25A532;
-}
-
-.btn-outline-success:hover {
-    background-color: #25A532;
-    color: white;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    color: white;
-    font-family: 'Readex Pro', sans-serif;
-    font-weight: 100;
-    text-transform: uppercase;
-}
-
-h1 {
-    font-size: 35pt;
-}
-
-p, span {
-    color: white;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.text-danger {
-    color: #bf3737 !important;
 }

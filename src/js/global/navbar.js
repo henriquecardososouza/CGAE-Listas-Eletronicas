@@ -10,3 +10,9 @@ document.addEventListener('animationend', function (e) {
         e.target.classList.remove('did-fade-in');
     }
 });
+/*
+document.getElementById("btn-nav-collase").addEventListener('mousedown', () => {
+    const div = document.getElementById("nav-items-collapse");
+    
+    div.style.display = div.style.display == "grid" ? "none" : "grid";
+})*/

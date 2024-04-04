@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CGAE | Home</title>
+    <title>CGAE | Listas | Vai e Volta</title>
     <link rel="stylesheet" href="../../../css/global/global.css">
-    <link rel="stylesheet" href="../../../css/student/home.css">
+    <link rel="stylesheet" href="../../../css/global/component/input.css">
+    <link rel="stylesheet" href="../../../css/student/lists.css">
     <script src="../../../js/global/navbar.js" defer></script>
 </head>
 <body>
@@ -57,35 +58,32 @@
         </nav>
 
         <main>
-            <section id="shorcuts">
-                <h1>Listas</h1>
+            <h1 class="page-title">Assinar Lista</h1>
+            <h2 class="page-subtitle">VAI E VOLTA</h2>
 
-                <div class="grid">
-                    <a href="#" class="card">
-                        <img src="../../../img/student/home/vai_volta.svg" alt="vai e volta">
-                        <h6>vai e volta</h6>
-                    </a>
-                    
-                    <a href="#" class="card">
-                        <img src="../../../img/student/home/saida.svg" alt="saída">
-                        <h6>saída</h6>
-                    </a>
-                    
-                    <a href="#" class="card">
-                        <img src="../../../img/student/home/pernoite.svg" alt="pernoite">
-                        <h6>pernoite</h6>
-                    </a>
-                </div>
-            </section>
-            
-            <br>
+            <section id="form">
+                <form action="?" method="post" class="card">
+                    <div class="form-group mb">
+                        <input type="text" name="destino" id="destino" placeholder="Destino" required>
+                        <img src="../../../img/icon/user.svg" alt="house-icon">
+                    </div>
 
-            <section id="about">
-                <h1>Sobre</h1>
+                    <div class="form-group mb">
+                        <input type="date" name="data" id="data" placeholder="Data de Saída" required>
+                    </div>
 
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ad nesciunt perspiciatis? Eum nulla sequi hic suscipit magni, labore itaque quod quo dolor molestiae atque reprehenderit facere est dicta tempore?</p>
+                    <div class="form-group mb">
+                        <input type="time" name="hora-saida" id="hora-saida" placeholder="Horário de Saída" required>
+                    </div>
 
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores itaque vero dolores minus, quidem molestias quod excepturi iste, molestiae, distinctio porro autem atque ducimus illo harum ipsum similique suscipit dolorem!</p>
+                    <div class="form-group mb">
+                        <input type="time" name="hora-chegada" id="hora-chegada" placeholder="Horário de Chegada" required>
+                    </div>
+
+                    <div class="align-right">
+                        <button class="btn btn-outline-success">Assinar</button>
+                    </div>
+                </form>
             </section>
         </main>
 
