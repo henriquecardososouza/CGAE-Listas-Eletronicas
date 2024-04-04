@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CGAE | Listas | Vai e Volta</title>
+    <title>CGAE | Listas | Pernoite</title>
     <link rel="stylesheet" href="../../../css/global/global.css">
     <link rel="stylesheet" href="../../../css/student/lists.css">
     <script src="../../../js/global/navbar.js" defer></script>
@@ -58,17 +58,31 @@
 
         <main>
             <h1 class="page-title">Assinar Lista</h1>
-            <h2 class="page-subtitle">VAI E VOLTA</h2>
+            <h2 class="page-subtitle">pernoite</h2>
 
             <section id="form">
                 <form action="?" method="post" class="card">
                     <div class="form-group mb">
-                        <input type="text" name="destino" id="destino" placeholder="Destino" required>
+                        <input type="text" name="endereco" id="endereco" placeholder="Endereço" required>
                         <img src="../../../img/icon/house.svg" alt="house-icon">
+                    </div>
+                    
+                    <div class="form-group mb">
+                        <input type="text" name="reponsavel" id="reponsavel" placeholder="Responsável" required>
+                        <img src="../../../img/icon/user.svg" alt="user-icon">
+                    </div>
+                    
+                    <div class="form-group mb">
+                        <input type="text" name="telefone" id="telefone" placeholder="Telefone do Responsável" required>
+                        <img src="../../../img/icon/phone.svg" alt="phone-icon">
                     </div>
 
                     <div class="form-group mb">
-                        <input type="date" name="data" id="data" placeholder="Data de Saída" required>
+                        <input type="date" name="data-saida" id="data-saida" placeholder="Data de Saída" required>
+                    </div>
+
+                    <div class="form-group mb">
+                        <input type="date" name="data-chegada" id="data-chegada" placeholder="Data de Chegada" required>
                     </div>
 
                     <div class="form-group mb">

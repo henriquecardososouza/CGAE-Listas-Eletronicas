@@ -5,6 +5,8 @@
 }
 
 .card {
-    width: 400px;
+    display: grid;
     margin: 40px 0 40px 0;
+    max-width: 95%;
+    width: 360px;
 }

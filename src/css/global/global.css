@@ -14,3 +14,11 @@ body {
     width: 90%;
     margin: auto;
 }
+
+.width-auto {
+    width: auto;
+}
+
+.align-right {
+    justify-self: right;
+}

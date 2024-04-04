@@ -28,10 +28,6 @@ main {
     justify-self: center;
 }
 
-.align-right {
-    justify-self: right;
-}
-
 .mb {
     margin-bottom: 27px;
 }
