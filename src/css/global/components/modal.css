@@ -1,0 +1,125 @@
+.modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fade-in 0.2s linear;
+}
+
+.modal {
+    width: calc(95% - 60px);
+    max-width: 500px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    padding: 10px 30px 30px 30px;
+    border-radius: 20px;
+    background-color: var(--background-secondary);
+    box-shadow: 5px 5px 20px black;
+    animation: fade-in 0.2s linear;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-size: 15pt;
+}
+
+.btn-close-modal {
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid var(--color-danger);
+    color: var(--color-danger);
+    position: relative;
+    display: grid;
+    place-items: center;
+}
+
+.btn-close-modal:hover {
+    background-color: var(--color-danger);
+    color: white;
+}
+
+.btn-close-modal:hover > .close:after, .btn-close-modal:hover > .close:before {
+    background-color: white;
+}
+
+.btn-close-modal .close {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    transition: 0.3s;
+    display: grid;
+    place-items: center;
+}
+
+.btn-close-modal .close:before, .btn-close-modal .close:after {
+    position: absolute;
+    content: ' ';
+    height: 20px;
+    width: 1px;
+    background-color: var(--color-danger);
+    border-radius: 100px;
+    transition: 0.3s;
+}
+
+.btn-close-modal .close:before {
+    transform: rotate(45deg);
+}
+
+.btn-close-modal .close:after {
+    transform: rotate(-45deg);
+}
+
+.modal-body {
+    margin: 30px 0 50px 0;
+}
+
+.modal-content {
+    text-align: justify;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.modal-footer button {
+    margin: 0px 5px;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+
+    to { opacity: 1; }
+}
+
+@keyframes fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@media (max-width: 480px) {
+    .modal-footer {
+        display: block;
+    }
+
+    .modal-footer .btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    ul {
+        padding: 0;
+    }
+}

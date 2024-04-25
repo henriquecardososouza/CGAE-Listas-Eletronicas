@@ -1,0 +1,10 @@
+.filter {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#active-filters {
+    display: flex;
+}

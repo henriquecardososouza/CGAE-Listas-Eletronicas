@@ -1,0 +1,48 @@
+.grid {
+    display: grid;
+    place-items: center;
+}
+
+.card {
+    max-width: 650px;
+    width: 95%;
+    margin: 40px 0 0 0;
+}
+
+.dl-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+dt, dl {
+    color: white;
+}
+
+dt {
+    text-transform: uppercase;
+}
+
+dd {
+    text-transform: capitalize;
+}
+
+@media (max-width: 768px) {
+    .dl-line {
+        display: block;
+    }
+
+    dt {
+        font-weight: bold;
+    }
+
+    dd, dt {
+        text-align: justify;
+        margin: 0;
+    }
+
+    .dl-line button {
+        width: 100%;
+    }
+}

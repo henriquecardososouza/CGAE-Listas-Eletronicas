@@ -10,9 +10,31 @@ document.addEventListener('animationend', function (e) {
         e.target.classList.remove('did-fade-in');
     }
 });
-/*
-document.getElementById("btn-nav-collase").addEventListener('mousedown', () => {
-    const div = document.getElementById("nav-items-collapse");
-    
-    div.style.display = div.style.display == "grid" ? "none" : "grid";
-})*/
+
+window.addEventListener("resize", function() {
+    var windowWidth = window.innerWidth;
+
+    if (windowWidth > 1100) {
+        if (document.querySelector("div.nav-items-aux").style.display == "block") openNavbar();
+    }
+});
+
+function openNavbar() {
+    const items = document.querySelector("div.nav-items-aux");
+    const display = items.style.display == "block" ? "none" : "block";
+
+    if (display == "block") {
+        items.style.display = display;
+        setTimeout(() => { document.querySelector("div.nav-items-aux").style.overflowY = "visible"; }, 200);
+    }
+
+    else {
+        items.style.overflowY = "hidden";
+        items.style.animation = "shrink-to-top 0.2s ease-out";
+
+        setTimeout(() => { 
+            document.querySelector("div.nav-items-aux").style.display = "none";
+            items.style.animation = "grow-from-top 0.2s ease-out";
+        }, 200);
+    }
+}

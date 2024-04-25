@@ -16,7 +16,7 @@ p, span {
 
 .page-title {
     font-size: 35pt;
-    margin: 5px 0 0 0;
+    margin: 5px 0;
 }
 
 .page-subtitle {
@@ -25,30 +25,12 @@ p, span {
 
 @media (max-width: 1024px) {
     .page-title {
-        font-size: 28pt;
-    }
-}
-
-@media (max-width: 768px) {
-    .page-title {
-        font-size: 25pt;
+        font-size: 30pt;
     }
 }
 
 @media (max-width: 540px) {
     .page-title {
-        font-size: 20pt;
-    }
-}
-
-@media (max-width: 425px) {
-    .page-title {
-        font-size: 16pt;
-    }
-}
-
-@media (max-width: 320px) {
-    .page-title {
-        font-size: 12pt;
+        font-size: 27pt;
     }
 }

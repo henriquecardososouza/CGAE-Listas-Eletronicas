@@ -1,0 +1,45 @@
+table {
+    width: 100%;
+    min-width: 768px;
+    color: white;
+    text-align: center;
+}
+
+table, td, th {
+    border-collapse: collapse;
+    border: 0.5px solid rgba(255, 255, 255, 0.2);
+}
+
+td, th {
+    padding: 10px 0;
+    text-transform: capitalize;
+    font-weight: 400;
+}
+
+.table-link {
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.table-link:hover {
+    background-color: var(--background-secondary)
+}
+
+.table-link img {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.table-link span {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+@media (max-width: 840px) {
+    #table {
+        overflow-x: scroll;
+    }
+}

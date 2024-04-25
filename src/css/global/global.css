@@ -22,3 +22,16 @@ body {
 .align-right {
     justify-self: right;
 }
+
+.justify-right {
+    display: flex;
+    justify-content: end !important;
+}
+
+.mt-4 {
+    margin-top: 40px;
+}
+
+li {
+    list-style: none;
+}

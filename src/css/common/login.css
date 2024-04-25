@@ -32,6 +32,15 @@ main {
     margin-bottom: 27px;
 }
 
+.form-group {
+    max-width: 100%;
+    width: 360px;
+}
+
+.align-right {
+    width: auto;
+}
+
 @media (max-width: 768px) {
     body {
         min-width: 0;

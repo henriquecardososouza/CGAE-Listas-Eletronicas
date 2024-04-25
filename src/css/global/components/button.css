@@ -5,14 +5,70 @@
     cursor: pointer;
     transition: 0.4s;
     font-family: var(--font-default);
+    font-size: 13px;
+    text-decoration: none;
 }
 
 .btn-outline-success {
-    border: 1px solid #25A532;
-    color: #25A532;
+    border: 1px solid var(--color-success);
+    color: var(--color-success);
 }
 
 .btn-outline-success:hover {
-    background-color: #25A532;
+    background-color: var(--color-success);
     color: white;
+}
+
+.btn-outline-danger {
+    border: 1px solid var(--color-danger);
+    color: var(--color-danger);
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--color-danger);
+    color: white;
+}
+
+.btn-outline-primary {
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-filter {
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    border-radius: 10px;
+    border: 1px solid var(--color-success);
+    display: grid;
+    place-items: center;
+}
+
+.btn-filter img {
+    width: 55%;
+    height: 55%;
+}
+
+.btn-filter:hover {
+    background-color: var(--background-secondary);
+}
+
+.btn-filter-active {
+    height: 45px;
+    padding: 0 20px;
+    color: white;
+    margin: 0 0 0 10px;
+    border-radius: 10px;
+    border: 1px solid var(--color-success);
+    display: grid;
+    place-items: center;
+}
+
+.btn-filter-active:hover {
+    background-color: var(--background-secondary);
 }

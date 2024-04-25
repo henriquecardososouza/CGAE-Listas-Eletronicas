@@ -13,7 +13,7 @@
         <nav>
             <ul class="navbar">
                 <li class="nav-logo"><a class="nav-brand" href="#"><img src="../../../img/common/brand.svg" alt="CGAE brand"></a></li>
-
+                <button class="btn btn-outline-navbar" onclick="openNavbar()">|||</button>
                 <div class="nav-items">
                     <li>
                         <a class="nav-link" href="#">Home</a>
@@ -54,11 +54,50 @@
                     </li>
                 </div>
             </ul>
+            <div class="nav-items-aux">
+                <li>
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+
+                <li class="nav-link dropdown">
+                    <div class="dropdown-btn">
+                        Listas <img src="../../../img/common/arrow-down.svg" alt="">
+                    </div>
+                    
+                    <div class="dropdown-content size-3">
+                        <a href="#">Vai e volta</a>
+                        <a href="#">Saída</a>
+                        <a href="#">Pernoite</a>
+                    </div>
+                </li>
+
+                <li class="nav-link dropdown">
+                    <div class="dropdown-btn">
+                        Assinaturas <img src="../../../img/common/arrow-down.svg" alt="">
+                    </div>
+                    
+                    <div class="dropdown-content size-2">
+                        <a href="#">Ativas</a>
+                        <a href="#">Encerradas</a>
+                    </div>
+                </li>
+
+                <li class="nav-link dropdown">
+                    <div class="dropdown-btn">
+                        Perfil <img src="../../../img/common/arrow-down.svg" alt="">
+                    </div>
+                    
+                    <div class="dropdown-content size-2">
+                        <a href="#">Meu perfil</a>
+                        <a href="#" class="text-danger">Sair</a>
+                    </div>
+                </li>
+            </div>
         </nav>
 
         <main>
             <section id="shorcuts">
-                <h1>Listas</h1>
+                <h1 class="page-title">Listas</h1>
 
                 <div class="grid">
                     <a href="#" class="card">
@@ -81,7 +120,7 @@
             <br>
 
             <section id="about">
-                <h1>Sobre</h1>
+                <h1 class="page-title">Sobre</h1>
 
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ad nesciunt perspiciatis? Eum nulla sequi hic suscipit magni, labore itaque quod quo dolor molestiae atque reprehenderit facere est dicta tempore?</p>
 

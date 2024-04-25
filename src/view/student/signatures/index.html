@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGAE | Assinaturas</title>
+    <link rel="stylesheet" href="../../../css/global/global.css">
+    <link rel="stylesheet" href="../../../css/student/signatures.css">
+    <script src="../../../js/global/navbar.js" defer></script>
+    <script src="../../../js/global/components/modal.js" defer></script>
+    <script src="../../../js/global/components/checkbox.js" defer></script>
+    <script src="../../../js/pages/student/signatures.js"></script>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <ul class="navbar">
+                <li class="nav-logo"><a class="nav-brand" href="#"><img src="../../../img/common/brand.svg" alt="CGAE brand"></a></li>
+
+                <div class="nav-items">
+                    <li>
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+
+                    <li class="nav-link dropdown">
+                        <div class="dropdown-btn">
+                            Listas <img src="../../../img/common/arrow-down.svg" alt="">
+                        </div>
+                        
+                        <div class="dropdown-content size-3">
+                            <a href="#">Vai e volta</a>
+                            <a href="#">Saída</a>
+                            <a href="#">Pernoite</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-link dropdown">
+                        <div class="dropdown-btn">
+                            Assinaturas <img src="../../../img/common/arrow-down.svg" alt="">
+                        </div>
+                        
+                        <div class="dropdown-content size-2">
+                            <a href="#">Ativas</a>
+                            <a href="#">Encerradas</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-link dropdown">
+                        <div class="dropdown-btn">
+                            Perfil <img src="../../../img/common/arrow-down.svg" alt="">
+                        </div>
+                        
+                        <div class="dropdown-content size-2">
+                            <a href="#">Meu perfil</a>
+                            <a href="#" class="text-danger">Sair</a>
+                        </div>
+                    </li>
+                </div>
+            </ul>
+        </nav>
+
+        <main>
+            <section id="content">
+                <h1 class="page-title">minhas assinaturas</h1>
+                <h2 class="page-subtitle">ativas</h2>
+
+                <div class="filter">
+                    <button class="btn btn-filter" onclick="openModal('filter')"><img src="./../../../img/icon/filter.svg" alt="*"></button>
+
+                    <div id="active-filters">
+                        <button class="btn btn-filter-active" onclick="">Vai e volta &times;</button>
+                        <button class="btn btn-filter-active" onclick="">Saída &times;</button>
+                    </div>
+                </div>
+
+                <div id="table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="table-link"><img src="./../../../img/icon/sort.svg" alt=""><span>lista</span></th>
+                                <th class="table-link"><img src="./../../../img/icon/sort.svg" alt=""><span>data de saída</span></th>
+                                <th>horário de saída</th>
+                                <th>horário de chegada</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr class="table-link">
+                                <td>vai e volta</td>
+                                <td>08/04/2024</td>
+                                <td>11:00</td>
+                                <td>23:00</td>
+                            </tr>
+                            
+                            <tr class="table-link">
+                                <td>vai e volta</td>
+                                <td>08/04/2024</td>
+                                <td>11:00</td>
+                                <td>23:00</td>
+                            </tr>
+                            
+                            <tr class="table-link">
+                                <td>vai e volta</td>
+                                <td>08/04/2024</td>
+                                <td>11:00</td>
+                                <td>23:00</td>
+                            </tr>
+                            
+                            <tr class="table-link">
+                                <td>vai e volta</td>
+                                <td>08/04/2024</td>
+                                <td>11:00</td>
+                                <td>23:00</td>
+                            </tr>
+                            
+                            <tr class="table-link">
+                                <td>vai e volta</td>
+                                <td>08/04/2024</td>
+                                <td>11:00</td>
+                                <td>23:00</td>
+                            </tr>
+                            
+                            <tr class="table-link">
+                                <td>vai e volta</td>
+                                <td>08/04/2024</td>
+                                <td>11:00</td>
+                                <td>23:00</td>
+                            </tr>
+                            
+                            <tr class="table-link">
+                                <td>vai e volta</td>
+                                <td>08/04/2024</td>
+                                <td>11:00</td>
+                                <td>23:00</td>
+                            </tr>
+                            
+                            <tr class="table-link">
+                                <td>vai e volta</td>
+                                <td>08/04/2024</td>
+                                <td>11:00</td>
+                                <td>23:00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination">
+                    <button class="btn-pagination previous" id="btn-previous" onclick="changePage(-1)"><img src="./../../../img/icon/arrow-left.svg" alt="&lsaquo;"></button>
+                    <button class="btn-pagination active" id="pagination-link">1</button>
+                    <button class="btn-pagination next" id="btn-next" onclick="changePage(1)"><img src="./../../../img/icon/arrow-right.svg" alt="&rsaquo;"></button>
+                </div>
+            </section>
+
+            <section id="modal">
+                <div id="filter-background" class="modal-background" style="display: none" onclick="openModal(this.id.split('-')[0])"></div>
+                <div id="filter" class="modal" style="display: none">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Filtrar</h3>
+                        <button type="button" class="btn btn-close-modal" onclick="openModal('filter')"><div class="close"></div></button>
+                    </div>
+
+                    <hr>
+
+                    <div class="modal-body">
+                        <div class="modal-content">
+                            <h4>Lista</h4>
+
+                            <ul>
+                                <li>
+                                    <div class="form-group">
+                                        <input type="checkbox" name="lista" id="vai_volta">
+                                        <span class="checkmark" onclick="setCheckbox('vai_volta')"></span>
+                                        <label for="vai_volta">Vai e Volta</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <input type="checkbox" name="lista" id="saida">
+                                        <span class="checkmark" onclick="setCheckbox('saida')"></span>
+                                        <label for="saida">Saída</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-group">
+                                        <input type="checkbox" name="lista" id="pernoite">
+                                        <span class="checkmark" onclick="setCheckbox('pernoite')"></span>
+                                        <label for="pernoite">Pernoite</label>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <h4>Data de Saída</h4>
+
+                            <ul>
+                                <li>
+                                    <div class="form-group">
+                                        <input type="date" name="data_saida" id="data_saida" required>
+                                    </div>
+                                </li>
+                                <br>
+                                <li>
+                                    <div class="form-group">
+                                        <input type="date" name="data_chegada" id="data_chegada" required>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-outline-danger" onclick="openModal('filter')">Cancelar</button>
+                        <button class="btn btn-outline-primary" onclick="cleanFilter()">Limpar Filtros</button>
+                        <button class="btn btn-outline-success" onclick="setFilter()">Filtrar</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <img class="footer-logo" src="../../../img/common/footer/logo.svg" alt="if logo">
+        
+            <div class="footer-line"></div>
+        
+            <div class="footer-contacts">
+                <div class="footer-contact">
+                    <img src="../../../img/common/footer/instagram.svg" alt="instagram">
+                    <span>@ifnmg.salinas</span>
+                </div>
+                
+                <div class="footer-contact">
+                    <img src="../../../img/common/footer/email.svg" alt="email">
+                    <span>cgaelistaseletronicas@gmail.com</span>
+                </div>
+                
+                <div class="footer-contact">
+                    <img src="../../../img/common/footer/phone.svg" alt="phone">
+                    <span>(99) 99999999</span>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            //const items = {{items}};
+        </script>
+    </div>
+</body>
+</html>
